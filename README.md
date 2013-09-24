@@ -10,6 +10,7 @@ Dependency
 
   + Python2
   + Flask
+  + PyJade
   + MongoDB(*not used yet*)
 
 Environment Configuration
@@ -29,11 +30,10 @@ Python2
 
   Please visit [Python installer](http://www.python.org/getit/) and make the rest done.
 
-Flask
------
+Flask && PyJade
+---------------
 
-  You can use [pip](http://www.pip-installer.org/en/latest/) or [easy_install](https://pypi.python.org/pypi/setuptools) or *Package Manager* to install [Flask](http://flask.pocoo.org/).
-
+  You can use [pip](http://www.pip-installer.org/en/latest/) or [easy_install](https://pypi.python.org/pypi/setuptools) or *Package Manager* to install [Flask](http://flask.pocoo.org/) and [PyJade](https://pypi.python.org/pypi/pyjade).
 
 MongoDB
 -------
