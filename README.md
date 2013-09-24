@@ -12,15 +12,15 @@ Dependency
   + Flask
   + MongoDB(*not used yet*)
 
-Environment Configure
-=====================
+Environment Configuration
+=========================
 
 Python2
 -------
 
 ### Linux || OS X ###
 
-  Python2 has *mostly* installed as default in the system.
+  Python2 has *mostly* been installed as default in the system.
   Otherwise you can find it in your package manager.
 
   For OS X users, you can use [macports](http://www.macports.org/) or [homebrew](http://brew.sh/) or [Python installer](http://www.python.org/getit/). 
