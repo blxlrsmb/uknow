@@ -11,6 +11,8 @@ build
 eggs
 parts
 bin
+env
+dlc
 var
 sdist
 develop-eggs

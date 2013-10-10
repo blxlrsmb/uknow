@@ -1,0 +1,9 @@
+mixin render(field)
+  li.field
+    span.field-label= field.label
+    = field(class='field-input', **kwargs)
+    if field.errors
+      ul.field-errors
+        each error in field.errors
+          li= error
+//- vi: se sw=2 sts=2:
