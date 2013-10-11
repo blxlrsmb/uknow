@@ -1,0 +1,39 @@
+doctype 5
+
+mixin link_css(filename)
+  link(rel='stylesheet',
+       href=url_for('static', filename='css/' + filename))
+
+| {% set tabs = [
+|  ('base.index', 'Home'),
+|  ] %}
+
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title
+      if title
+        #{title} -
+      | Unknown Information Collector
+    mixin link_css('bootstrap.min.css')
+    block scripts
+  body
+    .container
+      .navbar: .navbar-inner
+        .brand Unknown
+        ul.nav
+          for endpoint, label in tabs
+            class_ = 'active' if endpoint == request.endpoint else None
+            li(class=class_)
+              a(href=url_for(endpoint))
+                =label
+      .row: .span12: h1 #{title}
+      .row
+        .span8
+          block content
+      footer
+        | Copyright blxlrsmb.
+        | All rights reserved.
+    script(src='js/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+//- vi: se sw=2 sts=2:
