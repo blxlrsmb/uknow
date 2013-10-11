@@ -13,6 +13,8 @@ Dependency
   + PyJade
   + MongoDB(*not used yet*)
 
+  Please first install virtualenv at $PROJECTROOT/.env
+
 Environment Configuration
 =========================
 

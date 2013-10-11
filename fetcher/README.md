@@ -7,3 +7,6 @@
 - rss：获取RSS订阅内容
 
 TODO：统一接口
+
+interface as suggested in the issue,
+implementation similar to that of api-website
