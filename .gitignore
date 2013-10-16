@@ -12,7 +12,7 @@ eggs
 parts
 bin
 env
-dlc
+.download_cache
 var
 sdist
 develop-eggs
