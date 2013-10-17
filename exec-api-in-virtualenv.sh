@@ -1,9 +1,9 @@
 #!/bin/bash
 # $File: exec-in-virtualenv.sh
-# $Date: Fri Oct 11 23:09:17 2013 +0800
+# $Date: Wed Oct 16 22:30:51 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
-dir=$(dirname $0)/.env
+dir=$(dirname $0)/api-website/.env
 
 if [ ! -d "$dir" ]
 then
