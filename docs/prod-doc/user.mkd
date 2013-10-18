@@ -1,0 +1,78 @@
+# Functional Requirement
+
+## User Management
+
+An user's permitted behaviors on his/her account are included in but not limited to the following:
+
+- Register an account
+- Login
+- Edit his/her personal profile
+- Change his/her password
+- Delete his/her account, along with all the data the user has provided to Uknow.
+
+# Non-functional Requirement
+
+## User Management
+
+### Register Page
+
+The register page contains an input form, users can only successfully register an account if:
+
+- The username is unique in our database, and contains only letters and digits.
+- The password is no less than 6 characters, and does not contains digits only.
+- User repeat the password again correctly.
+- User provided a valid email address.
+
+After a valid register form is submitted, the server side would again check the input values.
+If the form passes, a validation email would automaticlly be sent to the user with a confirm code.
+Otherwise, the client will redirect the user to the original register page again,
+and alert about this error message.
+
+### Confirm Page
+
+A link to the confirm page should be attached in the email sent to the user.
+An user account will be activated only if:
+
+- The email address was registered before but has not been activated yet.
+- User visits the confirm page within the time constraints.
+- A correct confirm code (dependent on this account only) is provided by the user.
+
+Once an account is activated, user can then edit profile, change password,
+and use all the other services provided by Uknow.
+
+### Login Page
+
+A visitor will be redirected to login page everytime he/she tries to visit a restricted resource.
+In the login page, the user is asked to provide username together with password.
+A session is stored in cookie after a successful login,
+otherwise, a "password error" message will be displayed.
+
+### Profile Page
+
+User can view and edit the following items:
+
+- Avatar, this could be uploaded by user or selected from Gravatar.com
+- Nickname, which is displayed in the front page of the site.
+- Sex, you know what I mean.
+- Age, those under 16 is supposed to be warned before accessing items with specific labels.
+- Email address, another validation email will be sent if this item is changed
+
+On the other hand, users should be able to provide access to some social networking sites
+for us to collect information including but not limited to:
+
+- Weibo, a twitter-like site in mainland China.
+- Renren, a facebook-like site which is very popular among Chinese students
+- QQ, a MSN-like IM tool running by Tencent
+- Tsinghua Netclass, specially provided for Tsinghua student
+
+Finally, if user wishes to delete his/her account, a confirm email will also be sent.
+
+### Change Password
+
+The password of an account could be changed only if:
+
+- The correct old password is provided
+- A new valid password.
+- The new valid password is typed twice and matched well.
+- The link to a confirm page which was emailed to the user was clicked within 24h.
+

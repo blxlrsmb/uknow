@@ -1,0 +1,109 @@
+
+## Data Management
+
+### Items
+An item is piece of information retrieved from various source,
+and showed up in lists for further reading. It comprise of following
+parts:
+
+- Title
+- Source
+- Content
+- Labels
+- Comments
+
+It is the core entity in the system. A user can manipulate items in
+following ways:
+
+- Removal
+	When user feels unpleasant or tired of specific item, he/she
+	may remove this item using button provided. Removal operation
+	can be reversed whinin a short period of time to prevent from
+	mis-clicking the button.
+- Archive
+	User can store specific item for further reading or recap in the
+	future. Archived items still show up in item flow, and will
+	be labeled as 'archived'.
+- Share
+	If an item fascinates a user, he may share it among popular SNS.
+	When first sharing an item, user will authenticate its account
+	on desired SNS website, and after confirmation, a sharing information
+	will be posted on choosed SNS.
+- Like
+	User can show his/her opinion on specific item, and others will know
+	the statistics, and could be used as an score to evaluate an item.
+	High score items are more likely to rank higher than low score items.
+- Comment
+	User can post comments under an item. Posts will be stored in this
+	system, and can optionally be posted synchronously on item source,
+	if the source website supports such function.
+
+	Comments is organized hierarchically. If a user is intend
+	to reply another one's comment, he/she can click the reply button,
+	and the reply form will show just below the comment.
+
+	When complete typing, click the reply button and the comments will
+	be posted, and the form will disappear as you finish commenting.
+
+
+Further more, system can learn from user behavious on items and to
+recommend items related to users interest.
+
+### Labels
+
+A label is an attribute describing items. An item can have multiple label.
+A label associated with an item may be automatically assigned by system,
+and tagged by user. A label can be either a system-wide label, which is
+visible to all user, or a user specified label which indicates user
+preference on an item.
+
+Label may come from:
+
+- System Pre-tagging
+	An item may arrive to a user with pre-tagged labels. These pre-tagged
+	labels are vital to subsequent data processing, such as tag-filtering
+	plugin in tab.
+
+- User-tagging
+	Same item could have distinct meaning to different user. User can
+	tag item with labels cater to their taste, as well as remove labels
+	that could lead to misunderstanding to itself.
+
+As decribed aforementioned, functions like 'archive' is actually
+tag a item which label 'archived'
+
+### Plugins
+
+Plugin is a essential concept in the system, which comprises the
+implementations of varied functionalities in the system.
+A plugin should process a bunch of items, returning processed items.
+The number of items before and after need not to be the same, that is,
+a plugin can either shrink items or enrich items (filtering job) or
+process on contents of items.
+
+User can choose a subset of provided plugins to employ on its items.
+Plugin can be either scoped to a 'tab' or can be applied system-wide.
+
+Plugins can be configurable, but configuration is plugin-dependent.
+
+Examples of plugins:
+
+- Tag-filtering
+- Highlight
+- Emotion tagging
+- Face detection in image
+- Related items
+- etc.
+
+### Tabs
+
+Tab is a collection of filtered items, in which the filter is defined
+by plugins. A typical use of tab is to divide items into different
+categories, which may be exclusive or not.
+
+Tabs can be added or removed on-the-fly with 'add' or 'remove' button,
+add define its behaviour with plugins.
+
+Moreover, tab layout, item flow style, etc., are also configurable via tab
+configuration.
+
