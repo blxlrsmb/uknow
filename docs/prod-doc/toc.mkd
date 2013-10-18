@@ -1,0 +1,73 @@
+# Introduction -- doubao
+
+  ## Background
+
+  ## Goals
+
+  ## Future Work
+
+
+
+# Functional Requirement
+
+  ## User Management -- blahgeek
+
+    ### Registeration
+
+    ### Login
+
+    ### Logout
+
+
+  ## Data Management -- zxytim
+
+    ### Labels
+
+    ### Plugins
+
+    ### Tabs
+
+    ### unread, like, delete, favorite etc.
+
+
+# Non-functional Requirement
+
+  ## User Interface -- blahgeek
+
+    ### login, logout, reg, ...
+
+
+  ## Data Flow and Internal Logic 
+
+  ## Availablity
+
+  ## Software Environment
+
+  ## Web API
+
+
+# Documentation -- ppwwyyxxc
+
+  ## License
+
+  ## Help Documentation
+
+    ### User Interface
+
+    ### API Documentation
+
+
+# Future Work
+
+  ## Perspective
+
+  ## Cross-platform
+
+  ## TTS
+
+  ## Recommendation
+
+  ## Face Recognition
+
+  ## Graphical Programming Interface
+
