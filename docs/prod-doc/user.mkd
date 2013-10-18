@@ -1,0 +1,74 @@
+# Functional Requirement
+
+## User Management
+
+User can do things including but not limited to:
+
+- Register an account
+- Login
+- Edit his profile
+- Change his password
+- Delete his account
+
+# Non-functional Requirement
+
+## User Management
+
+### Register Page
+
+The register page contains a input form, User can only successfully register an account if:
+
+- The Username is unique in the server, and contains only characters and digits
+- The Password is not shorter than 6 characters, and is not made up with digits only
+- User repeat the password again
+- User provided a valid email address
+
+After a valid register form is submitted, the server side would again check the input values.
+If the form passes, a validation email would automaticlly send to user with a confirm code.
+If not, redirect the user to the original register page again and alert about error message.
+
+### Confirm Page
+
+There's a link to confirm page in the email sent to user. A user account will be activated only if:
+
+- The email address was registed before
+- User visited the confirm page
+- A correct confirm code (related to this account only) was provided by user
+
+Once an account is activated, user can login, edit profile, change password, delete account and so on.
+
+### Login Page
+
+User will be redirected to login page everytime he tries to visit a restricted page.
+In login page, user is asked to provide his username and password. A session is stored in cookie
+after a successful login, otherwise, a "password error" message is showed to user.
+
+### Profile Page
+
+User can view and edit the following items:
+
+- Avatar, this could be uploaded by user or selected from Gravatar.com
+- Nickname, which is displayed in the front page of the site
+- Sex, you know what I mean
+- Age, those under 16 is supposed to be warned before accessing some information
+- Email address, another validation email will be sent if this item is changed
+
+On the other hand, user should be able to provide access to some social networking sites
+for collecting information including but not limited to:
+
+- Weibo, a twitter-like site in chinese mainland
+- Renren, a facebook-like site which is very popular among chinese students
+- QQ, a MSN-like tool running by Tencent
+- Tsinghua Netclass, special provided for Tsinghua student
+
+Finally, if user wishes to delete his account, a confirm email will also be sent.
+
+### Change Password
+
+The password of an account could be changed only if:
+
+- The correct old password is provided
+- A new valid password
+- The new valid password is typed twice
+- The link to a confirm page which emailed to user was clicked
+
