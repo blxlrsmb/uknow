@@ -1,0 +1,8 @@
+@startuml
+User -> Website: Browse Request
+Website -> Database: Get User Subscribe List
+Database --> Website: User Subscribe List
+Website -> Database: Ask for Lastest Information for User
+Database --> Website: Provided Information
+User <-- Website: Information List
+@enduml

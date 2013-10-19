@@ -1,0 +1,5 @@
+@startuml
+User -> Website: Click Logout Button
+Website --> Website: Destroy Session
+User <-- Website: Goodbye Message
+@enduml

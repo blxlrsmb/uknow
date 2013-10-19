@@ -1,0 +1,23 @@
+digraph G{
+	node [label = "", penwidth = 0]
+	edge [arrowhead = "none"]
+	server [image="./unknown-small.jpeg"];
+	android [image="./android.png"];
+	blackberry [image="./blackberry.png"];
+	chrome [image="./chrome.png"];
+	ios [image="./iOS.png"];
+	linux [image="./linux.png"];
+	osx [image="./OS_X.png"];
+	symbian [image="./symbian.png"];
+	windows [image="./windows.png"];
+	windowsphone [image="./windowsphone.png"];
+	android -> server;
+	blackberry -> server;
+	chrome -> server;
+	ios -> server;
+	linux -> server;
+	osx -> server;
+	symbian -> server;
+	windows -> server;
+	windowsphone -> server;
+}

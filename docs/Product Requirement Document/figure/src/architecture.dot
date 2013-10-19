@@ -1,0 +1,36 @@
+digraph G{
+  compound = true;
+  node [shape = square]
+  subgraph clusterFetcher {
+    node [penwidth = 0, shape = none];
+    subgraph cluster0 {
+      "User-specific Type";
+      "General Type";
+    }
+    "Background Services" -> "RenRen";
+    "Background Services" -> "163";
+    "Background Services" -> "WeiBo";
+    "Background Services" -> "Weather";
+    "Background Services" -> "...";
+    label = "Item Fetcher";
+    shape = square;
+  }
+  subgraph clusterPrefilter {
+    node [penwidth = 0, shape = none];
+    "Plugins" -> "Label Assigner";
+    label = "Prefilter";
+    shape = square;
+  }
+  "Label Assigner" -> "Database";
+  subgraph clusterPostfilter {
+    node [penwidth = 0, shape = none];
+    "Item Aggregator" -> "Widgets" [label = "tabs"];
+    shape = square;
+    label = "Postfilter";
+  }
+  "Widgets" -> "Items in Tab" -> "API Website";
+  "API Website" -> "General Type" [lhead = cluster0, label = "Activate"];
+  "Database" -> "Item Aggregator";
+  "API Website" -> "Item Aggregator" [label = "Provides userinfo, etc", lhead = clusterPostfilter];
+  "Background Services" -> "Plugins" [ltail = clusterFetcher];
+}

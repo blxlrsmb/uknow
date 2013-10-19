@@ -1,0 +1,8 @@
+@startuml
+Guest -> Website: Click Register Button
+Website --> Guest: Register Form
+Guest -> Website: Filt Register Form
+Website -> Database: Check Legality
+Database -> Website: Check Result
+Guest <-- Website: Register Response
+@enduml

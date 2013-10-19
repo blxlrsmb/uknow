@@ -1,0 +1,6 @@
+@startuml
+User -> Website: New Tag
+Website -> Database: Store Tag Information
+Database --> Website: Activity Response
+User <-- Website: Tagged Information
+@enduml

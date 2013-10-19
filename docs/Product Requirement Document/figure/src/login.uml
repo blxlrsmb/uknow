@@ -1,0 +1,8 @@
+@startuml
+Guest -> Website: Click Login Button
+Website --> Guest: Login Form
+Guest -> Website: Username and Password
+Website -> Database: Check Password
+Database --> Website: Check Result
+Guest <-- Website: Login Response
+@enduml

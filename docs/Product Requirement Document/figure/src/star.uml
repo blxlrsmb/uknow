@@ -1,0 +1,6 @@
+@startuml
+User -> Website: Click Delete Button
+Website -> Database: Store Delete Information
+Database --> Website: Activity Response
+User <-- Website: Removed Information
+@enduml

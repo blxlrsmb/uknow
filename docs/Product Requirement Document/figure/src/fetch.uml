@@ -1,0 +1,5 @@
+@startuml
+Fetcher -> Prefilter: New Fetched Item
+Prefilter -> Database: Prefilted Item
+Database -> Database: Store
+@enduml

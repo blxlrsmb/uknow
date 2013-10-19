@@ -1,0 +1,17 @@
+@startuml
+participant Guest
+participant Website
+participant "OAuth Server" as OS
+Guest -> Website: Click Login via OAuth Button
+Website -> OS: Access ID and Redirect URL
+OS -> Guest: Autherization Page
+Guest --> OS: Autherization
+OS --> Website: Access Code
+Website -> OS: Ask for Access Token
+OS --> Website: Access Token
+Website -> OS: Ask for User Information
+OS --> Website: User Information
+Website -> Database: Check Legality
+Database --> Website: Check Result
+Guest <-- Website: Login Response
+@enduml
