@@ -1,5 +1,5 @@
 % $File: report.tex
-% $Date: Sat Oct 19 13:43:47 2013 +0800
+% $Date: Sat Oct 19 14:34:59 2013 +0800
 % $Author: wyx <ppwwyyxxc@gmail.com>
 
 \documentclass[11pt,a4paper]{article}
@@ -65,13 +65,18 @@ basicstyle=\footnotesize\ttfamily}
 \begin{document}
 
 \titleformat*{\section}{\centering\Large\bf}
+\setlength{\baselineskip}{1.3em}
+\fontsize{13}{\baselineskip}\selectfont
+
+
 \maketitle
 \tableofcontents
 
 \input{introduction}
 \input{functional}
 \input{non-functional}
-\input{documentation.tex}
+\input{documentation}
+\input{future}
 
 \printbibliography
 

@@ -1,13 +1,13 @@
 %File: functional-data.tex
-%Date: Sat Oct 19 13:49:50 2013 +0800
-%Author: Yuxin Wu <ppwwyyxxc@gmail.com>
+%Date: Sat Oct 19 14:12:08 2013 +0800
+%Author: Xinyu Zhou <zxytim@gmail.com>
 
 \subsection{Data Management}
 
 \subsubsection{Items}
 
-An item is piece of information retrieved from various source, and
-showed up in lists for further reading. It comprise of following parts:
+An item is piece of information retrieved from various sources, and
+shown in lists for further reading. It consists of following parts:
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -23,57 +23,59 @@ showed up in lists for further reading. It comprise of following parts:
   Comments
 \end{itemize}
 
-It is the core entity in the system. A user can manipulate items in
+Item is the core entity in Uknow system. A user can manipulate items in
 following ways:
 
 \begin{description}
 \item[Removal] \hfill
 
-  When user feels unpleasant or tired of specific item, he/she
-  may remove this item using button provided. Removal operation can be
-  reversed whinin a short period of time to prevent from mis-clicking
-  the button.
+  When a user find a specific item unpleasant, unattractive or redundant, he/she
+  may remove this item using the button provided. Removal operation can be
+  reversed within a short period of time to prevent from mis-clicking the button.
+
 \item[Archive] \hfill
 
-  User can store specific item for further reading or recap in
+  User can store specific items for further reading or recapping in
   the future. Archived items still show up in item flow, and will be
   labeled as `archived'.
+
 \item[Share] \hfill
 
-  If an item fascinates a user, he may share it among popular SNS.
+  If an item fascinates a user, he/she may share it among popular SNS.
   When first sharing an item, user will authenticate its account on
   desired SNS website, and after confirmation, a sharing information
-  will be posted on choosed SNS.
+  will be posted on the chosen SNS.
+
 \item[Like] \hfill
 
-  User can show his/her opinion on specific item, and others will
-  know the statistics, and could be used as an score to evaluate an
-  item. High score items are more likely to rank higher than low score
-  items.
+  Users can show theirs preferences on certain items, and others will
+  know the statistics, and this could be used as an score to evaluate an
+  item. For a better reading experience, high score items are more likely to rank higher in the item flow than low score items.
+
 \item[Comment] \hfill
 
-  User can post comments under an item. Posts will be stored in
+  Users can post comments under an item. Posts will be stored in
   this system, and can optionally be posted synchronously on item
-  source, if the source website supports such function.
+  source, if the source website supports such functionality.
 
-  Comments is organized hierarchically. If a user is intend to reply
-  another one's comment, he/she can click the reply button, and the
-  reply form will show just below the comment.
+  Comments is organized hierarchically. If a user intends to reply
+  other's comment, he/she can click the reply button, and the
+  reply form should show right below the comment.
 
-  When complete typing, click the reply button and the comments will be
-  posted, and the form will disappear as you finish commenting.
+  When complete typing, click the reply button and the comments shall be
+  posted, and the form will consequently disappear.
 \end{description}
 
-Further more, system can learn from user behavious on items and to
-recommend items related to users interest.
+Furthermore, system can learn from user behaviors on items and to
+recommend items related to users' interest.
 
 \subsubsection{Labels}
 
 A label is an attribute describing items. An item can have multiple
-label. A label associated with an item may be automatically assigned by
-system, and tagged by user. A label can be either a system-wide label,
+labels. A label associated with an item may be automatically assigned by
+system, or tagged by users. A label can be either a system-wide label,
 which is visible to all user, or a user specified label which indicates
-user preference on an item.
+user preferences on an item.
 
 Label may come from:
 
@@ -81,19 +83,20 @@ Label may come from:
 \item[System Pre-tagging]
   An item may arrive to a user with pre-tagged
   labels. These pre-tagged labels are vital to subsequent data
-  processing, such as tag-filtering plugin in tab.
+  processing, such as tag-filtering plugins in tabs.
+
 \item[User-tagging]
   Same item could have distinct meaning to different user.
   User can tag item with labels cater to their taste, as well as remove
   labels that could lead to misunderstanding to itself.
 \end{description}
 
-As decribed aforementioned, functions like `archive' is actually tag a
-item which label `archived'
+As described aforementioned, functions like `archive' is actually a process of tagging an
+item by the label `archived'
 
 \subsubsection{Plugins}
 
-Plugin is a essential concept in the system, which comprises the
+Plugin is an essential concept in Uknow system, which comprises the
 implementations of varied functionalities in the system. A plugin should
 process a bunch of items, returning processed items. The number of items
 before and after need not to be the same, that is, a plugin can either
@@ -107,27 +110,19 @@ Plugins can be configurable, but configuration is plugin-dependent.
 
 Examples of plugins:
 
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  Tag-filtering
-\item
-  Highlight
-\item
-  Emotion tagging
-\item
-  Face detection in image
-\item
-  Related items
-\item
-  etc.
-\end{itemize}
+\begin{description}
+\item[Tag-filtering] Allowing users to choose preferred tags.
+\item[Highlight] Highlight significant words in an item.
+\item[Emotion tagging] Detect emotion of an item.
+\item[Face detection in image] Detect faces from images of an item.
+\item[Related items] Recommend related items for users to discover new contents to read.
+\end{description}
 
 \subsubsection{Tabs}
 
 Tab is a collection of filtered items, in which the filter is defined by
 plugins. A typical use of tab is to divide items into different
-categories, which may be exclusive or not.
+categories, which can be exclusive or not.
 
 Tabs can be added or removed on-the-fly with `add' or `remove' button,
 add define its behaviour with plugins.
