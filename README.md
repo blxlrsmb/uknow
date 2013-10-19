@@ -1,6 +1,8 @@
 Unknown Information Collector
 =============================
 
+  ![logo](https://git.net9.org/blxlrsmb/unknown/raw/master/docs/logo/logo.png)
+
   Unknown Information Collector is a web server that can fetch some Information and provide it with RESTful api.
 
   It's a project for Software Engineering course.
@@ -26,7 +28,7 @@ Python2
   Python2 has *mostly* been installed as default in the system.
   Otherwise you can find it in your package manager.
 
-  For OS X users, you can use [macports](http://www.macports.org/) or [homebrew](http://brew.sh/) or [Python installer](http://www.python.org/getit/). 
+  For OS X users, you can use [macports](http://www.macports.org/) or [homebrew](http://brew.sh/) or [Python installer](http://www.python.org/getit/).
 
 ### Windows User ###
 
