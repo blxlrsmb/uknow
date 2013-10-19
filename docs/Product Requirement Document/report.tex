@@ -1,5 +1,5 @@
 % $File: report.tex
-% $Date: Sat Oct 19 12:11:46 2013 +0800
+% $Date: Sat Oct 19 13:43:47 2013 +0800
 % $Author: wyx <ppwwyyxxc@gmail.com>
 
 \documentclass[11pt,a4paper]{article}
@@ -43,15 +43,11 @@ basicstyle=\footnotesize\ttfamily}
                    \noalign{\global\arrayrulewidth\savewidth}}
 
 
-\renewcommand{\abstractname}{摘要}
-\renewcommand{\contentsname}{目录}
-\renewcommand{\tablename}{表}
-\renewcommand{\figurename}{图}
 \defbibheading{bibliography}{\section{References}}
 \bibliography{refs.bib}
-\newcommand{\figref}[1]{\hyperref[fig:#1]{图\ref*{fig:#1}}}
-\newcommand{\secref}[1]{\hyperref[sec:#1]{\ref*{sec:#1}节}}
-\newcommand{\tabref}[1]{\hyperref[tab:#1]{表\ref*{tab:#1}}}
+\newcommand{\figref}[1]{\hyperref[fig:#1]{Fig. \ref*{fig:#1}}}
+\newcommand{\secref}[1]{\hyperref[sec:#1]{Sec. \ref*{sec:#1}}}
+\newcommand{\tabref}[1]{\hyperref[tab:#1]{Tab. \ref*{tab:#1}}}
 
 % math function
 \let\Oldsum\sum
@@ -73,7 +69,8 @@ basicstyle=\footnotesize\ttfamily}
 \tableofcontents
 
 \input{introduction}
-
+\input{functional}
+\input{non-functional}
 \input{documentation.tex}
 
 \printbibliography

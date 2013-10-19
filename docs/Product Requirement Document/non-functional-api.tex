@@ -1,0 +1,36 @@
+\subsection{Web API}
+
+Since we provide several different clients, the communication between
+client and server should be universal. Thus, web API based on JSON will
+be used.
+
+JSON (JavaScript Object Notation) is a lightweight data-interchange
+format. It is easy for humans to read and write. It is easy for machines
+to parse and generate. It is based on a subset of the JavaScript
+Programming Language, Standard ECMA-262 3rd Edition - December 1999.
+
+\subsubsection{Basic Structure}
+
+All returned valued is a dict containing some specific keys. If an error
+occurred during an API access, a key named \texttt{error} will be
+provided with a key named \texttt{msg} showing the reason of error.
+Otherwise, some data will be returned.
+
+\subsubsection{User Management}
+
+All user management related action should be accessible by API including
+but not limited to:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Register an account
+\item
+  User login (validate)
+\item
+  Edit profile
+\item
+  Delete an account
+\end{itemize}
+
+When a password is sent, SSL/TLS protocal should be used.
