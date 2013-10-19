@@ -12,8 +12,8 @@ class DefaultConfig(object):
 
 
 def create_app(subproject):
-    app = Flask('unknown.%s' % subproject, instance_relative_config=True,
-                instance_path=os.environ.get('UNKNOWN_INSTANCE'))
+    app = Flask('uknow.%s' % subproject, instance_relative_config=True,
+                instance_path=os.environ.get('uknow_INSTANCE'))
     app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
     app.config.from_object(DefaultConfig())
     try:

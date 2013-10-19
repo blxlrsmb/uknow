@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup_args = dict(
-    name='unknown',
+    name='uknow',
     install_requires=[
         'Flask>=0.9',
         'Flask-WTF>=0.8',
@@ -10,7 +10,7 @@ setup_args = dict(
     ],
     entry_points=dict(
         console_scripts=[
-            'unknown-website = unknown.website.app:main',
+            'uknow-website = uknow.website.app:main',
             ],
     ),
 )

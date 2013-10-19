@@ -1,5 +1,5 @@
 # encoding=utf-8
-from unknown.utils import create_app
+from uknow.utils import create_app
 from .apps.base import base
 
 
