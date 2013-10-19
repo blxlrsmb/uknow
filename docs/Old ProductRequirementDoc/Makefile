@@ -6,8 +6,8 @@ TARGET=Unknown-prd.pdf
 all: $(TARGET)
 
 $(TARGET): $(SRCDIR)/$(MAINTEX).tex $(OBJDIR)
-	xelatex -output-directory=$(OBJDIR) $< > /dev/null
-	xelatex -output-directory=$(OBJDIR) $< > /dev/null
+	xelatex -output-directory=$(OBJDIR) $<
+	xelatex -output-directory=$(OBJDIR) $<
 	@mv $(OBJDIR)/$(MAINTEX).pdf $(TARGET)
 	@echo DONE!
 

@@ -30,8 +30,21 @@ but not limited to:
   User login (validate)
 \item
   Edit profile
+\item Withdraw authority for specific third-party web service
 \item
   Delete an account
 \end{itemize}
 
 When a password is sent, SSL/TLS protocal should be used.
+
+\subsubsection{Data Flow}
+Any client of Uknow shall follow an uniformed protocal to commuticate data with Uknow backend server.
+Thus, Uknow server shall provide web API for clients to fetch feeds data, mainly consisting of the following parts:
+\begin{enumerate}
+  \item Get new feeds
+  \item Tag an item
+  \item Update tab configurations
+  \item Update tab-level plugins
+\end{enumerate}
+
+

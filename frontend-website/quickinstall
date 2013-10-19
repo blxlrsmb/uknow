@@ -1,13 +1,8 @@
-#!/bin/bash
-# Adapted from moin2's quickinstall script, licensed under GPLv2.
-# create a virtual environment in directory $ENV/
+#!/bin/bash -e
+# This script create a virtual environment in directory $ENV,
+# install dependencies and setup executables according to setup.py.
 #
-# set PYTHON environment variable to change the python version
-# set ENV environment variable to change the virtual env directory
-# set VIRTUALENV environment variable to change the virtualenv command
-# for example: PYTHON=/usr/bin/pypy ENV=env-pypy ./quickinstall
-#
-# needs: virtualenv, pip
+# You need to install virtualenv and pip before running this script.
 
 : "DLC = ${DLC:=./.download_cache}, ENV = ${ENV:=./.env}"
 
