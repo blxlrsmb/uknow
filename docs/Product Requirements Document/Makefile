@@ -9,7 +9,7 @@ all: rebuild
 rebuild output/$(TARGET).pdf: *.tex *.bib output
 	cd output && rm -f *.tex *.bib && ln -s ../*.tex ../*.bib .
 	cd output &&  $(TEX) $(TARGET).tex && $(BIBTEX) $(TARGET)
-	pdfunite img/cover.pdf output/$(TARGET).pdf $(OUTPUT)
+	cp output/$(TARGET).pdf $(OUTPUT) -f
 
 output:
 	mkdir output -p

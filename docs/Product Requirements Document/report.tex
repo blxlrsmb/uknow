@@ -1,5 +1,5 @@
 % $File: report.tex
-% $Date: Sat Oct 19 21:05:47 2013 +0800
+% $Date: Sat Oct 19 22:34:39 2013 +0800
 % $Author: wyx <ppwwyyxxc@gmail.com>
 
 \documentclass[11pt,a4paper]{article}
@@ -10,6 +10,7 @@
 
 \usepackage{fontspec,amsmath,amssymb,zhspacing,verbatim,minted,listings,zhmath}
 \usepackage{titlesec, titletoc}
+\usepackage{pdfpages}
 \usepackage{enumerate}
 \usepackage[hyperfootnotes=false,colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=blue]{hyperref}
 \usepackage[backend=biber]{biblatex}
@@ -70,9 +71,9 @@ basicstyle=\footnotesize\ttfamily}
 \fontsize{12}{\baselineskip}\selectfont
 
 
+\includepdf{img/cover}
 \maketitle
 \tableofcontents
-
 \input{introduction}
 \input{functional}
 \input{non-functional}
