@@ -1,5 +1,5 @@
 %File: functional-user.tex
-%Date: Sat Oct 19 13:57:36 2013 +0800
+%Date: Sat Oct 19 17:05:21 2013 +0800
 %Author: Yikai Zhao <blahgeek@gmail.com>
 
 \subsection{User Management}
@@ -18,6 +18,18 @@ limited to the following:
 \item
   Change his/her password
 \item
-  Delete his/her account, along with all the data the user has provided
-  to Uknow.
+  Delete his/her account, along with all the relevant data
 \end{itemize}
+
+Moreover, since Uknow is supposed to connect to multiple diversed service providers,
+users have to provide authorize us the use of their accounts on other web services.
+OAuth\footnote{\url{http://oauth.net/}} is an open protocol to allow secure authorization.
+By using OAuth, users can safely authorize Uknow to use their accounts.
+The principles and proecss of OAuth authorization is illustrated in \figref{oauth}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/oauth.png}
+  \caption{OAuth process \label{fig:oauth}}
+\end{figure}
+

@@ -1,9 +1,16 @@
 \subsection{Data Flow and Internal Logic}
 
-The back-end of Uknow InfoHub system comprises mainly 5 components: item
+The back-end of Uknow InfoHub system comprises mainly five components: item
 fetcher, prefilter, data storage, postfilter and API website, as
-illustrated in figure XXX\textless{}?\textgreater{}.  % XXX TODO
+illustrated in \figref{architecture}.
 Data passing between modules are encoded using json formats.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/architecture.png}
+  \caption{Overall architecture of Uknow backend\label{fig:architecture}}
+\end{figure}
+
 
 \subsubsection{Item}
 
@@ -42,9 +49,16 @@ programmatically. Following attributes are associated with an item:
 
 \subsubsection{Item fetcher}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/fetch.png}
+  \caption{Workflow of Fetcher \label{fig:fetcher}}
+\end{figure}
+
+
 Item fetchers simply retrieve items from various information sources,
 adding basic attributes such as ID, description, source URL (if
-available), and then forward items to prefilter for later processing.
+available), and then forward items to prefilter for later processing, as illustrated in \figref{fetcher}.
 There are two types of item fetcher:
 
 \begin{description}
@@ -107,10 +121,17 @@ Postfilter contains two stages:
 
 \subsubsection{API Website}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/browse.png}
+  \caption{Workflow of the API website\label{fig:website}}
+\end{figure}
+
+
 API Website is the interface of the back-end system which interacts with
 users, though indirectly. It accepts user requests, invokes
 corresponding functions as described above, fetches and presents result
-back to user. Refer to \secref{webapi} for further discussion.
+back to user, as displayed in \figref{website}. Refer to \secref{webapi} for further discussion about the API interfaces.
 
 \subsection{Scalability}
 

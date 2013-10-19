@@ -1,5 +1,5 @@
 %File: non-functional-user.tex
-%Date: Sat Oct 19 13:43:47 2013 +0800
+%Date: Sat Oct 19 17:06:09 2013 +0800
 %Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 \subsection{User Management}
@@ -27,7 +27,14 @@ After a valid register form is submitted, the server side would again
 check the input values. If the form passes, a validation email would
 automaticlly be sent to the user with a confirm code. Otherwise, the
 client will redirect the user to the original register page again, and
-alert about this error message.
+alert about this error message. This process is illustrated well in \figref{register}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{img/register.png}
+  \caption{Registration process\label{fig:register}}
+\end{figure}
+
 
 \subsubsection{Confirm Page}
 
@@ -49,13 +56,29 @@ user. An user account will be activated only if:
 Once an account is activated, user can then edit profile, change
 password, and use all the other services provided by Uknow.
 
-\subsubsection{Login Page}
+\subsubsection{Login/Logout Page}
 
 A visitor will be redirected to login page everytime he/she tries to
 visit a restricted resource. In the login page, the user is asked to
 provide username together with password. A session is stored in cookie
 after a successful login, otherwise, a ``password error'' message will
-be displayed.
+be displayed. On logging out, this session shall be destroyed and user will be
+redirected to the  home page.
+The login/logout process is illustrated in \figref{login} and \figref{logout}.
+\begin{figure}
+\begin{minipage}[b]{0.57\linewidth}
+  \centering
+  \includegraphics[width=\textwidth]{img/login.png}
+  \caption{Login Process \label{fig:login}}
+\end{minipage}
+\begin{minipage}[b]{0.37\linewidth}
+  \centering
+  \includegraphics[width=\textwidth]{img/logout.png}
+  \caption{Logout Process \label{fig:logout}}
+\end{minipage}
+\end{figure}
+
+
 
 \subsubsection{Profile Page}
 
