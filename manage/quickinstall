@@ -4,7 +4,7 @@
 #
 # You need to install virtualenv and pip before running this script.
 
-: "DLC = ${DLC:=./.download_cache}, ENV = ${ENV:=./.env}"
+: "DLC = ${DLC:=./.download_cache}, ENV = ${ENV:=../.env}"
 
 # find the right python version
 if [ -z "$PYTHON" ]; then
