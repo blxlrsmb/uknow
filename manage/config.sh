@@ -1,6 +1,6 @@
 #!/bin/bash
 # $File: config.sh
-# $Date: Tue Nov 12 20:55:53 2013 +0800
+# $Date: Wed Nov 13 02:19:32 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
-modules="api-website fetcher common"
+ukmodules="api-website fetcher common"		# 'modules' conflicts with some read-only shell variable

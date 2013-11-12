@@ -10,7 +10,7 @@ setup_args = dict(
     ],
     entry_points=dict(
         console_scripts=[
-            'uknow-website = uknow.website.app:main',
+            'frontend-website = uknow.website.app:main',
             ],
     ),
 )

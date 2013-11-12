@@ -4,6 +4,8 @@
 #
 # You need to install virtualenv and pip before running this script.
 
+script_dir=$(dirname $0)
+cd $script_dir
 : "DLC = ${DLC:=./.download_cache}, ENV = ${ENV:=../.env}"
 
 # find the right python version
@@ -24,4 +26,5 @@ fi
 
 . "$ENV"/bin/activate || exit 1
 
-pip install --download-cache="$DLC" -e .
+pip install --download-cache="$DLC" -e ../api-website
+pip install --download-cache="$DLC" -e ../frontend-website
