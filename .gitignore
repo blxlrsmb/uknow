@@ -39,3 +39,6 @@ nosetests.xml
 
 # virtualenv
 .env
+
+# vim swap file
+*.swp
