@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect
 
-
 base = Blueprint('base', __name__)
 
 

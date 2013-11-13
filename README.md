@@ -1,5 +1,4 @@
-Unknown Information Collector
-=============================
+# Unknown Information Collector
 
   ![logo](https://git.net9.org/blxlrsmb/unknown/raw/master/docs/logo/logo.png)
 
@@ -7,40 +6,52 @@ Unknown Information Collector
 
   It's a project for Software Engineering course.
 
-Dependency
-==========
+## Dependency
 
-  + Python2
-  + Flask
-  + PyJade
-  + MongoDB(*not used yet*)
+  + Python2 with virtualenv
+  + Redis server
+  + MongoDB
 
-  Please first install virtualenv at $PROJECTROOT/.env
+## Installation
 
-Environment Configuration
-=========================
+Make sure you have python2 and virtualenv in ``PATH``, then run the following command:
 
-Python2
--------
+	cd manage
+	./quickinstall
 
-### Linux || OS X ###
 
-  Python2 has *mostly* been installed as default in the system.
-  Otherwise you can find it in your package manager.
+## Run
+To start the api-website:
 
-  For OS X users, you can use [macports](http://www.macports.org/) or [homebrew](http://brew.sh/) or [Python installer](http://www.python.org/getit/).
+	. ./manage/setenv.sh
+	api-website
 
-### Windows User ###
+Or:
 
-  Please visit [Python installer](http://www.python.org/getit/) and make the rest done.
+	cd api-website
+	./standalone_server.py
 
-Flask && PyJade
----------------
+To start the frontend-website:
 
-  You can use [pip](http://www.pip-installer.org/en/latest/) or [easy_install](https://pypi.python.org/pypi/setuptools) or *Package Manager* to install [Flask](http://flask.pocoo.org/) and [PyJade](https://pypi.python.org/pypi/pyjade).
+	. ./manage/setenv.sh
+	frontend-website
 
-MongoDB
--------
+Or:
 
-  Not used yet.
+	./frontend-website/start_frontend.sh
 
+To start the fetcher server:
+
+	. ./manage/setenv.sh
+	./fetcher/celery_worker.sh
+	fetcher-server
+
+Or:
+
+	cd fetcher
+	./celery_worker.sh
+	./general_fetcher_server.py
+
+
+## Configuration
+See ``manage/config.py``

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Tue Nov 12 21:03:06 2013 +0800
+# $Date: Wed Nov 13 11:27:40 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """unknown informatin hub API website
@@ -9,11 +9,20 @@ global variables:
     g.user_id    ID of current user (int)
 """
 
-from ukutil import import_all_modules
-
+import os
 from flask import Flask
 
-_app = Flask(__name__)
+from ukutil import import_all_modules
+
+
+class DefaultConfig(object):
+    API_HOST = None
+    API_PORT = None
+    API_RUN_OPTIONS = {}
+
+_app = Flask(__name__, instance_relative_config=True,
+            instance_path=os.environ.get('UKNOW_CONFIG'))
+_app.config.from_object(DefaultConfig())
 
 def get_app():
     """load API modules and return the WSGI application"""

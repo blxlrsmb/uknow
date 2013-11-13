@@ -26,5 +26,4 @@ fi
 
 . "$ENV"/bin/activate || exit 1
 
-pip install --download-cache="$DLC" -e ../api-website
-pip install --download-cache="$DLC" -e ../frontend-website
+pip install --download-cache="$DLC" -e .
