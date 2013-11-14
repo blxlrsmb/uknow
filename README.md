@@ -19,6 +19,11 @@ Make sure you have python2 and virtualenv in ``PATH``, then run the following co
 	cd manage
 	./quickinstall
 
+*Notice* If you are using Mac, you may need to install libevent with your package manager.
+And if you are using macports, run following command instead:
+
+	cd manage
+	CFLAGS="-I /opt/local/include -L /opt/local/lib" ./quickinstall
 
 ## Run
 To start the api-website:
