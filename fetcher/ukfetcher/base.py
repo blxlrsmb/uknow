@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Wed Nov 13 00:06:07 2013 +0800
+# $Date: Fri Nov 15 21:06:48 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """:class:`register_fetcher_base`"""
@@ -13,6 +13,7 @@ import uklogger
 
 from abc import ABCMeta, abstractmethod
 from functools import wraps
+
 
 class register_fetcher_base(object):
     """base class for decorator to register a new fetcher"""
@@ -32,7 +33,7 @@ class register_fetcher_base(object):
     def _create_fetcher_context(self):
         """:return: a :class:`FetcherContext` object"""
 
-    def __init__(self, name, on_register_done = None):
+    def __init__(self, name, on_register_done=None):
         """:param name: name of the fetcher
         :param _on_register_done: callable to be invoked when this fetcher has
             been registerd"""
@@ -64,4 +65,3 @@ class register_fetcher_base(object):
     def run(self):
         """run the fetcher"""
         self._callback()
-

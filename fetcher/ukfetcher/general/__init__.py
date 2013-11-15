@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Nov 13 01:03:05 2013 +0800
+# $Date: Fri Nov 15 21:28:42 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -15,6 +15,7 @@ from ..context import FetcherContext, FETCHER_TYPE_GENERAL
 
 import gevent
 
+
 class GeneralFetcherContext(FetcherContext):
     """FetcherContext for general fetchers"""
     fetcher_name = None
@@ -22,12 +23,11 @@ class GeneralFetcherContext(FetcherContext):
     def __init__(self, fetcher_name):
         self.fetcher_name = fetcher_name
 
-    def new_item(self, desc, inital_tag, other = None):
+    def new_item(self, desc, inital_tag, other=None):
         return self._do_new_item(
                 FETCHER_TYPE_GENERAL,
                 self.fetcher_name,
                 desc, inital_tag, other)
-
 
 
 class register_fetcher(register_fetcher_base):
@@ -63,6 +63,7 @@ class register_fetcher(register_fetcher_base):
     def _create_fetcher_context(self):
         return GeneralFetcherContext(self.fetcher_name)
 
+
 def start_server():
     """start the server for all general fetchers"""
     import_all_modules(__file__, __name__)
@@ -88,4 +89,3 @@ def start_server():
             i.join()
     except KeyboardInterrupt:
         uklogger.log_info('got KeyboardInterrupt, exit')
-

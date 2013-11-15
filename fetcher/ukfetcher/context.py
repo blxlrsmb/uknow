@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Wed Nov 13 00:35:51 2013 +0800
+# $Date: Fri Nov 15 21:10:15 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -25,6 +25,7 @@ from datetime import datetime
 FETCHER_TYPE_GENERAL = 0
 FETCHER_TYPE_USER = 1
 
+
 class FetcherContext(object):
     """context where a fetcher is executed"""
 
@@ -34,7 +35,7 @@ class FetcherContext(object):
     """user id as integer, or None if unavailable"""
 
     def _do_new_item(self,
-            fetcher_type, fetcher_name, desc, inital_tag, other):
+                     fetcher_type, fetcher_name, desc, inital_tag, other):
         """helper function for implementing :meth:`new_item`"""
         assert fetcher_type in (FETCHER_TYPE_USER, FETCHER_TYPE_GENERAL), \
                 'bad fetcher_type: {}'.format(fetcher_type)
@@ -45,7 +46,6 @@ class FetcherContext(object):
         assert isinstance(inital_tag, list) and \
                 all([isinstance(i, basestring) for i in inital_tag]), \
                 'bad inital_tag: {!r}'.format(inital_tag)
-
 
         db = get_mongo('item')
         item_id = global_counter('item')
@@ -67,7 +67,7 @@ class FetcherContext(object):
         return item_id
 
     @abstractmethod
-    def new_item(self, desc, inital_tag, other = None):
+    def new_item(self, desc, inital_tag, other=None):
         """add an item into database
         :param fetcher_type: one of FETCHER_TYPE_USER or FETCHER_TYPE_GENERAL
         :param fetcher_name: str, name of fetcher
@@ -75,4 +75,3 @@ class FetcherContext(object):
         :param initial_tag: list of str, initial tags
         :param other: any bson-serializable object
         :return: int, item id"""
-
