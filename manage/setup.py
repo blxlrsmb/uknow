@@ -10,7 +10,8 @@ setup_args = dict(
         'pymongo>=2.6.3',
         'celery>=3.1.1',
         'redis>=2.8.0',
-        'gevent>=0.13.8'
+        'gevent>=0.13.8',
+        'sphinx>=1.1.3'
     ],
     entry_points=dict(
         console_scripts=[
