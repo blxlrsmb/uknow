@@ -1,0 +1,25 @@
+%File: functional-user.tex
+%Date: Sat Oct 19 17:05:21 2013 +0800
+%Author: Yikai Zhao <blahgeek@gmail.com>
+
+\subsection{Fetcher}
+  As the core component, fetcher is designed to be extremely flexible.
+  It will be inherited into various kinds of fetchers to deal with different fetch target.
+  All the fetchers will be executed in a cluster as a time based work, just like web spiders, keeps fetching all the time.
+
+  \subsection{Function}
+    The fetcher will be assigned to a target website or other kind of source.
+    Each time it was called, it will return a list of informations, almost in raw text but with some basic information,
+    such as source, origin url, fetched time and so on.
+
+  \subsection{Performance}
+    Fetcher shall be called at least one time per day. For hot resources such as SNS, it's fetcher must have high speed,
+    so each time it shall return result in minute level.
+
+  \subsection{Input}
+    Fetcher don't need input after it's well configured. However, for augmentbility reason, a callback function is acceptable.
+    The callback funtion will deal with the result by default.
+
+  \subsection{Output}
+    Fetcher will return a FetcherContext which wraps the raw information. For default situation, it will be dealed by Prefilter.
+

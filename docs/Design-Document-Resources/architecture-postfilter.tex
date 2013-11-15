@@ -1,0 +1,23 @@
+%File: functional-user.tex
+%Date: Sat Oct 19 17:05:21 2013 +0800
+%Author: Yikai Zhao <blahgeek@gmail.com>
+
+\subsection{Postfilter}
+  Users can't read all of information that we fetched.
+  Thus a postfilter is designed to search for information that users want to read.
+  It will be called each time user make a action that need get new information.
+
+  \subsection{Function}
+    Postfilter is designed aimed to select the best information that users want.
+    It will pick out information that have the same or similiar tags with what user request.
+    More, it will sort the information list in better order so user can get what they are most desired to get at first skim.
+
+  \subsection{Performance}
+    For that users must wait for it when ask for more information, it shall have extremely high Performance, as fast as possible.
+
+  \subsection{Input}
+    A user defined query request, has various properties and limits.
+
+  \subsection{Output}
+    A list of information, which fits users request well.
+
