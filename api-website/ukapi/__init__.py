@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Nov 13 11:27:40 2013 +0800
+# $Date: Fri Nov 15 21:01:47 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """unknown informatin hub API website
@@ -20,9 +20,11 @@ class DefaultConfig(object):
     API_PORT = None
     API_RUN_OPTIONS = {}
 
-_app = Flask(__name__, instance_relative_config=True,
-            instance_path=os.environ.get('UKNOW_CONFIG'))
+_app = Flask(__name__,
+             instance_relative_config=True,
+             instance_path=os.environ.get('UKNOW_CONFIG'))
 _app.config.from_object(DefaultConfig())
+
 
 def get_app():
     """load API modules and return the WSGI application"""
@@ -30,4 +32,3 @@ def get_app():
     import_all_modules(__file__, __name__)
     get_app = lambda: _app
     return get_app()
-

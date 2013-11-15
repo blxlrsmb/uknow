@@ -1,8 +1,8 @@
-# Unknown Information Collector
+# Uknow Information Collector
 
   ![logo](https://git.net9.org/blxlrsmb/unknown/raw/master/docs/logo/logo.png)
 
-  Unknown Information Collector is a web server that can fetch some Information and provide it with RESTful api.
+  Uknow Information Collector is a web server that can fetch some Information and provide it with RESTful api.
 
   It's a project for Software Engineering course.
 
