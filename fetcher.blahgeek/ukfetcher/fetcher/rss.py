@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 # By i@BlahGeek.com at 10/11/2013
 
-remove_attributes = ('class', 'id', 'title', 'style', 'width', 'height', 'onclick')
-remove_tags = ('script', 'object', 'video', 'embed', 'iframe', 'noscript', 'style', 'img')
+remove_attributes = ('class', 'id', 'title', 'style', 'width', 'height',
+                     'onclick')
+remove_tags = ('script', 'object', 'video', 'embed', 'iframe', 'noscript',
+               'style', 'img')
 
 import feedparser
 import logging
@@ -12,11 +14,12 @@ import time
 from datetime import datetime, timedelta, date
 from BeautifulSoup import BeautifulSoup
 
+
 def fetch_rss(feeds_urls):
     socket.setdefaulttimeout(15)
     logging.info('Starting...')
     feeds = [feedparser.parse(x) for x in feeds_urls]
-    feeds = [x for x in feeds if x.feed.has_key('title')]
+    feeds = [x for x in feeds if 'title' in x.feed]
 
     for feed in feeds:
         logging.info('Handling ' + feed.feed.title)
@@ -49,5 +52,5 @@ def fetch_rss(feeds_urls):
 if __name__ == '__main__':
     logging.basicConfig(level='INFO')
     print fetch_rss(['http://www.guokr.com/rss/', ])
-    
+
 

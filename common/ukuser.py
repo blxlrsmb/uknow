@@ -6,6 +6,7 @@
 
 """utilities for managing users"""
 
+
 def get_enabled_fetcher(user_id):
     """:return: a list of fetcher names enabled by this user"""
     return ['sample_user']   # TODO XXX
@@ -17,4 +18,3 @@ def get_enabled_prefilter(user_id):
 
 # TODO get_enabled_postfilter, user register, user
 # authentication, etc.
-

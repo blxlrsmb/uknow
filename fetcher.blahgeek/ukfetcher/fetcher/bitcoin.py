@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # File: bitcoin.py
-# Date: Sat Mar 23 16:41:41 2013 +0800
+# Date: Sat Nov 16 20:21:29 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from BeautifulSoup import BeautifulSoup
 import requests
 
 url = "https://mtgox.com/"
+
 
 def getPrice():
     ''' return float, in US dollars'''

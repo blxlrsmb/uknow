@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: default.py
-# $Date: Tue Nov 12 22:24:29 2013 +0800
+# $Date: Sat Nov 16 19:58:34 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """default config values"""
@@ -17,4 +17,3 @@ celery_broker = 'redis://localhost:6379/0'
 
 mongo_conn = ('127.0.0.1', 27017)
 mongo_db = 'uknow'
-

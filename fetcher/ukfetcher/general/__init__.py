@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Nov 15 21:28:42 2013 +0800
+# $Date: Sat Nov 16 20:29:32 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -17,6 +17,7 @@ import gevent
 
 
 class GeneralFetcherContext(FetcherContext):
+
     """FetcherContext for general fetchers"""
     fetcher_name = None
 
@@ -25,12 +26,13 @@ class GeneralFetcherContext(FetcherContext):
 
     def new_item(self, desc, inital_tag, other=None):
         return self._do_new_item(
-                FETCHER_TYPE_GENERAL,
-                self.fetcher_name,
-                desc, inital_tag, other)
+            FETCHER_TYPE_GENERAL,
+            self.fetcher_name,
+            desc, inital_tag, other)
 
 
 class register_fetcher(register_fetcher_base):
+
     """register a fetcher for general items"""
 
     sleep_time = None
@@ -43,18 +45,19 @@ class register_fetcher(register_fetcher_base):
         additional keyword argument:
             * sleep_time: default sleep time for this fetcher"""
 
-        self.sleep_time = kwargs.pop('sleep_time',
-                ukconfig.general_fetcher_sleep_interval_default)
+        self.sleep_time = \
+            kwargs.pop('sleep_time',
+                       ukconfig.general_fetcher_sleep_interval_default)
 
         register_fetcher_base.__init__(self, *args, **kwargs)
 
         ust = ukconfig.general_fetcher_sleep_interval_special.get(
-                self.fetcher_name, None)
+            self.fetcher_name, None)
         if ust is not None:
             self.sleep_time = ust
 
         assert self.sleep_time > 0, 'invalid sleep time: {}'.format(
-                self.sleep_time)
+            self.sleep_time)
 
     def _on_new_fetcher(self, func):
         self.fetcher_list.append(self)

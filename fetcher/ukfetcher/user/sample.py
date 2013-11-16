@@ -8,8 +8,8 @@
 
 from . import register_fetcher
 
+
 @register_fetcher('sample_user')
 def sample_user_fetcher(ctx):
     """say hello"""
     ctx.new_item('hello {}'.format(ctx.user_id), ['hello'])
-

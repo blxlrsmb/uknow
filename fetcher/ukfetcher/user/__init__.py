@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Nov 13 01:23:49 2013 +0800
+# $Date: Sat Nov 16 20:25:25 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -16,7 +16,9 @@ import uklogger
 
 from celery import Celery
 
+
 class UserFetcherContext(FetcherContext):
+
     """FetcherContext for user fetchers"""
 
     fetcher_name = None
@@ -25,13 +27,15 @@ class UserFetcherContext(FetcherContext):
         self.fetcher_name = fetcher_name
         self.user_id = user_id
 
-    def new_item(self, desc, inital_tag, other = None):
+    def new_item(self, desc, inital_tag, other=None):
         return self._do_new_item(
-                FETCHER_TYPE_USER,
-                self.fetcher_name,
-                desc, inital_tag, other)
+            FETCHER_TYPE_USER,
+            self.fetcher_name,
+            desc, inital_tag, other)
+
 
 class register_fetcher(register_fetcher_base):
+
     """register a fetcher for user items"""
 
     fetcher_map = {}
@@ -45,7 +49,7 @@ class register_fetcher(register_fetcher_base):
 
     def _create_fetcher_context(self):
         return UserFetcherContext(
-                self.fetcher_name, self.user_id)
+            self.fetcher_name, self.user_id)
 
     def run(self, user_id):
         """run the fetcher with specified user id"""
@@ -54,6 +58,8 @@ class register_fetcher(register_fetcher_base):
 
 _celery_app = None
 _celery_task = None
+
+
 def get_celery_task():
     """get celery task, which takes user id as its sole argument"""
     global _celery_app
@@ -61,17 +67,18 @@ def get_celery_task():
     if _celery_task:
         return _celery_task
     import_all_modules(__file__, __name__)
-    _celery_app = Celery('ukfetcher', broker = ukconfig.celery_broker)
+    _celery_app = Celery('ukfetcher', broker=ukconfig.celery_broker)
     _celery_app.conf.update(
-            CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml'])
+        CELERY_ACCEPT_CONTENT=['pickle', 'json', 'msgpack', 'yaml'])
+
     @_celery_app.task
     def on_user_activated(user_id):
         for i in get_enabled_fetcher(user_id):
             fetcher = register_fetcher.fetcher_map.get(i)
             if fetcher is None:
                 uklogger.log_err(
-                'fetcher {} not exist, requested by user {}'.format(
-                    i, user_id))
+                    'fetcher {} not exist, requested by user {}'.format(
+                        i, user_id))
             else:
                 uklogger.log_info('run fetcher {} for user {}'.format(
                     i, user_id))
@@ -80,8 +87,8 @@ def get_celery_task():
     _celery_task = on_user_activated.delay
     return _celery_task
 
+
 def get_celery_app():
     """:return: celery app"""
     get_celery_task()
     return _celery_app
-
