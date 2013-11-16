@@ -1,5 +1,5 @@
 ..  $File: index.rst
-    $Date: Mon Mar 05 20:04:14 2012 +0800
+    $Date: Sat Nov 16 22:59:37 2013 +0800
     -----------------------------------------------------------------
     Copyright (C) 2012 the pynojo development team <see AUTHORS file>
     -----------------------------------------------------------------
@@ -19,17 +19,12 @@
 Welcome to pynojo's documentation!
 ==================================
 
-Welcome! This documentation is generated on |today| for pynojo |release|.
-
-
-Contents:
+Welcome! This documentation is generated on |today| for uknow |release|.
 
 .. toctree::
     :maxdepth: 2
 
     devnotes
-    perm-model
-    global-name-list
     api
 
 
