@@ -1,0 +1,19 @@
+@startuml
+class FetcherContext {
+	user_id
+	_do_new_item(fetcher_type, fetcher_name, desc, inital_tag, other)
+	{abstract} new_item(desc, inital_tag, other)
+}
+FetcherContext <|-- GeneralFetcherContext
+class GeneralFetcherContext {
+	fetcher_name
+	__init__(fetcher_name)
+	new_item(desc, inital_tag, other)
+}
+FetcherContext <|-- UserFetcherContext
+class UserFetcherContext {
+	fetcher_name
+	__init__(fetcher_name, user_id)
+	new_item(desc, inital_tag, other)
+}
+@enduml

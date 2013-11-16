@@ -1,0 +1,28 @@
+@startuml
+class register_fetcher_base {
+	fetcher_name
+	_on_register_done
+	_callback
+	{abstract} _on_new_fetcher(func)
+	{abstract} _create_fetcher_context()
+	__init__(name, on_register_done)
+	__call__(func)
+	run()
+}
+register_fetcher_base <|-- general.register_fetcher
+class general.register_fetcher {
+	sleep_time
+	fetcher_list
+	__init__(args, kwargs)
+	_on_new_fetcher(func)
+	_create_fetcher_context()
+}
+register_fetcher_base <|-- user.register_fetcher
+class user.register_fetcher {
+	fetcher_map
+	user_id
+	_on_new_fetcher(func)
+	_create_fetcher_context()
+	run()
+}
+@enduml

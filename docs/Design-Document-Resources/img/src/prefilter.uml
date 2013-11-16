@@ -1,0 +1,12 @@
+@startuml
+class prefilter {
+	prefilter_list
+	user_customizable_map
+	priority
+	func
+	name
+	__init__(name, priority, is_user)
+	__call__(func)
+	apply(ctx, doc)
+}
+@enduml
