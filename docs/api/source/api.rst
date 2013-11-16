@@ -1,5 +1,5 @@
-..  $File: index.rst
-    $Date: Mon Mar 05 20:04:14 2012 +0800
+..  $File: api.rst
+    $Date: Sat Nov 16 22:43:57 2013 +0800
     -----------------------------------------------------------------
     Copyright (C) 2012 the pynojo development team <see AUTHORS file>
     -----------------------------------------------------------------
@@ -16,27 +16,12 @@
     along with pynojo.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Welcome to pynojo's documentation!
-==================================
-
-Welcome! This documentation is generated on |today| for pynojo |release|.
-
-
-Contents:
+API Reference
+-------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
-    devnotes
-    perm-model
-    global-name-list
-    api
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
+    autogen/common
+    autogen/ukapi
 
