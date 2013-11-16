@@ -1,5 +1,5 @@
 ..  $File: index.rst
-    $Date: Sat Nov 16 22:59:37 2013 +0800
+    $Date: Sat Nov 16 23:08:53 2013 +0800
     -----------------------------------------------------------------
     Copyright (C) 2012 the pynojo development team <see AUTHORS file>
     -----------------------------------------------------------------
@@ -16,7 +16,7 @@
     along with pynojo.  If not, see <http://www.gnu.org/licenses/>.
 
 
-Welcome to pynojo's documentation!
+Welcome to uknow's documentation!
 ==================================
 
 Welcome! This documentation is generated on |today| for uknow |release|.
