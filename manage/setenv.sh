@@ -1,13 +1,13 @@
 #!/bin/bash -e
 # $File: setenv.sh
-# $Date: Wed Nov 13 11:34:35 2013 +0800
+# $Date: Sat Nov 16 12:39:25 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 # zsh compatibility when direct sourcing from shell
 [[ -n $ZSH_VERSION ]] && script_dir=$(dirname $0) || script_dir=$(dirname ${BASH_SOURCE[0]})
 source $script_dir/config.sh
 
-project_root=$script_dir/..
+project_root=$(readlink -f $script_dir/..)
 env_dir=$project_root/.env
 
 if [ ! -d "$env_dir" ]
