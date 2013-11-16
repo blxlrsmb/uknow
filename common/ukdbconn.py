@@ -11,14 +11,16 @@ __all__ = ['get_mongo']
 import ukconfig
 
 try:
-	from pymongo import MongoClient
+    from pymongo import MongoClient
 except ImportError:
-	from pymongo import Connection as MongoClient
+    from pymongo import Connection as MongoClient
 
 from pymongo.errors import DuplicateKeyError
 
 _db = None
-def get_mongo(coll_name = None):
+
+
+def get_mongo(coll_name=None):
     global _db
     if _db is None:
         _db = MongoClient(*ukconfig.mongo_conn)[ukconfig.mongo_db]
@@ -27,7 +29,8 @@ def get_mongo(coll_name = None):
         return _db
     return _db[coll_name]
 
-def global_counter(name, delta = 1):
+
+def global_counter(name, delta=1):
     """atomically change a global int64 counter and return the newest value;
     starting from 1
     mongo document structure:
@@ -38,9 +41,9 @@ def global_counter(name, delta = 1):
     coll_name = 'global_counter'
     db = get_mongo()
     rst = db.command('findAndModify', coll_name,
-        query = {'_id': name},
-        update = {'$inc': {'val': delta}},
-        new = True)
+                     query={'_id': name},
+                     update={'$inc': {'val': delta}},
+                     new=True)
     if rst['value']:
         return rst['value']['val']
     try:
@@ -49,5 +52,3 @@ def global_counter(name, delta = 1):
         return val
     except DuplicateKeyError:
         return global_counter(name, delta)
-
-

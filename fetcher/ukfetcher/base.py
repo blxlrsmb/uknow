@@ -16,6 +16,7 @@ from functools import wraps
 
 
 class register_fetcher_base(object):
+
     """base class for decorator to register a new fetcher"""
     __metaclass__ = ABCMeta
 

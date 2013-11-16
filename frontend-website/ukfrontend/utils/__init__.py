@@ -9,6 +9,7 @@ class DefaultConfig(object):
     FRONTEND_PORT = None
     FRONTEND_RUN_OPTIONS = {}
 
+
 def create_app(subproject):
     app = Flask(subproject, instance_relative_config=True,
                 instance_path=os.environ.get('UKNOW_CONFIG'))

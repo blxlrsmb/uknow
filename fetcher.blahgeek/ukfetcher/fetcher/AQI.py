@@ -7,6 +7,7 @@ import requests
 
 url = "http://iphone.bjair.info/m/beijing/mobile"
 
+
 def getBeijingAQI():
     ''' return int '''
     r = requests.get(url)
@@ -15,5 +16,3 @@ def getBeijingAQI():
 
 if __name__ == '__main__':
     print getBeijingAQI()
-    
-

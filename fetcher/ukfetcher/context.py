@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Fri Nov 15 21:10:15 2013 +0800
+# $Date: Sat Nov 16 20:23:04 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -27,6 +27,7 @@ FETCHER_TYPE_USER = 1
 
 
 class FetcherContext(object):
+
     """context where a fetcher is executed"""
 
     __metaclass__ = ABCMeta
@@ -38,14 +39,14 @@ class FetcherContext(object):
                      fetcher_type, fetcher_name, desc, inital_tag, other):
         """helper function for implementing :meth:`new_item`"""
         assert fetcher_type in (FETCHER_TYPE_USER, FETCHER_TYPE_GENERAL), \
-                'bad fetcher_type: {}'.format(fetcher_type)
+            'bad fetcher_type: {}'.format(fetcher_type)
         assert isinstance(fetcher_name, basestring), \
-                'bad fetcher_name: {!r}'.format(fetcher_name)
+            'bad fetcher_name: {!r}'.format(fetcher_name)
         assert isinstance(desc, basestring), \
-                'bad desc: {!r}'.format(desc)
+            'bad desc: {!r}'.format(desc)
         assert isinstance(inital_tag, list) and \
-                all([isinstance(i, basestring) for i in inital_tag]), \
-                'bad inital_tag: {!r}'.format(inital_tag)
+            all([isinstance(i, basestring) for i in inital_tag]), \
+            'bad inital_tag: {!r}'.format(inital_tag)
 
         db = get_mongo('item')
         item_id = global_counter('item')
@@ -54,13 +55,13 @@ class FetcherContext(object):
         db.ensure_index('tag')
         db.ensure_index('creation_time')
         doc = {
-                '_id': item_id,
-                'fetcher_type': fetcher_type,
-                'fetcher_name': fetcher_name,
-                'desc': desc,
-                'tag': inital_tag,
-                'other': other,
-                'creation_time': datetime.utcnow()}
+            '_id': item_id,
+            'fetcher_type': fetcher_type,
+            'fetcher_name': fetcher_name,
+            'desc': desc,
+            'tag': inital_tag,
+            'other': other,
+            'creation_time': datetime.utcnow()}
         prefilter.apply(self, doc)
         db.insert(doc)
 

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # $File: setenv.sh
-# $Date: Sat Nov 16 12:39:25 2013 +0800
+# $Date: Sat Nov 16 20:32:13 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 # zsh compatibility when direct sourcing from shell
@@ -25,7 +25,7 @@ for i in $ukmodules
 do
 	PYTHONPATH=$PYTHONPATH:$project_root/$i
 done
-export PYTHONPATH
+export PYTHONPATH=$PYTHONPATH:$project_root
 
 export UKNOW_CONFIG=$(readlink -f $script_dir)
 
