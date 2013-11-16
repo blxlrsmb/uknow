@@ -2,7 +2,7 @@ TARGET=report
 TEX=xelatex -shell-escape
 BIBTEX=biber
 READER=evince
-OUTPUT=../Product-Requirements-Document.pdf
+OUTPUT=../Design-Document.pdf
 
 all: rebuild
 

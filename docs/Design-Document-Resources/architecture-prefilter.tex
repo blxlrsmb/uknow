@@ -11,18 +11,18 @@
     \caption{Prefilter\label{fig:prefilter}}
   \end{figure}
 
-  \subsection{Function}
+  \subsubsection{Function}
     Prefilter is the first classifiter applyed on the information. It can be system defined or user customized.
     Itself has priority levels, thus different prefilter will be executed in order.
     It will put different tags on piece of information, so the next step it can be easily selected.
 
-  \subsection{Performance}
+  \subsubsection{Performance}
     It shall return result almost immediately after it was called. So it only has several seconds of time.
 
-  \subsection{Input}
+  \subsubsection{Input}
     A FetcherContext item which was just fetched by a fetcher.
 
-  \subsection{Output}
+  \subsubsection{Output}
     A FetcherContext item which has multiple tags base on its content read by prefilter.
     Notice that a item may be abandoned by a prefilter for it may be duplicate, redundant or illegal.
 

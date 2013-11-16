@@ -12,19 +12,19 @@
     \caption{Fetcher\label{fig:fetcher}}
   \end{figure}
 
-  \subsection{Function}
+  \subsubsection{Function}
     The fetcher will be assigned to a target website or other kind of source.
     Each time it was called, it will return a list of informations, almost in raw text but with some basic information,
     such as source, origin url, fetched time and so on.
 
-  \subsection{Performance}
+  \subsubsection{Performance}
     Fetcher shall be called at least one time per day. For hot resources such as SNS, it's fetcher must have high speed,
     so each time it shall return result in minute level.
 
-  \subsection{Input}
+  \subsubsection{Input}
     Fetcher don't need input after it's well configured. However, for augmentbility reason, a callback function is acceptable.
     The callback funtion will deal with the result by default.
 
-  \subsection{Output}
+  \subsubsection{Output}
     Fetcher will return a FetcherContext which wraps the raw information. For default situation, it will be dealed by Prefilter.
 
