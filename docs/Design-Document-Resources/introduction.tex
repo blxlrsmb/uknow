@@ -18,6 +18,50 @@
     It would be run on a VPS located in U.S., provided by Linode Ltd.\ co.
 
   \subsection{Definition}
+    \subsubsection{Items}
 
-  \subsection{Reference}
+      An item is piece of information retrieved from various sources, and
+      shown in lists for further reading. It consists of following parts:
+
+      \begin{itemize}
+      \itemsep1pt\parskip0pt\parsep0pt
+      \item
+        Title
+      \item
+        Source
+      \item
+        Content
+      \item
+        Labels
+      \item
+        Comments
+      \end{itemize}
+
+      Item is the core entity in Uknow system.
+
+    \subsubsection{Labels}
+
+      A label is an attribute describing items. An item can have multiple
+      labels. A label associated with an item may be automatically assigned by
+      system, or tagged by users. A label can be either a system-wide label,
+      which is visible to all user, or a user specified label which indicates
+      user preferences on an item.
+
+      As described aforementioned, functions like `archive' is actually a process of tagging an
+      item by the label `archived'
+
+    \subsubsection{Plugins}
+
+      Plugin is an essential concept in Uknow system, which comprises the
+      implementations of varied functionalities in the system. A plugin should
+      process a bunch of items, returning processed items. The number of items
+      before and after need not to be the same, that is, a plugin can either
+      shrink items or enrich items (filtering job) or process on contents of
+      items.
+
+    \subsubsection{Tabs}
+
+      Tab is a collection of filtered items, in which the filter is defined by
+      plugins. A typical use of tab is to divide items into different
+      categories, which can be exclusive or not.
 

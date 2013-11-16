@@ -1,11 +1,25 @@
 \section{Interface}
-  This part will be discussed with caution dreadfully. For that interfaces may changed a lot when developing.
-  Part that we can be sure of is that JSON is used when communicating between client and API server.
-  Then the API server will call various method provided by different classes that fit the requests.
+  \subsection{Inner Interface}
+    Interfaces that shouldn't be called or even seen by client are considered as inner interfaces.
+    Mainly they are providing functions among components.
 
-  For that this project is still on the bootstrap step, and it may change everyday, we decided to mantain the interface information with
-  wiki and API doc, other than write it done on paper.
-  So, requests' format is still under discussion and it would change a lot. We don't think providing them now is a good idea.
+    This section shall describe the usage of each interface,
+    but we maintained a well constructed API document which describes each part of this project with explicit details.
+    So, another duplicate description is not that useful,
+    will causing more resources to maintain and may cause disagreements after changing some part of interfaces.
 
-  More, the prototype system does not containing a client program, so there's no need for stable interface design up to now.
+    In a word, referring to API document is suggested when want to look up for one interface.
+
+  \subsection{Client Interface}
+    This part will discuss with caution dreadfully,
+    for that interfaces may changed a lot when developing.
+    Part that we can be sure of is that JSON is used when communicating between client and API server.
+    Then the API server will call various methods provided by different classes that fit the requests.
+
+    For that this project is still in the bootstraping step, and it may change everyday, we decided to mantain the interface information with
+    wiki and API document, other than write it done on paper.
+    Meanwhile, requests' format is still under discussion and it would change a lot. We don't think providing them now is a good idea.
+
+    More, the prototype system does not containing a client program and user involved part,
+    so there's no need for stable client interfaces' design up to now.
 
