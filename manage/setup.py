@@ -12,7 +12,8 @@ setup_args = dict(
         'redis>=2.8.0',
         'gevent>=0.13.8',
         'sphinx>=1.1.3',
-        'pep8>=1.4.6'
+        'pep8>=1.4.6',
+        'feedparser==5.1.3'
     ],
     entry_points=dict(
         console_scripts=[

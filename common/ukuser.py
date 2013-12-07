@@ -9,7 +9,7 @@
 
 def get_enabled_fetcher(user_id):
     """:return: a list of fetcher names enabled by this user"""
-    return ['sample_user']   # TODO XXX
+    return ['sample_user', 'guokr_rss']   # TODO XXX
 
 
 def get_enabled_prefilter(user_id):
