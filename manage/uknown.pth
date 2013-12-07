@@ -1,0 +1,7 @@
+# put me on $venv/lib/python2.7/site-packages/
+
+../../../../api-website
+../../../../fetcher
+../../../../common
+../../../../frontend-website
+../../../../
