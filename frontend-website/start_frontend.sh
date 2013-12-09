@@ -7,7 +7,7 @@ realpath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
-if [ `uname` == 'Darwin' ]
+if [ `uname` = 'Darwin' ]
 then
   PROG_NAME=`realpath "$0"`
 else

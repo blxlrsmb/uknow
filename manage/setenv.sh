@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # $File: setenv.sh
-# $Date: Mon Dec 09 12:45:31 2013 +0800
+# $Date: Mon Dec 09 12:55:12 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 # zsh compatibility when direct sourcing from shell
@@ -11,7 +11,7 @@ realpath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
-if [ `uname` == 'Darwin' ]
+if [ `uname` = 'Darwin' ]
 then
   project_root=`realpath $script_dir/..`
 else
@@ -37,7 +37,7 @@ do
 done
 export PYTHONPATH=$PYTHONPATH:$project_root
 
-if [ `uname` == 'Darwin' ]
+if [ `uname` = 'Darwin' ]
 then
   export UKNOW_CONFIG=$(realpath -f $script_dir)
 else

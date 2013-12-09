@@ -1,13 +1,13 @@
 #!/bin/bash -e
 # $File: celery_worker.sh
-# $Date: Mon Dec 09 12:48:54 2013 +0800
+# $Date: Mon Dec 09 12:55:45 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 realpath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
-if [ `uname` == 'Darwin' ]
+if [ `uname` = 'Darwin' ]
 then
   PROG_NAME=`realpath "$0"`
 else

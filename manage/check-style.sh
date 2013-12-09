@@ -10,7 +10,7 @@ realpath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
-if [ `uname` == 'Darwin' ]
+if [ `uname` = 'Darwin' ]
 then
   real_dir=$(realpath $script_dir)/..
 else
