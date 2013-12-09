@@ -6,7 +6,17 @@
 [[ -n $ZSH_VERSION ]] && script_dir=$(dirname $0) || script_dir=$(dirname ${BASH_SOURCE[0]})
 source $script_dir/setenv.sh
 
-real_dir=$(readlink -f $script_dir)/..
+realpath() {
+  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
+if [ `uname` == 'Darwin' ]
+then
+  real_dir=$(realpath $script_dir)/..
+else
+  real_dir=$(readlink -f $script_dir)/..
+fi
+
 
 pep8 $real_dir --exclude=.env,.git,fetcher.blahgeek --statistics
 

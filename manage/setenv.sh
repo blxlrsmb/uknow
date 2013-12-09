@@ -1,13 +1,23 @@
 #!/bin/bash -e
 # $File: setenv.sh
-# $Date: Sat Nov 16 20:32:13 2013 +0800
+# $Date: Mon Dec 09 12:45:31 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 # zsh compatibility when direct sourcing from shell
 [[ -n $ZSH_VERSION ]] && script_dir=$(dirname $0) || script_dir=$(dirname ${BASH_SOURCE[0]})
 source $script_dir/config.sh
 
-project_root=$(readlink -f $script_dir/..)
+realpath() {
+  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
+if [ `uname` == 'Darwin' ]
+then
+  project_root=`realpath $script_dir/..`
+else
+  project_root=$(readlink -f $script_dir/..)
+fi
+
 env_dir=$project_root/.env
 
 if [ ! -d "$env_dir" ]
@@ -27,5 +37,10 @@ do
 done
 export PYTHONPATH=$PYTHONPATH:$project_root
 
-export UKNOW_CONFIG=$(readlink -f $script_dir)
+if [ `uname` == 'Darwin' ]
+then
+  export UKNOW_CONFIG=$(realpath -f $script_dir)
+else
+  export UKNOW_CONFIG=$(readlink -f $script_dir)
+fi
 
