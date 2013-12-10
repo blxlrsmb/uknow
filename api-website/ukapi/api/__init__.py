@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Tue Dec 10 11:46:48 2013 +0800
+# $Date: Tue Dec 10 12:13:19 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -54,7 +54,7 @@ class api_method(object):
         """the view_func passed to Flask.add_url_rule"""
         rst = self.api_implementation()
         assert isinstance(rst, dict), \
-                "ret value {0} is not a dict".format(str(rst))
+            "ret value {0} is not a dict".format(str(rst))
         callback = request.values.get('callback')
         if callback and VALID_CALLBACK_RE.match(callback) is not None:
             rst = '{}({})'.format(callback, json.dumps(rst))

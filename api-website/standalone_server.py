@@ -1,10 +1,11 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: standalone_server.py
-# $Date: Mon Dec 09 10:04:44 2013 +0800
+# $Date: Tue Dec 10 12:13:01 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from ukapi import get_app
+
 
 def main():
     app = get_app()
