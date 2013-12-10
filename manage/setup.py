@@ -5,6 +5,7 @@ setup_args = dict(
     install_requires=[
         'Flask>=0.9',
         'Flask-WTF>=0.8',
+        'Flask-Login>=0.2.7',
         'pyjade>=1.6',
 
         'pymongo>=2.6.3',

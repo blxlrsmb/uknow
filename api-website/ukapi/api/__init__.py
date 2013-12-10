@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Nov 15 21:04:20 2013 +0800
+# $Date: Tue Dec 10 11:46:48 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
 from .. import _app as app
 
-from flask import Response, request, g, abort
+from flask import Response, request
 
 import json
 import re
@@ -53,7 +53,8 @@ class api_method(object):
     def view_func(self):
         """the view_func passed to Flask.add_url_rule"""
         rst = self.api_implementation()
-        assert isinstance(rst, dict)
+        assert isinstance(rst, dict), \
+                "ret value {0} is not a dict".format(str(rst))
         callback = request.values.get('callback')
         if callback and VALID_CALLBACK_RE.match(callback) is not None:
             rst = '{}({})'.format(callback, json.dumps(rst))

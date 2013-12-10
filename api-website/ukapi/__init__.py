@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Nov 15 21:01:47 2013 +0800
+# $Date: Tue Dec 10 11:10:32 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """unknown informatin hub API website
@@ -11,6 +11,8 @@ global variables:
 
 import os
 from flask import Flask
+
+from flask_login import LoginManager
 
 from ukutil import import_all_modules
 
@@ -24,6 +26,11 @@ _app = Flask(__name__,
              instance_relative_config=True,
              instance_path=os.environ.get('UKNOW_CONFIG'))
 _app.config.from_object(DefaultConfig())
+
+_app.secret_key = 'WTF is this!!'       # Should have this to work
+
+login_manager = LoginManager()
+login_manager.init_app(_app)
 
 
 def get_app():
