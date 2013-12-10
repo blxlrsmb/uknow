@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: test.py
-# $Date: Fri Nov 15 21:05:13 2013 +0800
+# $Date: Tue Dec 10 09:13:42 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """test with user id"""
