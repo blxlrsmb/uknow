@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # File: test-user.sh
-# Date: Tue Dec 10 12:06:13 2013 +0800
+# Date: Tue Dec 10 13:56:29 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 DEST="http://localhost:5000"

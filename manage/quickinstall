@@ -4,6 +4,8 @@
 #
 # You need to install virtualenv and pip before running this script.
 
+[[ -d "../.git" ]] && cp pre-commit ../.git/hooks
+
 script_dir=$(dirname $0)
 cd $script_dir
 : "DLC = ${DLC:=./.download_cache}, ENV = ${ENV:=../.env}"

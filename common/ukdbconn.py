@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukdbconn.py
-# $Date: Tue Nov 12 23:31:51 2013 +0800
+# $Date: Tue Dec 10 15:01:50 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """database connections"""
