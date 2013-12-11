@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukutil.py
-# $Date: Tue Nov 12 21:01:10 2013 +0800
+# $Date: Wed Dec 11 20:02:48 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """common utility functions"""
@@ -9,6 +9,14 @@
 from importlib import import_module
 from pkgutil import walk_packages
 import os
+
+
+def ensure_unicode(s):
+    """assert type of s is basestring and convert s to unicode"""
+    assert isinstance(s, basestring), 's should be string'
+    if isinstance(s, str):
+        s = s.decode('utf-8')
+    return s
 
 
 def import_all_modules(file_path, pkg_name):

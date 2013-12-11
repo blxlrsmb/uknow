@@ -1,12 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Fri Nov 15 21:06:48 2013 +0800
+# $Date: Wed Dec 11 17:05:52 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
-""":class:`register_fetcher_base`"""
-
 from .prefilter import AbortItemProcessing
+from .context import FetcherContext
 
 import ukconfig
 import uklogger
@@ -16,13 +15,15 @@ from functools import wraps
 
 
 class register_fetcher_base(object):
-
     """base class for decorator to register a new fetcher"""
+
     __metaclass__ = ABCMeta
 
     fetcher_name = None
+
     _on_register_done = None
     _callback = None
+    _fetcher_name_registered = set()
 
     @abstractmethod
     def _on_new_fetcher(self, func):
@@ -35,9 +36,11 @@ class register_fetcher_base(object):
         """:return: a :class:`FetcherContext` object"""
 
     def __init__(self, name, on_register_done=None):
-        """:param name: name of the fetcher
-        :param _on_register_done: callable to be invoked when this fetcher has
+        """:param name: name of the fetcher, which must be globally unique
+        :param on_register_done: callable to be invoked when this fetcher has
             been registerd"""
+        assert name not in self._fetcher_name_registered, \
+            'multiple fetchers with same name: {}'.format(name)
         self.fetcher_name = name
         self._on_register_done = on_register_done
 
@@ -51,8 +54,10 @@ class register_fetcher_base(object):
 
         @wraps(func)
         def wrapper():
+            ctx = self._create_fetcher_context()
+            assert isinstance(ctx, FetcherContext)
             try:
-                return func(self._create_fetcher_context())
+                return func(ctx)
             except AbortItemProcessing:
                 pass
             except KeyboardInterrupt:

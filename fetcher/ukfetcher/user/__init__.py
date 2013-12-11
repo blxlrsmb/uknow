@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Sat Nov 16 20:25:25 2013 +0800
+# $Date: Wed Dec 11 16:35:56 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -18,24 +18,18 @@ from celery import Celery
 
 
 class UserFetcherContext(FetcherContext):
-
     """FetcherContext for user fetchers"""
 
-    fetcher_name = None
-
     def __init__(self, fetcher_name, user_id):
-        self.fetcher_name = fetcher_name
+        super(UserFetcherContext, self).__init__(
+            FETCHER_TYPE_USER, fetcher_name)
         self.user_id = user_id
 
     def new_item(self, desc, inital_tag, other=None):
-        return self._do_new_item(
-            FETCHER_TYPE_USER,
-            self.fetcher_name,
-            desc, inital_tag, other)
+        return self._do_new_item(desc, inital_tag, other)
 
 
 class register_fetcher(register_fetcher_base):
-
     """register a fetcher for user items"""
 
     fetcher_map = {}

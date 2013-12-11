@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Sat Nov 16 20:29:32 2013 +0800
+# $Date: Wed Dec 11 18:24:00 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -17,22 +17,17 @@ import gevent
 
 
 class GeneralFetcherContext(FetcherContext):
-
     """FetcherContext for general fetchers"""
-    fetcher_name = None
 
     def __init__(self, fetcher_name):
-        self.fetcher_name = fetcher_name
+        super(GeneralFetcherContext, self).__init__(
+            FETCHER_TYPE_GENERAL, fetcher_name)
 
     def new_item(self, desc, inital_tag, other=None):
-        return self._do_new_item(
-            FETCHER_TYPE_GENERAL,
-            self.fetcher_name,
-            desc, inital_tag, other)
+        return self._do_new_item(desc, inital_tag, other)
 
 
 class register_fetcher(register_fetcher_base):
-
     """register a fetcher for general items"""
 
     sleep_time = None

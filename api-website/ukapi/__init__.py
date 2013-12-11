@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Dec 11 11:38:16 2013 +0800
+# $Date: Wed Dec 11 20:02:19 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """unknown informatin hub API website
@@ -22,20 +22,23 @@ class DefaultConfig(object):
     API_PORT = None
     API_RUN_OPTIONS = {}
 
-_app = Flask(__name__,
-             instance_relative_config=True,
-             instance_path=os.environ.get('UKNOW_CONFIG'))
-_app.config.from_object(DefaultConfig())
-
-_app.secret_key = 'WTF is this!!'       # Should have this to work
-
-login_manager = LoginManager()
-login_manager.init_app(_app)
+_app = None
+login_manager = None
 
 
 def get_app():
     """load API modules and return the WSGI application"""
-    global get_app
+    global get_app, _app, login_manager
+    _app = Flask(__name__,
+                 instance_relative_config=True,
+                 instance_path=os.environ.get('UKNOW_CONFIG'))
+    _app.config.from_object(DefaultConfig())
+
+    _app.secret_key = 'WTF is this!!'       # Should have this to work
+
+    login_manager = LoginManager()
+    login_manager.init_app(_app)
+
     import_all_modules(__file__, __name__)
     get_app = lambda: _app
-    return get_app()
+    return _app
