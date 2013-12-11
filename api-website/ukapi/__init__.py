@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Tue Dec 10 11:10:32 2013 +0800
+# $Date: Wed Dec 11 11:38:16 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """unknown informatin hub API website
@@ -18,7 +18,7 @@ from ukutil import import_all_modules
 
 
 class DefaultConfig(object):
-    API_HOST = None
+    API_HOST = '0.0.0.0'
     API_PORT = None
     API_RUN_OPTIONS = {}
 
