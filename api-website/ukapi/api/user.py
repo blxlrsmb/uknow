@@ -1,14 +1,15 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Tue Dec 10 14:55:39 2013 +0800
+# Date: Wed Dec 11 21:31:47 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
 from . import api_method, request
-from flask_login import login_user, login_required, logout_user
-from ukdbconn import get_mongo, global_counter
+from flask_login import login_user, login_required, logout_user, current_user
+from ukdbconn import get_mongo, get_user
 from user_model import User
+from uklogger import log_info
 
 import json
 
@@ -17,6 +18,7 @@ import json
 @login_required
 def logout():
     """ logout api"""
+    log_info('user {0} logged out'.format(current_user.username))
     logout_user()
     return {'success': 1}
 
@@ -38,6 +40,7 @@ def login():
     if err:
         return err
     login_user(auth)
+    log_info('user {0} succesfully logged in'.format(username))
     return {'success': 1}
 
 
@@ -49,25 +52,24 @@ def register():
 
     """
     postdata = json.loads(request.data)
-    assert 'username' in postdata,\
-        'no username in register()'
-    assert 'password' in postdata,\
-        'no password in register()'
+    assert 'username' in postdata and 'password' in postdata,\
+        'no username or password in register()'
     username = postdata['username']
     password = postdata['password']
     assert isinstance(username, basestring), \
         'uesrname must be string'
     assert isinstance(password, basestring), \
         'password must be string'
-    db = get_mongo('user')
-    exist = db.find({'username': username}, {"_id": 0}).limit(1).count()
-    if exist > 0:
+
+    exist = get_user(username)
+    if exist:
         return {"error": "user {0} already exists".format(username)}
 
-    user_id = global_counter('n_user')
+    db = get_mongo('user')
     db.insert({
         'username': username,
         'password': password,
-        'uid': user_id
+        'tab': []
     })
-    return {}
+    log_info('new user: {0}:{1}'.format(username, password))
+    return {'success': 1}

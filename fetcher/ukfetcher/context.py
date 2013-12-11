@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Wed Dec 11 18:28:36 2013 +0800
+# $Date: Wed Dec 11 20:40:08 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -38,7 +38,7 @@ class FetcherContext(object):
     """user id as integer, or None if unavailable"""
 
     fetcher_type = None
-    """current fetcher type, in (FETCHER_TYPE_USER, FETCHER_TYPE_USER)"""
+    """current fetcher type, in (FETCHER_TYPE_GENERAL, FETCHER_TYPE_USER)"""
 
     fetcher_name = None
     """current fetcher name, str"""

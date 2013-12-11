@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukdbconn.py
-# $Date: Wed Dec 11 17:25:43 2013 +0800
+# $Date: Wed Dec 11 21:27:14 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """database connections"""
@@ -53,3 +53,11 @@ def global_counter(name, delta=1):
         return val
     except DuplicateKeyError:
         return global_counter(name, delta)
+
+
+def get_user(username):
+    db = get_mongo('user')
+    u = list(db.find({'username': username}).limit(1))
+    if len(u) == 0:
+        return None
+    return u[0]

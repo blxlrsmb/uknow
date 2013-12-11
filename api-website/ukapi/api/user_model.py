@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user_model.py
-# Date: Tue Dec 10 14:55:26 2013 +0800
+# Date: Wed Dec 11 20:59:36 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from .. import login_manager
@@ -13,7 +13,7 @@ class User(object):
     """User class as an implementation required by flask-login"""
 
     def __init__(self, username, password, need_auth=True):
-        self.user = None
+        self.username = username
         self.error = None
         if need_auth:
             self.authenticate(username, password)
@@ -30,7 +30,7 @@ class User(object):
         return False
 
     def get_id(self):
-        return self.user['username']
+        return self.username
 
     def authenticate(self, username, password):
         db = get_mongo('user')
@@ -42,7 +42,6 @@ class User(object):
         user = exist[0]
         if user['password'] == password:
             self._authenticated = True
-            self.user = user
         else:
             self.error = {'error': 'wrong password'}
 
@@ -53,7 +52,6 @@ class User(object):
     def from_doc(user_doc):
         """create authenticated User object from a user document from db"""
         u = User(user_doc['username'], user_doc['password'], need_auth=False)
-        u.user = user_doc
         return u
 
 
