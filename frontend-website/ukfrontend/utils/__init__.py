@@ -5,7 +5,7 @@ from flask import Flask
 
 
 class DefaultConfig(object):
-    FRONTEND_HOST = None
+    FRONTEND_HOST = '0.0.0.0'
     FRONTEND_PORT = None
     FRONTEND_RUN_OPTIONS = {}
 
