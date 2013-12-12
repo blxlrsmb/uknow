@@ -112,6 +112,7 @@ showEditTabForm = function(tabname){
                         type: 'select',
                         'data-placeholder': 'No tag selected',
                         multiple: '',
+                        style: 'width:100%;',
                       }],
                     '/set_tags');
       var $select = $('#form-tags');
