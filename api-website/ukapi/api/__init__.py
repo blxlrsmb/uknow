@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Tue Dec 10 12:13:19 2013 +0800
+# $Date: Thu Dec 12 14:23:56 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -60,4 +60,6 @@ class api_method(object):
             rst = '{}({})'.format(callback, json.dumps(rst))
         else:
             rst = json.dumps(rst, indent=4)
-        return Response(rst, 200, mimetype='application/json')
+        resp = Response(rst, 200, mimetype='application/json')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
