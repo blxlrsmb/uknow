@@ -255,7 +255,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="addtab-priority">Password</label>
+          <label class="control-label" for="addtab-priority">Priority</label>
           <div class="controls">
             <input type="text" id="addtab-priority" placeholder="10">
           </div>
@@ -327,7 +327,7 @@
             });
             $.each(ret['tabs'], function(i,t){
               $tabs.append($('<li>').addClass('divider-vertical'));
-              var $a = $('<a>').text(t);
+              var $a = $('<a>').text(t['name']);
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
             $('#loading').modal('hide');
