@@ -14,7 +14,8 @@ setup_args = dict(
         'gevent>=0.13.8',
         'sphinx>=1.1.3',
         'pep8>=1.4.6',
-        'feedparser==5.1.3'
+        'feedparser==5.1.3',
+        'termcolor>=1.1.0'
     ],
     entry_points=dict(
         console_scripts=[

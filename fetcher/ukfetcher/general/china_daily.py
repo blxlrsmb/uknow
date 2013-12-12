@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 16:40:59 2013 +0800
+# $Date: Thu Dec 12 19:31:18 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -13,7 +13,7 @@ import feedparser
 import socket
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 
 rss_list = [
