@@ -15,7 +15,9 @@ setup_args = dict(
         'sphinx>=1.1.3',
         'pep8>=1.4.6',
         'feedparser==5.1.3',
-        'termcolor>=1.1.0'
+        'termcolor>=1.1.0',
+        'BeautifulSoup>=3.2.1',
+        'requests>=2.1.0'
     ],
     entry_points=dict(
         console_scripts=[

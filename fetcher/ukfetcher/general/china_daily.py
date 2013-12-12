@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 19:31:18 2013 +0800
+# $Date: Thu Dec 12 20:00:31 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -108,7 +108,7 @@ for item in rss_list:
     else:
         suffix, category, url = item
 
-    decorator = register_fetcher(u'china_daily_rss_' + suffix)
+    decorator = register_fetcher(u'china_daily_rss_' + suffix, sleep_time=180)
     decorator(_gen_rss_fetcher(category, url))
 
 # vim: foldmethod=marker
