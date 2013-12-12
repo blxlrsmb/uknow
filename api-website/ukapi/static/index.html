@@ -233,15 +233,7 @@
       });
 
 			checkLogin = function() {
-				$.ajax({
-					url: document.API_URL + '/test_login',
-					type: 'GET',
-					crossDomain: true,
-					error: function(ret) {
-						// ret['status'] == 401
-						window.location.replace('/static/login.html');
-					}
-				});
+				makeGetRequest('/test_login');
 			};
       setTimeout(checkLogin, 0);
     </script>

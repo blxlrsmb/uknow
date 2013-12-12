@@ -38,10 +38,8 @@
 			doLogin = function() {
 				var username = $('#user_login')[0].value;
 				var password = $('#user_password')[0].value;
-				makePostRequest({
-						username: username,
-						password: password
-					  }, '/login', function(ret) {
+				makeGetRequest('/login?username=' + username + '&password=' + password,
+						function(ret) {
 							if (ret['success'] == 1) {
 								window.location.replace('/');
 							}
@@ -53,10 +51,8 @@
 			doRegister = function() {
 				var username = $('#user_login')[0].value;
 				var password = $('#user_password')[0].value;
-				makePostRequest({
-						username: username,
-						password: password
-					  }, '/register', function(ret) {
+				makeGetRequest('/register?username=' + username + '&password=' + password,
+						function(ret) {
 							if (ret['success'] == 1) {
 								doLogin();
 							}

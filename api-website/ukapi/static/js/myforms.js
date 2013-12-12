@@ -12,7 +12,22 @@ makePostRequest = function(data, url, onsuccess) {
 				window.location.replace('/static/login.html');
 		}
 	});
-}
+};
+
+makeGetRequest = function(url, onsuccess) {
+	$.ajax({
+		url: document.API_URL + url,
+		type: 'GET',
+		contentType: 'json',
+		crossDomain: true,
+		success: onsuccess,
+		error: function(ret) {
+			if (ret['status'] == 401)
+				window.location.replace('/static/login.html');
+		}
+	});
+
+};
 
 makeBasicForm = function(title, data, url, onsuccess){
 	$('#form-modal h3').text(title);
