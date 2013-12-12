@@ -72,8 +72,8 @@ def register():
         return {'error': 'illegal format'}
     if len(username) < 3 or len(password) < 3:
         return {'error':
-                'length of username and password must \
-                be at least 3 characters'}
+                'length of username and password must' +
+                ' be at least 3 characters'}
 
     exist = get_user(username)
     if exist:
