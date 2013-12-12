@@ -1,16 +1,21 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Thu Dec 12 15:57:08 2013 +0800
+# $Date: Thu Dec 12 16:06:08 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
 from .. import _app as app
 
-from flask import Response, request
+from flask import Response, request, redirect, url_for
 
 import json
 import re
+
+
+@app.route('/')
+def home():
+    return redirect(url_for('static', filename='index.html'))
 
 
 @app.errorhandler(404)

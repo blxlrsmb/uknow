@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Thu Dec 12 14:57:55 2013 +0800
+# Date: Thu Dec 12 15:28:32 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
@@ -33,7 +33,7 @@ def login():
         assert isinstance(username, basestring) \
             and isinstance(password, basestring)
     except Exception as e:
-        return {'error': 'wrong login format!' + str(e)}
+        return {'error': 'illegal login format!' + str(e)}
 
     auth = User(username, password)
     err = auth.get_error()
@@ -61,6 +61,10 @@ def register():
         assert isinstance(password, basestring)
     except:
         return {'error': 'illegal format'}
+    if len(username) <= 3 or len(password) <= 3:
+        return {'error':
+                'length of username and password must \
+                be at least 3 characters'}
 
     exist = get_user(username)
     if exist:
