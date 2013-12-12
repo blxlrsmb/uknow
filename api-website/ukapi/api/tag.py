@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Thu Dec 12 20:45:55 2013 +0800
+# Date: Thu Dec 12 20:51:21 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -38,6 +38,35 @@ def add_tag():
             get_mongo('user').save(u)
             log_info('user {0} add tag {1} to tab \
                      {2}'.format(current_user.username, tagname, tabname))
+            return {'tabs': u['tab']}
+    return {'error': 'no such tab'}
+
+
+@api_method('/set_tag', methods=['POST'])
+@login_required
+def set_tag():
+    """
+    {
+     name: ['tagname'],
+     tab: 'tabname'
+    }
+    """
+    try:
+        data = json.loads(request.data)
+        tags = data['name']
+        tabname = data['tab']
+        assert isinstance(tabname, basestring)
+        for tag in tags:
+            assert isinstance(tag, basestring)
+    except:
+        return {'error': 'illegal format'}
+    u = get_user(current_user.username)
+    for tab in u['tab']:
+        if tabname == tab['name']:
+            tab['tags'] = tags
+            get_mongo('user').save(u)
+            log_info('user {0} set tag to {1} on tab \
+                     {2}'.format(current_user.username, tags, tabname))
             return {'tabs': u['tab']}
     return {'error': 'no such tab'}
 
