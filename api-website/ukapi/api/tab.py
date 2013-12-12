@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Wed Dec 11 21:34:26 2013 +0800
+# Date: Thu Dec 12 11:07:42 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -46,3 +46,25 @@ def add_tab():
 def get_all_tabs():
     tabs = get_user(current_user.username)['tab']
     return {'tabs': tabs}
+
+
+@api_method('/del_tab')
+@login_required
+def del_tab():
+    """delete a tab
+    GET /del_tab?name=tabname
+    ignore it when tab with 'tabname' doesn't exist
+    """
+    data = request.args
+    try:
+        name = data['name']
+        assert isinstance(name, basestring)
+    except:
+        return {'error': 'illegal format'}
+    db = get_mongo('user')
+    db.update({'username': current_user.username},
+              {'$pull': {
+                  'tab': {
+                      'name': name
+                  }}})
+    return {'success': 1}
