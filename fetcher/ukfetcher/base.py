@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Wed Dec 11 17:05:52 2013 +0800
+# $Date: Thu Dec 12 16:22:21 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from .prefilter import AbortItemProcessing
@@ -42,6 +42,7 @@ class register_fetcher_base(object):
         assert name not in self._fetcher_name_registered, \
             'multiple fetchers with same name: {}'.format(name)
         self.fetcher_name = name
+        self._fetcher_name_registered.add(name)
         self._on_register_done = on_register_done
 
     def __call__(self, func):
