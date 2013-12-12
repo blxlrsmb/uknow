@@ -30,7 +30,10 @@ setup_args = dict(
         # tagger
         'jieba>=0.31',
         'nltk>=2.0.4',
-        'html2text>=3.200.3'
+        'html2text>=3.200.3',
+
+        # unit test
+        'coverage>=3.7',
     ],
     entry_points=dict(
         console_scripts=[
