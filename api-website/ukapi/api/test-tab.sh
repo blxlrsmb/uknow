@@ -5,8 +5,7 @@
 DEST="http://localhost:5000"
 
 if [[ $1 == "login" ]]; then
-	curl -X POST -d "{\"username\":\"testuser\", \"password\": \"testpass\" }" \
-		-H "Content-Type:application/json" $DEST/login -c 'cookie.txt'
+	curl -v "$DEST/login?username=testuser&password=testpass" -c cookie.txt
 elif [[ $1 == "add" ]]; then
 	curl -X POST -d "{\"name\":\"tab1\", \"priority\": 1 }" \
 		-H "Content-Type:application/json" $DEST/add_tab -b 'cookie.txt'
