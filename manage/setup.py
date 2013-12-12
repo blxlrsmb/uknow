@@ -14,7 +14,11 @@ setup_args = dict(
         'gevent>=0.13.8',
         'sphinx>=1.1.3',
         'pep8>=1.4.6',
-        'feedparser==5.1.3'
+        'feedparser==5.1.3',
+
+        'jieba>=0.31',
+        'nltk>=2.0.4',
+        'html2text>=3.200.3'
     ],
     entry_points=dict(
         console_scripts=[

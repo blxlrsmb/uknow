@@ -42,3 +42,6 @@ nosetests.xml
 
 # vim swap file
 *.swp
+
+# tagger model
+lib/tagger.model

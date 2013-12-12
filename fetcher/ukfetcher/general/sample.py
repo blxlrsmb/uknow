@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: sample.py
-# $Date: Wed Dec 11 18:18:39 2013 +0800
+# $Date: Thu Dec 12 17:04:04 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample fetcher which returns a random number"""
