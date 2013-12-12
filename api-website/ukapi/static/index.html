@@ -176,12 +176,12 @@
               var $a = $('<a>').text(t['name']).attr('href','#');
               $a.click(function(e){
                 e.preventDefault();
-                $('.itemCount').removeClass('active');
-                $(this).parent().addClass('active');
+                focusTab($(this));
               });
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
             $tabs.append($('<li>').addClass('divider-vertical'));
+            focusTab(0);
             $('#loading').modal('hide');
           }
         });
@@ -189,9 +189,18 @@
       getNowTab = function(){
         return $('.itemCount.active').text();
       };
+      focusTab = function(n){
+        $.each($('.itemCount'), function(i, tab){
+          var $tab = $(tab);
+          if($tab.is(n) || (typeof(n)=="number"&&i==n) || (typeof(n)=="string"&&n==$tab.text()))
+            $tab.addClass('active');
+          else
+            $tab.removeClass('active');
+        });
+      };
       $('#delete-tab').click(function(e){
         e.preventDefault();
-        showDeleteTabForm();
+        showDeleteTabForm(getNowTab());
       });
       dologout = function(){
         $('#loading').modal('show');

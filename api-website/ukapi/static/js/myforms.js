@@ -94,9 +94,9 @@ showAddTabForm = function(){
 };
 
 showDeleteTabForm = function(tabname){
-    makeBasicForm('Delete tab "'+tabname+'" ?', 
-                  [{name: 'name', type: 'hidden', value: tabname}], 
-                  '/del_tab', 
+    makeBasicForm('Delete tab "'+tabname+'" ?',
+                  [{name: 'name', type: 'hidden', value: tabname}],
+                  '/del_tab',
                   refreshTab);
     $('#form-modal').modal('show');
-}
+};
