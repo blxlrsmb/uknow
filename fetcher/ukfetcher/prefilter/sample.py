@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: sample.py
-# $Date: Wed Dec 11 18:26:55 2013 +0800
+# $Date: Thu Dec 12 11:34:32 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """a sample prefilter"""
@@ -23,3 +23,7 @@ def sample(ctx, doc):
     time.sleep(1)
     doc["desc"].content += " [passed by sample user, for uid {}]".format(
         ctx.user_id)
+
+@prefilter('auto_tag')
+def auto_tag(ctx, doc):
+    """auto tag """
