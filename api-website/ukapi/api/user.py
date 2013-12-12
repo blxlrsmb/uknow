@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Fri Dec 13 00:25:09 2013 +0800
+# Date: Fri Dec 13 01:33:28 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
@@ -56,7 +56,6 @@ def register():
     """user registration api.
         username: string
         password: string        XXX TODO
-
     """
     try:
         postdata = json.loads(request.data)

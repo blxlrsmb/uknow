@@ -6,7 +6,11 @@ makePostRequest = function(data, url, onsuccess) {
 		contentType: 'json',
 		data: JSON.stringify(data),
 		crossDomain: true,
-		success: onsuccess
+		success: onsuccess,
+		error: function(ret) {
+			if (ret['status'] == 401)
+				window.location.replace('/static/login.html');
+		}
 	});
 }
 
