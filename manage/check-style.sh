@@ -20,5 +20,5 @@ else
   real_dir=$(readlink -f $script_dir)/..
 fi
 
-$pep8 $real_dir --exclude=.env,.git,fetcher.blahgeek --statistics
+$pep8 $real_dir --exclude=.env,.git,fetcher.blahgeek,bin,lib --statistics
 
