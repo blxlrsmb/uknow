@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>UKnow InfoHub</title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/chosen_v1/chosen.jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/spin.js/spin.js"></script>
+		<script type="text/javascript" src="bower_components/spin.js/jquery.spin.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap.css/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			document.API_URL = '';
+		</script>
+		<script type="text/javascript" src="js/myforms.js"></script>
+	</head>
+
+	<body>
+		<div class='container'>
+			<div class='content'>
+				<center> <img alt="Login-logo" src="img/logo.png" /> </center>
+				<div class='login-box'>
+					<center>
+						<form accept-charset="UTF-8" action="/login" class="new_user" id="new_user" method="post">
+							<input autofocus="autofocus" class="form-text" id="user_login" name="user[login]" placeholder="Username" size="30" type="text" />
+							<input class="form-text" id="user_password" name="user[password]" placeholder="Password" size="30" type="password" />
+							<input class="btn-create btn" name="commit" value="Sign in" onclick="doLogin()"/>
+							<input class="btn-create btn" name="commit" value="Register" onclick="doRegister()"/>
+						</form>
+					</center>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			doLogin = function() {
+				var username = $('#user_login')[0].value;
+				var password = $('#user_password')[0].value;
+				makePostRequest({
+						username: username,
+						password: password
+					  }, '/login', function(ret) {
+							if (ret['success'] == 1) {
+								window.location.replace('/');
+							}
+							if (ret['error'] !== undefined)
+								alert(ret['error']);
+					});
+			};
+
+			doRegister = function() {
+				var username = $('#user_login')[0].value;
+				var password = $('#user_password')[0].value;
+				makePostRequest({
+						username: username,
+						password: password
+					  }, '/register', function(ret) {
+							if (ret['success'] == 1) {
+								doLogin();
+							}
+							if (ret['error'] !== undefined)
+								alert(ret['error']);
+					});
+			};
+		</script>
+	</body>
+</html>

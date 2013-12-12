@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Thu Dec 12 23:54:58 2013 +0800
+# Date: Fri Dec 13 00:25:09 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""

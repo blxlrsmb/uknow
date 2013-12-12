@@ -1,12 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user_model.py
-# Date: Wed Dec 11 20:59:36 2013 +0800
+# Date: Fri Dec 13 00:04:30 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from .. import login_manager
 from ukdbconn import get_mongo
-from uklogger import log_err
 
 
 class User(object):
@@ -49,18 +48,12 @@ class User(object):
         return self.error
 
     @staticmethod
-    def from_doc(user_doc):
+    def from_username(username):
         """create authenticated User object from a user document from db"""
-        u = User(user_doc['username'], user_doc['password'], need_auth=False)
+        u = User(username, '---none---', need_auth=False)
         return u
 
 
 @login_manager.user_loader
 def load_user(username):
-    db = get_mongo('user')
-    user = list(db.find({'username': username}, {"_id": 0}).limit(1))
-    if len(user) != 1:
-        log_err('load_user with username = {0} failed,  \
-            found {1} users!'.format(username, len(user)))
-        return None
-    return User.from_doc(user[0])
+    return User.from_username(username)
