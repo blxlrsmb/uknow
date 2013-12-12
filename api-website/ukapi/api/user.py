@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Thu Dec 12 15:28:32 2013 +0800
+# Date: Thu Dec 12 23:21:08 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
@@ -61,7 +61,7 @@ def register():
         assert isinstance(password, basestring)
     except:
         return {'error': 'illegal format'}
-    if len(username) <= 3 or len(password) <= 3:
+    if len(username) < 3 or len(password) < 3:
         return {'error':
                 'length of username and password must \
                 be at least 3 characters'}
