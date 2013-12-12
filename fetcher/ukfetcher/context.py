@@ -1,11 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Wed Dec 11 20:40:08 2013 +0800
+# $Date: Thu Dec 12 10:34:24 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
-mogo document: {
+mongo document: {
     _id: unique int64 id
     fetcher_type: int, indexed
     fetcher_name: str, indexed
