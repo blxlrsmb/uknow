@@ -26,7 +26,7 @@ setup_args = dict(
         # misc
         'feedparser==5.1.3',
         'BeautifulSoup>=3.2.1',
-        'requests>=2.1.0'
+        'requests>=2.1.0',
 
         # tagger
         'jieba>=0.31',
