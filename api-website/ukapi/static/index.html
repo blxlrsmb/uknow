@@ -344,7 +344,17 @@
         $.getJSON(document.API_URL+'/logout', '', function(ret){
           $('#loading').modal('hide');
           $('#login').modal('show');
+          showblackface();
         })
+      };
+      showblackface = function(){
+        $('body').html('');
+        $('body').attr('style','background-color: #000000;');
+        var $div = $('<div>').attr('style', 'margin: 150px auto');
+        $div.append($('<img>').attr('src', 'img/logo.svg').attr('style','padding-left:40%'));
+        $('body').append($div);
+        var sound = new Audio('img/haha.mp3');
+        sound.play();
       };
       $(document).ready(function(){
         appendNewSummary('网易头条', ['Tag1', 'Tag2'], '清华大学期末考试取消');
