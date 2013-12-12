@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # File: bitcoin.py
-# Date: Sat Nov 16 20:21:29 2013 +0800
+# Date: Thu Dec 12 20:32:13 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import register_fetcher
 from ukitem import TextOnlyItem
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 from BeautifulSoup import BeautifulSoup
 import requests
