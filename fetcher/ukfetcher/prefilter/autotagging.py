@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Thu Dec 12 20:42:49 2013 +0800
+# $Date: Thu Dec 12 23:15:30 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
@@ -29,9 +29,19 @@ def auto_tagging(ctx, doc):
             return
     if _tagger and ('other' in doc) and doc['other'] \
             and ('content' in doc['other']):
-        content = doc['other']['content'][0]['value']
+        content = doc['other']['content']
+        if not isinstance(content, basestring):
+            if isinstance(content, list):
+                content = content[0]
+            if isinstance(content, dict):
+                if 'value' in content:
+                    content = content['value']
+                else:
+                    return
+            else:
+                return
         tags = _tagger.predict_one(content)
-        log_info(doc['other']['content'][0]['base'])
+#        log_info(content)
         log_info(doc['tag'])
         log_info(tags)
         doc['tag'] = list(set(doc['tag'] + tags))

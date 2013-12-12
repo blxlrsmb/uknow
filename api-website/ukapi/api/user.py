@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Thu Dec 12 15:28:32 2013 +0800
+# Date: Fri Dec 13 01:33:28 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api
@@ -18,7 +18,7 @@ from . import api_method, request
 from flask_login import login_user, login_required, logout_user, current_user
 from ukdbconn import get_mongo, get_user
 from user_model import User
-from uklogger import log_info
+from uklogger import log_api as log_info
 
 
 @api_method('/logout')
@@ -27,6 +27,13 @@ def logout():
     """ logout api"""
     log_info('user {0} logged out'.format(current_user.username))
     logout_user()
+    return {'success': 1}
+
+
+@api_method('/test_login')
+@login_required
+def test_login():
+    """test if a cookie is valid"""
     return {'success': 1}
 
 
@@ -55,7 +62,6 @@ def register():
     """user registration api.
         username: string
         password: string        XXX TODO
-
     """
     try:
         username = request.values['username']
@@ -64,7 +70,7 @@ def register():
         assert isinstance(password, basestring)
     except:
         return {'error': 'illegal format'}
-    if len(username) <= 3 or len(password) <= 3:
+    if len(username) < 3 or len(password) < 3:
         return {'error':
                 'length of username and password must \
                 be at least 3 characters'}

@@ -243,3 +243,7 @@ section.controls div.bottom {
   -ms-user-select: none;
   user-select: none;
 }
+
+.form-text {
+	display: block;
+}
