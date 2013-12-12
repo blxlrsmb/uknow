@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # File: test-tag.sh
-# Date: Thu Dec 12 20:04:44 2013 +0800
+# Date: Thu Dec 12 20:46:24 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 DEST="http://localhost:5000"
 
@@ -12,6 +12,8 @@ elif [[ $1 == "add" ]]; then
 		-H "Content-Type:application/json" $DEST/add_tag -b 'cookie.txt'
 elif [[ $1 == "getall" ]]; then
 	curl -H "Content-Type:application/json" $DEST/get_all_tags -b 'cookie.txt'
+elif [[ $1 == "get" ]]; then
+	curl -H "Content-Type:application/json" "$DEST/get_tag_article?tag=guokr" -b 'cookie.txt'
 elif [[ $1 == "del" ]]; then
 	curl -H "Content-Type:application/json" "$DEST/del_tag?name=guokr&tab=tab1" -b 'cookie.txt'
 elif [[ $1 == "del2" ]]; then

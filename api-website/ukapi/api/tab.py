@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 20:31:35 2013 +0800
+# Date: Thu Dec 12 20:44:44 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -92,11 +92,10 @@ def get_tab_article():
     if len(tab) == 0:
         return {'error': 'no such tab'}
     tags = tab[0]['tags']
-    print tags
     itemdb = get_mongo('item')
     rst = list(itemdb.find({'tag': {'$in': tags},
                             'fetcher_type': FETCHER_TYPE_GENERAL},
-                           {'fetcher_name': 0, '_id': 0, 'other': 0}))
+                           {'fetcher_name': 0, '_id': 0}))
     for item in rst:
         item['creation_time'] = \
             item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
