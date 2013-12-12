@@ -27,5 +27,5 @@ def bitcoin_fetcher(ctx):
     """fetcher btcchina.com, save with tag `bitcoin`"""
     price = getPrice()
     ctx.new_item(TextOnlyItem("Last Bitcoin Price",
-                              "¥" + str(price)), ['bitcoin'])
+                              u"¥" + str(price)), ['bitcoin'])
     log_info(u'bitcoin price update: {}'.format(price))
