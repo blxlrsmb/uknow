@@ -1,12 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 11:07:42 2013 +0800
+# Date: Thu Dec 12 11:51:22 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
 from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
+from uklogger import log_info
 
 import json
 
@@ -38,6 +39,7 @@ def add_tab():
         'tags': []
     })
     get_mongo('user').save(doc)
+    log_info('user {0} add tab {1}'.format(username, name))
     return {'success': 1}
 
 
