@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Thu Dec 12 23:21:08 2013 +0800
+# Date: Thu Dec 12 23:54:58 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
@@ -9,7 +9,7 @@ from . import api_method, request
 from flask_login import login_user, login_required, logout_user, current_user
 from ukdbconn import get_mongo, get_user
 from user_model import User
-from uklogger import log_info
+from uklogger import log_api as log_info
 
 import json
 
@@ -20,6 +20,13 @@ def logout():
     """ logout api"""
     log_info('user {0} logged out'.format(current_user.username))
     logout_user()
+    return {'success': 1}
+
+
+@api_method('/test_login')
+@login_required
+def test_login():
+    """test if a cookie is valid"""
     return {'success': 1}
 
 

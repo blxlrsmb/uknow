@@ -1,13 +1,13 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 20:44:44 2013 +0800
+# Date: Thu Dec 12 23:55:10 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
 from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
-from uklogger import log_info
+from uklogger import log_api as log_info
 from ukfetcher.general import FETCHER_TYPE_GENERAL
 from ukitem import ItemDescBase
 
