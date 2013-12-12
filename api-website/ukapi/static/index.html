@@ -29,7 +29,10 @@
             <li class="itemCount"><a >Tab One</a></li>
  -->      </ul>
           <ul class="nav pull-left">
-            <li><a onclick="$('#addtab').modal('show');"><i class="icon-plus icon-white"></i></a></li>
+            <li><a onclick="$('#addtab').modal('show');" href="#"><i class="icon-plus icon-white"></i></a></li>
+          </ul>
+          <ul class="nav pull-right">
+            <li><a onclick="dologout();" href="#"><i class="icon-off icon-white"></i></a></li>
           </ul>
           <form class="navbar-search pull-right" id="navSearch">
             <input type="search"  class="search-query" placeholder="Search">
@@ -328,13 +331,20 @@
             });
             $.each(ret['tabs'], function(i,t){
               $tabs.append($('<li>').addClass('divider-vertical'));
-              var $a = $('<a>').text(t['name']);
+              var $a = $('<a>').text(t['name']).attr('href','#');
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
             $tabs.append($('<li>').addClass('divider-vertical'));
             $('#loading').modal('hide');
           }
         });
+      };
+      dologout = function(){
+        $('#loading').modal('show');
+        $.getJSON(document.API_URL+'/logout', '', function(ret){
+          $('#loading').modal('hide');
+          $('#login').modal('show');
+        })
       };
       $(document).ready(function(){
         appendNewSummary('网易头条', ['Tag1', 'Tag2'], '清华大学期末考试取消');
