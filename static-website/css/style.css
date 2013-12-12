@@ -71,7 +71,7 @@ section.mainContent div {
   height: 100%;
 }
 
-.controls {
+section.controls {
   box-sizing: border-box;
   padding: 5px;
   width: 50px;
@@ -89,7 +89,7 @@ section.mainContent div {
   background-repeat: repeat-x;
 }
 
-.controls .btn {
+section.controls .btn {
   width: 40px;
   height: 40px;
   margin-top: 5px;
@@ -101,21 +101,21 @@ section.mainContent div {
   -webkit-box-orient: vertical;
 }
 
-.controls div.top {
+section.controls div.top {
   min-height: 50px;
   display: -webkit-box;
   -webkit-box-align: start;
   -webkit-box-flex: 1;
 }
 
-.controls div.middle {
+section.controls div.middle {
   min-height: 185px;
   display: -webkit-box;
   -webkit-box-align: center;
   -webkit-box-flex: 2;
 }
 
-.controls div.bottom {
+section.controls div.bottom {
   min-height: 50px;
   -webkit-box-flex: 1;
   display: -webkit-box;
