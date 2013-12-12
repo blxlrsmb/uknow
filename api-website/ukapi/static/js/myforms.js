@@ -1,7 +1,8 @@
 
 makeBasicForm = function(title, data, url, onsuccess){
     $('#form-modal h3').text(title);
-    $form = $('#form-modal form').html('');
+    var $form = $('<form>').addClass('form-horizontal').attr('action', '#');
+    $('#form-modal .modal-body').append($form);
     $.each(data, function(i, input){
         var name = 'form-' + input['name'];
         var type = input['type'];
