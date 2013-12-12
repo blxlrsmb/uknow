@@ -15,6 +15,7 @@ makeBasicForm = function(title, data, url, onsuccess){
         $.each(input, function(n,m){
             $input.attr(n,m);
         });
+        $input.attr('id', name);
         $control_group.append($('<div>').addClass('controls').append($input));
         $form.append($control_group);
     });
