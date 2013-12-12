@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 15:55:06 2013 +0800
+# $Date: Thu Dec 12 16:40:59 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -15,20 +15,6 @@ from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_info
 
-
-class register_china_daily_rss_fetcher(register_fetcher):
-    """decorator that register a china daily rss fetcher"""
-
-    CHINA_DAILY_RSS_FETCHER_NAME_PREFIX = 'china_daily_rss_'
-
-    def __init__(self, category, **kwargs):
-        """see :meth:`register_fetcher.__init__`for details;
-        additional keyword arguments:
-            * category: category of this rss fetcher"""
-
-        register_fetcher.__init__(
-            self,
-            self.CHINA_DAILY_RSS_FETCHER_NAME_PREFIX + category)
 
 rss_list = [
     ('china', 'http://www.chinadaily.com.cn/rss/china_rss.xml'),
@@ -46,6 +32,22 @@ rss_list = [
     ('Hong_Kong', 'http://www.chinadaily.com.cn/rss/hk_rss.xml'),
     ('usa', 'http://usa.chinadaily.com.cn/usa_kindle.xml'),
     ('european', 'http://europe.chinadaily.com.cn/euweekly_rss.xml'),
+    ('china_c', u'中国在线', 'http://www.chinadaily.com.cn/rss_c/zgzx.xml'),
+    ('picture_c', u'图片', 'http://www.chinadaily.com.cn/rss_c/tupian.xml'),
+    ('international_c', u'中文国际',
+        'http://www.chinadaily.com.cn/rss_c/zwgj.xml'),
+    ('entertainment_c', u'娱乐',
+        'http://lifestyle.chinadaily.com.cn/rss/ent.xml'),
+    ('fashion_c', u'时尚', 'http://lifestyle.chinadaily.com.cn/rss/fashion.xml'),
+    ('health_c', u'健康', 'http://lifestyle.chinadaily.com.cn/rss/health.xml'),
+    ('discovery_c', u'博览', 'http://www.chinadaily.com.cn/rss_c/bolan.xml'),
+    ('travel_c', u'旅游', 'http://lifestyle.chinadaily.com.cn/rss/travel.xml'),
+    ('finance_c', u'财经', 'http://www.chinadaily.com.cn/rss_c/caijing.xml'),
+    ('migration_c', u'移民', 'http://lifestyle.chinadaily.com.cn/rss/yimin.xml'),
+    ('internet_c', u'科技互联网', 'http://www.chinadaily.com.cn/rss_c/kjhlw.xml'),
+    ('car_c', u'汽车', 'http://lifestyle.chinadaily.com.cn/rss/auto.xml'),
+    ('sports_c', u'体育', 'http://www.chinadaily.com.cn/rss_c/tiyu.xml'),
+    ('luxury_c', u'奢侈品', 'http://lifestyle.chinadaily.com.cn/rss/luxury.xml'),
     ]
 
 
@@ -59,7 +61,7 @@ def _get_id(category, entry):
 
 
 def _get_content(category, entry):
-    for val in ['content', 'description']:
+    for val in ['content', 'text', 'description']:
         try:
             return entry[val]
         except KeyError:
@@ -72,7 +74,7 @@ def _get_content(category, entry):
 def _gen_rss_fetcher(category, url):
     """helper function to generate china daily rss fetcher"""
     def fetcher(ctx):
-        """China Daily fetcher of category {}""" . format(category)
+        u"""China Daily fetcher of category {}""" . format(category)
 
         coll = ctx.get_mongo_collection()
         for entry in fetch_rss(url).entries:
@@ -99,8 +101,14 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-for category, url in rss_list:
-    decorator = register_china_daily_rss_fetcher(category)
+for item in rss_list:
+    if len(item) == 2:
+        category, url = item
+        suffix = category
+    else:
+        suffix, category, url = item
+
+    decorator = register_fetcher(u'china_daily_rss_' + suffix)
     decorator(_gen_rss_fetcher(category, url))
 
 # vim: foldmethod=marker
