@@ -12,6 +12,7 @@ from uklogger import log_info
 import feedparser
 import socket
 
+
 def fetch_rss(feed_url):
     socket.setdefaulttimeout(15)
     return feedparser.parse(feed_url)
@@ -31,4 +32,3 @@ def guokr_rss_fetcher(ctx):
         ctx.new_item(TextOnlyItem(entry.title, entry.summary), ['guokr'],
                      {'id': entry.id, 'content': entry.content})
         log_info(u'guokr rss: new entry: {} {}'.format(entry.id, entry.title))
-

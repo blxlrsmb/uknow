@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Thu Dec 12 15:17:12 2013 +0800
+# $Date: Thu Dec 12 15:57:08 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -39,7 +39,8 @@ class api_method(object):
     def __init__(self, url_rule, **kwargs):
         self.url_rule = url_rule
         self.url_rule_extra_kwargs = kwargs
-        if 'methods' in self.url_rule_extra_kwargs and 'POST' in self.url_rule_extra_kwargs['methods']:
+        if 'methods' in self.url_rule_extra_kwargs \
+                and 'POST' in self.url_rule_extra_kwargs['methods']:
             self.url_rule_extra_kwargs['methods'].append('OPTIONS')
 
     def __call__(self, func):
@@ -57,7 +58,8 @@ class api_method(object):
         if request.method == 'OPTIONS':
             resp = Response('', 200)
             resp.headers['Access-Control-Allow-Origin'] = '*'
-            resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Origin, Accept'
+            resp.headers['Access-Control-Allow-Headers'] = \
+                'Content-Type, Origin, Accept'
             return resp
         rst = self.api_implementation()
         assert isinstance(rst, dict), \
@@ -69,5 +71,6 @@ class api_method(object):
             rst = json.dumps(rst, indent=4)
         resp = Response(rst, 200, mimetype='application/json')
         resp.headers['Access-Control-Allow-Origin'] = '*'
-        resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Origin, Accept'
+        resp.headers['Access-Control-Allow-Headers'] = \
+            'Content-Type, Origin, Accept'
         return resp
