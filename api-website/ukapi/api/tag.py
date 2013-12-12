@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Thu Dec 12 14:27:15 2013 +0800
+# Date: Thu Dec 12 20:51:21 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
 from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_info
+from ukfetcher.general import FETCHER_TYPE_GENERAL
+from ukitem import ItemDescBase
 
 import json
 
@@ -36,6 +38,35 @@ def add_tag():
             get_mongo('user').save(u)
             log_info('user {0} add tag {1} to tab \
                      {2}'.format(current_user.username, tagname, tabname))
+            return {'tabs': u['tab']}
+    return {'error': 'no such tab'}
+
+
+@api_method('/set_tag', methods=['POST'])
+@login_required
+def set_tag():
+    """
+    {
+     name: ['tagname'],
+     tab: 'tabname'
+    }
+    """
+    try:
+        data = json.loads(request.data)
+        tags = data['name']
+        tabname = data['tab']
+        assert isinstance(tabname, basestring)
+        for tag in tags:
+            assert isinstance(tag, basestring)
+    except:
+        return {'error': 'illegal format'}
+    u = get_user(current_user.username)
+    for tab in u['tab']:
+        if tabname == tab['name']:
+            tab['tags'] = tags
+            get_mongo('user').save(u)
+            log_info('user {0} set tag to {1} on tab \
+                     {2}'.format(current_user.username, tags, tabname))
             return {'tabs': u['tab']}
     return {'error': 'no such tab'}
 
@@ -76,3 +107,24 @@ def del_tag():
                      {2}'.format(current_user.username, tagname, tabname))
             return {'tabs': u['tab']}
     return {'error': 'no such tab'}
+
+
+@api_method('/get_tag_article')
+def get_tag_article():
+    """get all article under a tag
+    GET /get_tag_article?tag=tagname
+    """
+    try:
+        tagname = request.args['tag']
+        assert isinstance(tagname, basestring)
+    except:
+        return {'error': 'illegal format'}
+    itemdb = get_mongo('item')
+    rst = list(itemdb.find({'tag': tagname,
+                            'fetcher_type': FETCHER_TYPE_GENERAL},
+                           {'fetcher_name': 0, '_id': 0}))
+    for item in rst:
+        item['creation_time'] = \
+            item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
+        item['desc'] = ItemDescBase.deserialize(item['desc']).render_as_text()
+    return {'data': rst}

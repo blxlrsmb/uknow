@@ -7,13 +7,16 @@
   <!-- <link rel="stylesheet" href="bower_components/bootstrap.css/css/bootstrap.css"> -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="bower_components/chosen_v1/chosen.min.css">
   <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/chosen_v1/chosen.jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/spin.js/spin.js"></script>
   <script type="text/javascript" src="bower_components/spin.js/jquery.spin.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap.css/js/bootstrap.min.js"></script>
   <script type="text/javascript">
     document.API_URL = '';
   </script>
+  <script type="text/javascript" src="js/myforms.js"></script>
 </head>
 
 <body>
@@ -29,7 +32,7 @@
             <li class="itemCount"><a >Tab One</a></li>
  -->      </ul>
           <ul class="nav pull-left">
-            <li><a onclick="$('#addtab').modal('show');" href="#"><i class="icon-plus icon-white"></i></a></li>
+            <li><a onclick="showAddTabForm();" href="#"><i class="icon-plus icon-white"></i></a></li>
           </ul>
           <ul class="nav pull-right">
             <li><a onclick="dologout();" href="#"><i class="icon-off icon-white"></i></a></li>
@@ -47,7 +50,8 @@
     <section class="controls no-select">
       <div class="tControls">
         <div class="top">
-          <button  class="btn" title="Mark all as read" alt="Mark all as read"><i class="icon-ok"></i></button>
+          <button class="btn" title="Delete this tab" id="delete-tab"><i class="icon-trash"></i></button>
+          <button class="btn" title="Edit this tab" id="edit-tab"><i class="icon-edit"></i></button>
         </div>
         <div class="middle">
           <button class="btn" ><i class="icon-arrow-up"></i></button>
@@ -131,172 +135,12 @@
     </div>
   </div>
 
-  <div id="register" class="modal hide fade" tabindex="-1" role="dialog" z-index="1">
+  <div id="form-modal" class="modal hide fade" tabindex="-1" role="dialog" z-index="1">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>Register</h3>
+      <h3></h3>
     </div>
-    <div class="modal-body">
-      <form class="form-horizontal" action="#" id="register-form">
-        <div class="control-group">
-          <label class="control-label" for="register-email">Email</label>
-          <div class="controls">
-            <input type="text" id="register-email" placeholder="Email">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="register-password">Password</label>
-          <div class="controls">
-            <input type="password" id="register-password" placeholder="Password">
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn">Sign up</button>
-          </div>
-        </div>
-      </form>
-      <script type="text/javascript">
-      $('#register-form').on('submit', function(e){
-        e.preventDefault();
-        var data = JSON.stringify({
-          'username': $('#register-email').val(),
-          'password': $('#register-password').val()
-        });
-        $.ajax({
-          url: document.API_URL+'/register',
-          type: 'POST',
-          dataType: 'json',
-          contentType: 'json',
-          data: data,
-          crossDomain: true,
-          success: function(ret){
-            if(ret['success'] == 1){
-              alert('Register ok.');
-              $('#register').modal('hide');
-              $('#login').modal('show');
-            }
-            if(ret['error'] !== undefined)
-              alert(ret['error']);
-          }
-        });
-      });
-      </script>
-    </div>
-  </div>
-
-  <div id="login" class="modal hide fade" tabindex="-1" role="dialog" z-index="10">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>Login</h3>
-    </div>
-    <div class="modal-body">
-      <form class="form-horizontal" action="#" id="login-form">
-        <div class="control-group">
-          <label class="control-label" for="login-email">Email</label>
-          <div class="controls">
-            <input type="text" id="login-email" placeholder="Email">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="login-password">Password</label>
-          <div class="controls">
-            <input type="password" id="login-password" placeholder="Password">
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="controls">
-            <button class="btn btn-info" id="login-register">Register</button>
-            <button type="submit" class="btn">Go!</button>
-          </div>
-        </div>
-      </form>
-      <script type="text/javascript">
-      $('#login-register').click(function(e){
-        e.preventDefault();
-        $('#login').modal('hide');
-        $('#register').modal('show');
-      })
-      $('#login-form').on('submit', function(e){
-        e.preventDefault();
-        var data = JSON.stringify({
-          'username': $('#login-email').val(),
-          'password': $('#login-password').val()
-        });
-        $.ajax({
-          url: document.API_URL+'/login',
-          type: 'POST',
-          dataType: 'json',
-          contentType: 'json',
-          data: data,
-          crossDomain: true,
-          success: function(ret){
-            if(ret['success'] == 1){
-              alert('Login ok.');
-              $('#login').modal('hide');
-              refreshTab();
-            }
-            if(ret['error'] !== undefined)
-              alert(ret['error']);
-          }
-        });
-      });
-      </script>
-    </div>
-  </div>
-
-  <div id="addtab" class="modal hide fade" tabindex="-1" role="dialog" z-index="10">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>Add Tab</h3>
-    </div>
-    <div class="modal-body">
-      <form class="form-horizontal" action="#" id="addtab-form">
-        <div class="control-group">
-          <label class="control-label" for="addtab-name">Name</label>
-          <div class="controls">
-            <input type="text" id="addtab-name" placeholder="Aha">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="addtab-priority">Priority</label>
-          <div class="controls">
-            <input type="text" id="addtab-priority" placeholder="10">
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="controls">
-            <button type="submit" class="btn">Add!</button>
-          </div>
-        </div>
-      </form>
-      <script type="text/javascript">
-      $('#addtab-form').on('submit', function(e){
-        e.preventDefault();
-        var data = JSON.stringify({
-          'name': $('#addtab-name').val(),
-          'priority': $('#addtab-priority').val()
-        });
-        $.ajax({
-          url: document.API_URL+'/add_tab',
-          type: 'POST',
-          dataType: 'json',
-          contentType: 'json',
-          data: data,
-          crossDomain: true,
-          success: function(ret){
-            if(ret['success'] == 1){
-              alert('Add tab ok.');
-              $('#addtab').modal('hide');
-              refreshTab();
-            }
-            if(ret['error'] !== undefined)
-              alert(ret['error']);
-          }
-        });
-      });
-      </script>
-    </div>
+    <div class="modal-body"></div>
   </div>
 
     <script type="text/javascript">
@@ -327,30 +171,65 @@
           } else {
             $tabs = $('#tabs').html('');
             ret['tabs'].sort(function(a,b){
-              return a['priority'] > b['priority'];
+              return parseInt(a['priority']) > parseInt(b['priority']);
             });
             $.each(ret['tabs'], function(i,t){
               $tabs.append($('<li>').addClass('divider-vertical'));
               var $a = $('<a>').text(t['name']).attr('href','#');
+              $a.click(function(e){
+                e.preventDefault();
+                focusTab($(this).parent());
+              });
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
             $tabs.append($('<li>').addClass('divider-vertical'));
+            focusTab(0);
             $('#loading').modal('hide');
           }
         });
       };
+      getNowTab = function(){
+        return $('.itemCount.active').text();
+      };
+      focusTab = function(n){
+        $.each($('.itemCount'), function(i, tab){
+          var $tab = $(tab);
+          if($tab.is(n) || (typeof(n)=="number"&&i==n) || (typeof(n)=="string"&&n==$tab.text()))
+            $tab.addClass('active');
+          else
+            $tab.removeClass('active');
+        });
+      };
+      $('#delete-tab').click(function(e){
+        e.preventDefault();
+        showDeleteTabForm(getNowTab());
+      });
+      $('#edit-tab').click(function(e){
+        e.preventDefault();
+        showEditTabForm(getNowTab());
+      });
       dologout = function(){
         $('#loading').modal('show');
         $.getJSON(document.API_URL+'/logout', '', function(ret){
           $('#loading').modal('hide');
           $('#login').modal('show');
+          showblackface();
         })
+      };
+      showblackface = function(){
+        $('body').html('');
+        $('body').attr('style','background-color: #000000;');
+        var $div = $('<div>').attr('style', 'margin: 150px auto');
+        $div.append($('<img>').attr('src', 'img/logo.svg').attr('style','padding-left:40%'));
+        $('body').append($div);
+        var sound = new Audio('img/haha.mp3');
+        sound.play();
       };
       $(document).ready(function(){
         appendNewSummary('网易头条', ['Tag1', 'Tag2'], '清华大学期末考试取消');
         setArticle('网易头条', '清华大学期末考试取消', 'BlahGeek', 'blah blah blah')
       });
-      setTimeout(function(){$('#login').modal('show')}, 0);
+      setTimeout(showLoginForm, 0);
     </script>
 
 

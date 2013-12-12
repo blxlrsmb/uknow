@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 14:27:10 2013 +0800
+# Date: Thu Dec 12 20:44:44 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
 from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_info
+from ukfetcher.general import FETCHER_TYPE_GENERAL
+from ukitem import ItemDescBase
 
 import json
 
@@ -24,7 +26,7 @@ def add_tab():
     try:
         data = json.loads(request.data)
         name = data['name']
-        priority = data.get('priority', 0)
+        priority = int(data.get('priority', 0))
         assert isinstance(name, basestring)
     except:
         return {'error': 'illegal format'}
@@ -50,15 +52,17 @@ def get_all_tabs():
     return {'tabs': tabs}
 
 
-@api_method('/del_tab')
+@api_method('/del_tab', methods=['POST'])
 @login_required
 def del_tab():
     """delete a tab
-    GET /del_tab?name=tabname
+    {
+        name: 'tabname'      # name of the tab
+    }
     ignore it when tab with 'tabname' doesn't exist
     """
-    data = request.args
     try:
+        data = json.loads(request.data)
         name = data['name']
         assert isinstance(name, basestring)
     except:
@@ -70,3 +74,30 @@ def del_tab():
                       'name': name
                   }}})
     return {'success': 1}
+
+
+@api_method('/get_tab_article')
+@login_required
+def get_tab_article():
+    """get all article under a tab
+    GET /get_tab_article?tab=tabname
+    """
+    try:
+        tabname = request.args['tab']
+        assert isinstance(tabname, basestring)
+    except:
+        return {'error': 'illegal format'}
+    db = get_user(current_user.username)
+    tab = filter(lambda x: x['name'] == tabname, db['tab'])
+    if len(tab) == 0:
+        return {'error': 'no such tab'}
+    tags = tab[0]['tags']
+    itemdb = get_mongo('item')
+    rst = list(itemdb.find({'tag': {'$in': tags},
+                            'fetcher_type': FETCHER_TYPE_GENERAL},
+                           {'fetcher_name': 0, '_id': 0}))
+    for item in rst:
+        item['creation_time'] = \
+            item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
+        item['desc'] = ItemDescBase.deserialize(item['desc']).render_as_text()
+    return {'data': rst}

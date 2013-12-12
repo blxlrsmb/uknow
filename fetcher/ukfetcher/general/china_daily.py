@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 20:43:58 2013 +0800
+# $Date: Thu Dec 12 22:44:36 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -13,7 +13,7 @@ import feedparser
 import socket
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 
 rss_list = [
@@ -71,10 +71,20 @@ def _get_content(category, entry):
         category))
 
 
-def _gen_rss_fetcher(category, url):
-    """helper function to generate china daily rss fetcher"""
-    def fetcher(ctx):
-        u"""China Daily fetcher of category {}""" . format(category)
+def fetch_rss(feed_url):
+    socket.setdefaulttimeout(15)
+    return feedparser.parse(feed_url)
+
+
+@register_fetcher('chinadaily_rss', sleep_time=1800)
+def chinadaily_rss_fetcher(ctx):
+    """china daily rss fetcher"""
+    for item in rss_list:
+        if len(item) == 2:
+            category, url = item
+            suffix = category
+        else:
+            suffix, category, url = item
 
         coll = ctx.get_mongo_collection()
         for entry in fetch_rss(url).entries:
@@ -82,33 +92,13 @@ def _gen_rss_fetcher(category, url):
                 coll.insert({'_id': _get_id(category, entry)})
             except DuplicateKeyError:
                 continue
-            tags = ['china_daily', category]
+            tags = ['china daily', category]
             if 'category' in entry:
                 tags.append(entry.category.lower())
             ctx.new_item(
                 TextOnlyItem(entry.title, entry.summary),
                 tags,
                 {'id': _get_id(category, entry),
-                    'content': _get_content(category, entry)})
+                 'content': _get_content(category, entry)})
             log_info(u'China Daily rss: new entry: {} {}' . format(
                 _get_id(category, entry), entry.title))
-
-    return fetcher
-
-
-def fetch_rss(feed_url):
-    socket.setdefaulttimeout(15)
-    return feedparser.parse(feed_url)
-
-
-for item in rss_list:
-    if len(item) == 2:
-        category, url = item
-        suffix = category
-    else:
-        suffix, category, url = item
-
-    decorator = register_fetcher(u'china_daily_rss_' + suffix, sleep_time=60)
-    decorator(_gen_rss_fetcher(category, url))
-
-# vim: foldmethod=marker
