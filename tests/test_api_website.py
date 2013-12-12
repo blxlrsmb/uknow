@@ -1,15 +1,16 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: test_api_website.py
-# $Date: Fri Dec 13 02:26:54 2013 +0800
+# $Date: Fri Dec 13 03:33:42 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 import unittest
 import random
 import string
 import cookielib
-from base import APIInterface
+from interface import APIInterface
 from urllib2 import HTTPError
+from functools import wraps
 
 
 def _random_string(length):
@@ -24,60 +25,176 @@ def _fake_user():
         'password': 'random_password_' + _random_string(6)}
 
 
-class APITest(unittest.TestCase, APIInterface):
+class APITestBase(APIInterface):
 
     """a valid user to register"""
     user = {}
 
     cookie = ''
 
+    NR_TEST_TABS = 10
+
+    def assertSucceed(self, res):
+        self.assertEquals(res, dict(success=1))
+
+    def assertError(self, res, error_msg):
+        self.assertEquals(res, dict(error=error_msg))
+
     def login(self, user=None):
         """Login to api-website.
-        If user is not given, login with APITest.user"""
+        If user is not given, login with APITestBase.user"""
         if not user:
-            user = APITest.user
-        return self.post('/login', **user)
+            user = APITestBase.user
+        return self.get('/login', **user)
 
     def logout(self):
         """Logout api-website"""
         return self.get('/logout')
 
-    def test0_sample(self):
+    def login_required(user):
+        """decorator to login before proceeding"""
+        def decorator(func):
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                self.clear_cookie()
+                self.login(user)
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator
+
+
+class LoginTest(unittest.TestCase, APITestBase):
+
+    def test000_sample(self):
         res = self.get('/sample')
         self.assertEquals(res, dict(answer=42))
 
-    def test1_login_fail(self):
+    def test001_login_fail(self):
         res = self.login(_fake_user())
         self.assertEquals(res, dict(error='no such user'))
 
-    def test2_login_register(self):
-        APITest.user = _fake_user()
-        res = self.post('/register', **APITest.user)
-        self.assertEquals(res, dict(success=1))
+    def test002_login_register(self):
+        APITestBase.user = _fake_user()
+        res = self.get('/register', **APITestBase.user)
+        self.assertSucceed(res)
 
-    def test3_login_duplicate_register(self):
-        res = self.post('/register', **APITest.user)
+    def test003_login_duplicate_register(self):
+        res = self.get('/register', **APITestBase.user)
         self.assertEquals(res, dict(error='user {} already exists' . format(
-            APITest.user['username'])))
+            APITestBase.user['username'])))
 
-    def test4_login_succeed(self):
+    def test004_login_succeed(self):
         self.clear_cookie()
         res = self.login()
-        self.assertEquals(res, dict(success=1))
+        self.assertSucceed(res)
 
-    def test5_logout_succeed(self):
+    def test005_logout_succeed(self):
         self.clear_cookie()
         res = self.login()
         res = self.logout()
-        self.assertEquals(res, dict(success=1))
+        self.assertSucceed(res)
 
-    def test6_logout_failed(self):
+    def test006_logout_failed(self):
         try:
             res = self.logout()
         except HTTPError as e:
             assert e.code == 401
         else:
             raise Exception()
+
+class TabTest(unittest.TestCase, APITestBase):
+    def test100_tab_add_fail(self):
+        try:
+            res = self.post('/add_tab', name='tab2', priority=1)
+        except HTTPError as e:
+            assert e.code == 401
+        else:
+            raise Exception()
+
+    def test101_tab_add(self):
+        self.login()
+        for i in range(self.NR_TEST_TABS):
+            self.assertSucceed(self.post(
+                '/add_tab', name='tab{}'.format(i), priority=1))
+        for i in range(self.NR_TEST_TABS):
+            self.assertError(self.post(
+                '/add_tab', name='tab{}'.format(i), priority=1),
+                'tab with this name already exists!')
+
+    def test102_tab_getall(self):
+        self.login()
+        res = self.get('/get_all_tabs')
+        self.assertTrue('tabs' in res)
+        self.assertEqual(len(res['tabs']), 10)
+
+    def test103_tab_get(self):
+        self.login()
+        for i in range(self.NR_TEST_TABS):
+            res = self.get('/get_tab_article', tab='tab{}' .format(i))
+            self.assertEqual(res, {'data': []})
+
+    def test104_tab_del(self):
+        self.login()
+        for i in range(self.NR_TEST_TABS):
+            self.assertSucceed(self.post('/del_tab', name='tab{}' .format(i)))
+            res = self.get('/get_all_tabs')
+            self.assertEqual(len(res['tabs']), self.NR_TEST_TABS - i - 1)
+
+        for i in range(self.NR_TEST_TABS):
+            # if tab does not exists, api ignores it
+            self.assertSucceed(self.post('/del_tab', name='tab{}' .format(i)))
+
+class TagTest(unittest.TestCase, APITestBase):
+
+    TEST_TAB_NAME = 'tagtest_tab'
+    TEST_TAG_NAME = 'tagtest_tag'
+
+    NR_TEST_TAGS = 10
+
+    def test200_add_tab(self):
+        self.login()
+        self.assertSucceed(self.post('/add_tab', name=self.TEST_TAB_NAME,
+            priority=1))
+
+    def test201_add_tag(self):
+        self.login()
+        for i in range(self.NR_TEST_TAGS):
+            tagname = self.TEST_TAG_NAME+str(i)
+            res = self.post('/add_tag', name=tagname,
+                tab=self.TEST_TAB_NAME, priority=1)
+            self.assertTrue('tabs' in res)
+            self.assertTrue(isinstance(res['tabs'], list))
+            self.assertEqual(len(res['tabs']), 1)
+            self.assertTrue('tags' in res['tabs'][0])
+            self.assertEqual(len(res['tabs'][0]['tags']), i + 1)
+            self.assertTrue(tagname in res['tabs'][0]['tags'])
+
+    def test202_get_tag(self):
+        self.login()
+        res = self.get('/get_tag_article', tag=self.TEST_TAG_NAME + '0')
+        self.assertEqual(res, dict(data=[]))  # nothing here
+
+    def test203_del_tag(self):
+        self.login()
+        for i in range(self.NR_TEST_TAGS):
+            tagname = self.TEST_TAG_NAME+str(i)
+            res = self.get('/del_tag', name=tagname,
+                tab=self.TEST_TAB_NAME, priority=1)
+            self.assertTrue('tabs' in res)
+            self.assertTrue(isinstance(res['tabs'], list))
+            self.assertEqual(len(res['tabs']), 1)
+            self.assertTrue('tags' in res['tabs'][0])
+            self.assertEqual(len(res['tabs'][0]['tags']),
+                self.NR_TEST_TAGS - i - 1)
+
+            # tags that are not removed
+            for j in range(i + 1, self.NR_TEST_TAGS):
+                tagname = self.TEST_TAG_NAME+str(j)
+                self.assertTrue(tagname in res['tabs'][0]['tags'])
+
+    def test299_del_tab(self):
+        self.login()
+        self.assertSucceed(self.post('/del_tab', name=self.TEST_TAB_NAME))
 
 
 def main():

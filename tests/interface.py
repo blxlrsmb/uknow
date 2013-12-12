@@ -1,10 +1,10 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Fri Dec 13 02:24:17 2013 +0800
+# $Date: Fri Dec 13 03:33:19 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
-"""API webiste test case base"""
+"""API Interface"""
 
 import urllib
 import urllib2
