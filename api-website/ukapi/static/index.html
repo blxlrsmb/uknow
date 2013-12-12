@@ -204,7 +204,7 @@
         <div class="control-group">
           <div class="controls">
             <button class="btn btn-info" id="login-register">Register</button>
-            <button type="submit" class="btn">Sign in</button>
+            <button type="submit" class="btn">Go!</button>
           </div>
         </div>
       </form>
@@ -231,6 +231,7 @@
             if(ret['success'] == 1){
               alert('Login ok.');
               $('#login').modal('hide');
+              refreshTab();
             }
             if(ret['error'] !== undefined)
               alert(ret['error']);
@@ -330,6 +331,7 @@
               var $a = $('<a>').text(t['name']);
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
+            $tabs.append($('<li>').addClass('divider-vertical'));
             $('#loading').modal('hide');
           }
         });
