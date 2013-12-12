@@ -5,15 +5,16 @@ makeBasicForm = function(title, data, url, onsuccess){
     $('#form-modal .modal-body').html($form);
     $.each(data, function(i, input){
         var name = 'form-' + input['name'];
-        var type = input['type'];
-        if(type === undefined) type = 'text';
-        var placeholder = input['placeholder'];
-        if(placeholder === undefined) placeholder = input['name'];
+        if(input['type'] === undefined) input['type'] = 'text';
+        if(input['placeholder'] === undefined) input['placeholder'] = input['name'];
         $control_group = $('<div>').addClass('control-group');
         var $label = $('<label>').addClass('control-label').attr('for', name);
         $label.text(input['name'].charAt(0).toUpperCase()+input['name'].slice(1));
-        $control_group.append($label);
-        var $input = $('<input>').attr('type', type).attr('placeholder', placeholder).attr('id',name);
+        if(input['type'] != 'hidden') $control_group.append($label);
+        var $input = $('<input>');
+        $.each(input, function(n,m){
+            $input.attr(n,m);
+        });
         $control_group.append($('<div>').addClass('controls').append($input));
         $form.append($control_group);
     });
@@ -61,7 +62,6 @@ showLoginForm = function(){
                   '/login',
                   function(ret){
                     if(ret['success'] == 1){
-                      alert('Login ok.');
                       $('#form-modal').modal('hide');
                       refreshTab();
                     }
@@ -91,3 +91,11 @@ showAddTabForm = function(){
                   });
     $('#form-modal').modal('show');
 };
+
+showDeleteTabForm = function(tabname){
+    makeBasicForm('Delete tab "'+tabname+'" ?', 
+                  [{name: 'name', type: 'hidden', value: tabname}], 
+                  '/del_tab', 
+                  refreshTab);
+    $('#form-modal').modal('show');
+}

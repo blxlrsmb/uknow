@@ -48,7 +48,8 @@
     <section class="controls no-select">
       <div class="tControls">
         <div class="top">
-          <button  class="btn" title="Mark all as read" alt="Mark all as read"><i class="icon-ok"></i></button>
+          <button class="btn" title="Delete this tab" id="delete-tab"><i class="icon-trash"></i></button>
+          <button class="btn" title="Edit this tab" id="edit-tab"><i class="icon-edit"></i></button>
         </div>
         <div class="middle">
           <button class="btn" ><i class="icon-arrow-up"></i></button>
@@ -137,7 +138,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3></h3>
     </div>
-    <div class="modal-body"><form class="form-horizontal" action="#"></form></div>
+    <div class="modal-body"></div>
   </div>
 
     <script type="text/javascript">
@@ -173,6 +174,11 @@
             $.each(ret['tabs'], function(i,t){
               $tabs.append($('<li>').addClass('divider-vertical'));
               var $a = $('<a>').text(t['name']).attr('href','#');
+              $a.click(function(e){
+                e.preventDefault();
+                $('.itemCount').removeClass('active');
+                $(this).parent().addClass('active');
+              });
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
             $tabs.append($('<li>').addClass('divider-vertical'));
@@ -180,6 +186,13 @@
           }
         });
       };
+      getNowTab = function(){
+        return $('.itemCount.active').text();
+      };
+      $('#delete-tab').click(function(e){
+        e.preventDefault();
+        showDeleteTabForm();
+      });
       dologout = function(){
         $('#loading').modal('show');
         $.getJSON(document.API_URL+'/logout', '', function(ret){
