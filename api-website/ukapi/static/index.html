@@ -208,15 +208,17 @@
         e.preventDefault();
         showEditTabForm(getNowTab());
       });
+
       doLogout = function(){
         $('#loading').modal('show');
-        $.getJSON(document.API_URL+'/logout', '', function(ret){
+        $.getJSON(document.API_URL + '/logout', '', function(ret){
           $('#loading').modal('hide');
           $('#login').modal('show');
-          showblackface();
+          showBlackface();
         })
       };
-      showblackface = function(){
+
+      showBlackface = function(){
         $('body').html('');
         $('body').attr('style','background-color: #000000;');
         var $div = $('<div>').attr('style', 'margin: 150px auto');

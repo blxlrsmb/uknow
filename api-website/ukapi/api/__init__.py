@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 02:02:38 2013 +0800
+# $Date: Fri Dec 13 02:32:12 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -67,9 +67,6 @@ class api_method(object):
                 'Content-Type, Origin, Accept'
             return resp
         rst = self.api_implementation()
-        if not isinstance(rst, dict):
-            return rst
-
         assert isinstance(rst, dict), \
             "ret value {0} is not a dict".format(str(rst))
         callback = request.values.get('callback')

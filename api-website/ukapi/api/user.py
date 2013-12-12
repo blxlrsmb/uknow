@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Fri Dec 13 01:33:28 2013 +0800
+# Date: Fri Dec 13 02:35:24 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api
@@ -37,7 +37,7 @@ def test_login():
     return {'success': 1}
 
 
-@api_method('/login', methods=['POST', 'GET'])
+@api_method('/login')
 def login():
     """login api"""
     try:
@@ -57,7 +57,7 @@ def login():
     return {'success': 1}
 
 
-@api_method('/register', methods=['POST', 'OPTIONS', 'GET'])
+@api_method('/register')
 def register():
     """user registration api.
         username: string
