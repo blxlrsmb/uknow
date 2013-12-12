@@ -118,7 +118,7 @@ showEditTabForm = function(tabname){
       var $select = $('#form-tags');
       $.each(tagnames, function(i, tagname){
         var $option = $('<option>').attr('value', tagname).text(tagname);
-        $select.append($select);
+        $select.append($option);
       });
       $select.chosen({width: "100%"});
       $('#form-modal').modal('show');
