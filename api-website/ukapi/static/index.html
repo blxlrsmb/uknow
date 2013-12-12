@@ -176,7 +176,7 @@
               var $a = $('<a>').text(t['name']).attr('href','#');
               $a.click(function(e){
                 e.preventDefault();
-                focusTab($(this));
+                focusTab($(this).parent());
               });
               $tabs.append($('<li>').addClass('itemCount').append($a));
             });
