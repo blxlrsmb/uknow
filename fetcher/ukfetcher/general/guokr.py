@@ -18,7 +18,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('guokr_rss', sleep_time=50)
+@register_fetcher('guokr_rss', sleep_time=1800)
 def guokr_rss_fetcher(ctx):
     """fetcher guokr.com/rss/, save each title with tag `guokr`"""
     URL = 'http://www.guokr.com/rss/'

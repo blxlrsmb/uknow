@@ -18,7 +18,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('stackoverflow_rss', sleep_time=50)
+@register_fetcher('stackoverflow_rss', sleep_time=1800)
 def stackoverflow_rss_fetcher(ctx):
     """fetcher stackoverflow.com/feeds,
     save each title with tag `stackoverflow`"""
