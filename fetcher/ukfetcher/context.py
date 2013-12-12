@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Thu Dec 12 10:34:24 2013 +0800
+# $Date: Fri Dec 13 00:47:53 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -93,4 +93,9 @@ class FetcherContext(object):
 
     def get_mongo_collection(self):
         """create a mongo collection to store fetcher-specific data"""
-        return get_mongo('fetcher_' + self.fetcher_name)
+        return self.get_mongo_collection_for_fetcher_name(self.fetcher_name)
+
+    @classmethod
+    def get_mongo_collection_for_fetcher_name(cls, fetcher_name):
+        """create a mongo collection to store fetcher-specific data"""
+        return get_mongo('fetcher_' + fetcher_name)

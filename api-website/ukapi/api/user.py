@@ -4,14 +4,21 @@
 # Date: Thu Dec 12 15:28:32 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
-"""user operation api"""
+"""user operation api
+
+mongo doc: collection: user
+{
+    username:
+    password:
+    tab: []
+}
+
+"""
 from . import api_method, request
 from flask_login import login_user, login_required, logout_user, current_user
 from ukdbconn import get_mongo, get_user
 from user_model import User
 from uklogger import log_info
-
-import json
 
 
 @api_method('/logout')
@@ -23,13 +30,12 @@ def logout():
     return {'success': 1}
 
 
-@api_method('/login', methods=['POST'])
+@api_method('/login', methods=['POST', 'GET'])
 def login():
     """login api"""
     try:
-        postdata = json.loads(request.data)
-        username = postdata['username']
-        password = postdata['password']
+        username = request.values['username']
+        password = request.values['password']
         assert isinstance(username, basestring) \
             and isinstance(password, basestring)
     except Exception as e:
@@ -44,7 +50,7 @@ def login():
     return {'success': 1}
 
 
-@api_method('/register', methods=['POST', 'OPTIONS'])
+@api_method('/register', methods=['POST', 'OPTIONS', 'GET'])
 def register():
     """user registration api.
         username: string
@@ -52,11 +58,8 @@ def register():
 
     """
     try:
-        postdata = json.loads(request.data)
-        assert 'username' in postdata and 'password' in postdata,\
-            'no username or password in register()'
-        username = postdata['username']
-        password = postdata['password']
+        username = request.values['username']
+        password = request.values['password']
         assert isinstance(username, basestring)
         assert isinstance(password, basestring)
     except:

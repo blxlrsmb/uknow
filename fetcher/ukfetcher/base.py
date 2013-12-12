@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Thu Dec 12 16:22:21 2013 +0800
+# $Date: Fri Dec 13 00:31:10 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from .prefilter import AbortItemProcessing
@@ -21,7 +21,6 @@ class register_fetcher_base(object):
 
     fetcher_name = None
 
-    _on_register_done = None
     _callback = None
     _fetcher_name_registered = set()
 
@@ -35,15 +34,13 @@ class register_fetcher_base(object):
     def _create_fetcher_context(self):
         """:return: a :class:`FetcherContext` object"""
 
-    def __init__(self, name, on_register_done=None):
+    def __init__(self, name):
         """:param name: name of the fetcher, which must be globally unique
-        :param on_register_done: callable to be invoked when this fetcher has
-            been registerd"""
+        """
         assert name not in self._fetcher_name_registered, \
             'multiple fetchers with same name: {}'.format(name)
         self.fetcher_name = name
         self._fetcher_name_registered.add(name)
-        self._on_register_done = on_register_done
 
     def __call__(self, func):
         """:param func: callable to be invoked when this fetcher is requested;

@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Dec 11 20:02:19 2013 +0800
+# $Date: Fri Dec 13 01:46:04 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
-"""unknown informatin hub API website
-
-global variables:
-    g.user_id    ID of current user (int)
-"""
+"""uknow informatin hub API website"""
 
 import os
 from flask import Flask

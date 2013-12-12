@@ -1,24 +1,23 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Sat Nov 16 20:28:11 2013 +0800
+# $Date: Fri Dec 13 00:19:42 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """change mongo doc before inserting into db"""
 
+from ..util import get_db_set
+
 from ukutil import import_all_modules
-from ukuser import get_enabled_prefilter
 import uklogger
 
 
 class AbortItemProcessing(Exception):
-
     """dummy exception to abort processing of current item, causing it to be
     discarded"""
 
 
 class prefilter(object):
-
     """decorator to register a new prefilter"""
 
     prefilter_list = []
@@ -58,7 +57,7 @@ class prefilter(object):
         note that user-defined prefilters would be first invoked, and then
         system-wide ones"""
         if ctx.user_id is not None:
-            for i in get_enabled_prefilter(ctx.user_id):
+            for i in get_db_set(ctx.user_id, 'prefilter'):
                 flt = cls.user_customizable_map.get(i)
                 if flt is None:
                     uklogger.log_err(
