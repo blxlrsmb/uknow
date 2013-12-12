@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Thu Dec 12 11:55:54 2013 +0800
+# Date: Thu Dec 12 14:27:15 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -21,8 +21,8 @@ def add_tag():
      tab: 'tabname'
     }
     """
-    data = json.loads(request.data)
     try:
+        data = json.loads(request.data)
         tagname = data['name']
         tabname = data['tab']
         assert isinstance(tagname, basestring) \

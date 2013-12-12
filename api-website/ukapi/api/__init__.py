@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Thu Dec 12 14:23:56 2013 +0800
+# $Date: Thu Dec 12 15:05:32 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -52,6 +52,11 @@ class api_method(object):
 
     def view_func(self):
         """the view_func passed to Flask.add_url_rule"""
+        if request.method == 'OPTIONS':
+            resp = Response('', 200)
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Origin, Accept'
+            return resp
         rst = self.api_implementation()
         assert isinstance(rst, dict), \
             "ret value {0} is not a dict".format(str(rst))
@@ -62,4 +67,5 @@ class api_method(object):
             rst = json.dumps(rst, indent=4)
         resp = Response(rst, 200, mimetype='application/json')
         resp.headers['Access-Control-Allow-Origin'] = '*'
+        resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Origin, Accept'
         return resp

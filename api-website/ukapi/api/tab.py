@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 11:51:22 2013 +0800
+# Date: Thu Dec 12 14:27:10 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -21,8 +21,8 @@ def add_tab():
         priority: integer   # bigger, better. default to be 0
     }
     """
-    data = json.loads(request.data)
     try:
+        data = json.loads(request.data)
         name = data['name']
         priority = data.get('priority', 0)
         assert isinstance(name, basestring)
