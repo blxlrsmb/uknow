@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: user.py
-# Date: Wed Dec 11 21:31:47 2013 +0800
+# Date: Thu Dec 12 14:57:55 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 """user operation api"""
@@ -26,8 +26,8 @@ def logout():
 @api_method('/login', methods=['POST'])
 def login():
     """login api"""
-    postdata = json.loads(request.data)
     try:
+        postdata = json.loads(request.data)
         username = postdata['username']
         password = postdata['password']
         assert isinstance(username, basestring) \
@@ -44,22 +44,23 @@ def login():
     return {'success': 1}
 
 
-@api_method('/register', methods=['POST'])
+@api_method('/register', methods=['POST', 'OPTIONS'])
 def register():
     """user registration api.
         username: string
         password: string        XXX TODO
 
     """
-    postdata = json.loads(request.data)
-    assert 'username' in postdata and 'password' in postdata,\
-        'no username or password in register()'
-    username = postdata['username']
-    password = postdata['password']
-    assert isinstance(username, basestring), \
-        'uesrname must be string'
-    assert isinstance(password, basestring), \
-        'password must be string'
+    try:
+        postdata = json.loads(request.data)
+        assert 'username' in postdata and 'password' in postdata,\
+            'no username or password in register()'
+        username = postdata['username']
+        password = postdata['password']
+        assert isinstance(username, basestring)
+        assert isinstance(password, basestring)
+    except:
+        return {'error': 'illegal format'}
 
     exist = get_user(username)
     if exist:
