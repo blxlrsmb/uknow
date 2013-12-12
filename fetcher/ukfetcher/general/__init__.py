@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Wed Dec 11 18:24:00 2013 +0800
+# $Date: Thu Dec 12 11:32:17 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -12,6 +12,7 @@ import uklogger
 
 from ..base import register_fetcher_base
 from ..context import FetcherContext, FETCHER_TYPE_GENERAL
+from ukdbconn import declare_general_tag
 
 import gevent
 
@@ -23,8 +24,9 @@ class GeneralFetcherContext(FetcherContext):
         super(GeneralFetcherContext, self).__init__(
             FETCHER_TYPE_GENERAL, fetcher_name)
 
-    def new_item(self, desc, inital_tag, other=None):
-        return self._do_new_item(desc, inital_tag, other)
+    def new_item(self, desc, inital_tags, other=None):
+        declare_general_tag(inital_tags)
+        return self._do_new_item(desc, inital_tags, other)
 
 
 class register_fetcher(register_fetcher_base):
