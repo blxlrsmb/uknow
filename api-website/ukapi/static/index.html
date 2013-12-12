@@ -7,7 +7,9 @@
   <!-- <link rel="stylesheet" href="bower_components/bootstrap.css/css/bootstrap.css"> -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="bower_components/chosen_v1/chosen.min.css">
   <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/chosen_v1/chosen.jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/spin.js/spin.js"></script>
   <script type="text/javascript" src="bower_components/spin.js/jquery.spin.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap.css/js/bootstrap.min.js"></script>
@@ -201,6 +203,10 @@
       $('#delete-tab').click(function(e){
         e.preventDefault();
         showDeleteTabForm(getNowTab());
+      });
+      $('#edit-tab').click(function(e){
+        e.preventDefault();
+        showEditTabForm(getNowTab());
       });
       dologout = function(){
         $('#loading').modal('show');

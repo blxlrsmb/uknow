@@ -12,6 +12,7 @@ makeBasicForm = function(title, data, url, onsuccess){
         $label.text(input['name'].charAt(0).toUpperCase()+input['name'].slice(1));
         if(input['type'] != 'hidden') $control_group.append($label);
         var $input = $('<input>');
+        if(input['type'] == 'select') $input = $('<select>');
         $.each(input, function(n,m){
             $input.attr(n,m);
         });
@@ -99,4 +100,26 @@ showDeleteTabForm = function(tabname){
                   '/del_tab',
                   refreshTab);
     $('#form-modal').modal('show');
+};
+
+showEditTabForm = function(tabname){
+    $.getJSON(document.API_URL+'/get_all_tags', '', function(alltags){
+      var tagnames = $.map(alltags['tags'], function(x){return x['name'];});
+      makeBasicForm('Edit tab "' + tabname + '"?',
+                    [{name: 'name', type: 'hidden', value: tabname},
+                     {
+                        name: 'tags',
+                        type: 'select',
+                        'data-placeholder': 'No tag selected',
+                        multiple: '',
+                      }],
+                    '/set_tags');
+      var $select = $('#form-tags');
+      $select.chosen();
+      $.each(tagnames, function(i, tagname){
+        var $option = $('<option>').attr('value', tagname).text(tagname);
+        $select.append($select);
+      });
+      $('#form-modal').modal('show');
+    });
 };
