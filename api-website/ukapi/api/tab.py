@@ -50,15 +50,17 @@ def get_all_tabs():
     return {'tabs': tabs}
 
 
-@api_method('/del_tab')
+@api_method('/del_tab', methods=['POST'])
 @login_required
 def del_tab():
     """delete a tab
-    GET /del_tab?name=tabname
+    {
+        name: 'tabname'      # name of the tab
+    }
     ignore it when tab with 'tabname' doesn't exist
     """
-    data = request.args
     try:
+        data = json.loads(request.data)
         name = data['name']
         assert isinstance(name, basestring)
     except:
