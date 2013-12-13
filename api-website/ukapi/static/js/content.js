@@ -98,6 +98,10 @@ nextArticle = function(){
 setWholePageArticle = function(){
     $('#loading').modal('show');
     var $tab = getNowTab();
+    if($tab.length === 0){
+      $('#loading').modal('hide');
+      return;
+    }
     var tabname = $tab.text();
     $.getJSON(document.API_URL+'/get_tab_article',
               {tab: tabname},
