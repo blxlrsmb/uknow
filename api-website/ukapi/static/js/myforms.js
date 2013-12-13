@@ -148,11 +148,12 @@ showEditFetcherForm = function(){
 		});
 		$select.chosen({width: "100%"});
 		$(document).data('old-fetchers', fetchers);
+		$form.off();
 		$form.on('submit', function(e){
 			e.preventDefault();
 			$(document).data('new-fetchers', $select.val());
 			$('#form-modal').modal('hide');
-			setTimeout(doEditFetcher, 300);
+			setTimeout(doEditFetcher, 500);
 		});
 		$('#form-modal').modal('show');
 	});
