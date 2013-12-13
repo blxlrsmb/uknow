@@ -12,7 +12,7 @@ setArticle = function(data){
   var $source = $('#article-source').html('');
   $source.text(data['time']+"  ");
   $.each(data['tags'], function(i, tag){
-    $source.appent($('<span class="label">').text(tag));
+    $source.append($('<span class="label">').text(tag));
   });
   $('#article-title').text(data['title']);
   $('#article-content').html(data['content']);
