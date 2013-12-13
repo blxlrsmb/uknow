@@ -46,7 +46,6 @@ refreshTab = function(){
       alert('Error refreshing tabs');
     } else {
       doRefreshTab(ret['tabs']);
-      $('#loading').modal('hide');
     }
   });
 };
