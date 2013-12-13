@@ -9,7 +9,7 @@ appendNewSummary = function(data){
 };
 
 setArticle = function(data){
-  var $source = $('#article-source').html();
+  var $source = $('#article-source').html('');
   $source.text(data['time']+"  ");
   $.each(data['tags'], function(i, tag){
     $source.appent($('<span class="label">').text(tag));
