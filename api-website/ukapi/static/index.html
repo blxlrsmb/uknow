@@ -54,8 +54,8 @@
     <section class="controls no-select">
       <div class="tControls">
         <div class="top">
-          <button class="btn" title="Delete this tab" id="delete-tab"><i class="icon-trash"></i></button>
-          <button class="btn" title="Edit this tab" id="edit-tab"><i class="icon-edit"></i></button>
+          <button class="btn" title="Delete this tab" onclick="showDeleteTabForm();"><i class="icon-trash"></i></button>
+          <button class="btn" title="Edit this tab" onclick="showEditTabForm();"><i class="icon-edit"></i></button>
         </div>
         <div class="middle">
           <button class="btn" onclick="prevArticle();"><i class="icon-arrow-up"></i></button>
@@ -71,20 +71,7 @@
 
     <section class="summaries" id="summaries">
 
-      <article class="well summary">
-        <div class="row-fluid" >
-          <div class="span6 pub-name">
-            git.net9.org
-          </div>
-          <div class="span6 pub-date">
-            <span class="label">Tag1</span>
-            <span class="label label-important">Tag2</span>
-          </div>
-        </div>
-        <h3 class="pub-title">UKnow InfoHub前端框架完成</h3>
-      </article>
-
-      <article class="well summary">
+      <article class="well summary active">
         <div class="row-fluid" >
           <div class="span6 pub-name">
             git.net9.org
@@ -98,7 +85,6 @@
       </article>
 
     </section>
-
 
     <section class="entries" id="entries">
 
@@ -126,7 +112,8 @@
       <h3>About UKnow InfoHub</h3>
     </div>
     <div class="modal-body">
-      <p>blah blah blah</p>
+      <p>Uknow Information Collector is a web server that can fetch some Information and provide it with RESTful api.
+      <p>It's a project for Software Engineering course.</p>
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -149,26 +136,8 @@
 
     <script type="text/javascript">
       $('#loading-spin').spin();
-
-      $('#delete-tab').click(function(e){
-        e.preventDefault();
-        showDeleteTabForm();
-      });
-
-      $('#edit-tab').click(function(e){
-        e.preventDefault();
-        showEditTabForm();
-      });
-
-      $(document).ready(function(){
-        appendNewSummary('网易头条', ['Tag1', 'Tag2'], '清华大学期末考试取消');
-        setArticle('网易头条', '清华大学期末考试取消', 'BlahGeek', 'blah blah blah')
-      });
-
       setTimeout(checkLogin, 0);
-
     </script>
-
 
 </body>
 </html>
