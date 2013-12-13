@@ -58,7 +58,7 @@ makeBasicForm = function(title, data, url, onsuccess){
 		$.each(data, function(i, input){
 			dic[input['name']] = $('#form-'+input['name']).val();
 		});
-		makePostRequest(dic, url, onsucess);
+		makePostRequest(dic, url, onsuccess);
 	});
 };
 

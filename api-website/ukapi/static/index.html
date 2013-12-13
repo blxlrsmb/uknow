@@ -17,6 +17,7 @@
     document.API_URL = '';
   </script>
   <script type="text/javascript" src="js/myforms.js"></script>
+  <script type="text/javascript" src="js/user.js"></script>
 </head>
 
 <body>
@@ -145,97 +146,24 @@
 
     <script type="text/javascript">
       $('#loading-spin').spin();
-      appendNewSummary = function(source, tags, title){
-        var $pubname = $('<div>').addClass('span6 pub-name').text(source);
-        var $pubdate = $('<div>').addClass('span6 pub-date');
-        $.map(tags, function(t, i){
-          $pubdate.append(' ').append($('<span>').addClass('label').text(t));
-        });
-        var $article = $('<article>').addClass('well summary');
-        $article.append($('<div>').addClass('row-fluid').append($pubname).append($pubdate));
-        $article.append($('<h3>').addClass('pub-title').text(title));
-        $('#summaries').append($article);
-        return $article;
-      };
-      setArticle = function(source, title, author, content){
-        $('#article-source').text(source);
-        $('#article-title').text(title);
-        $('#article-author').text(author);
-        $('#article-content').html(content);
-      };
-      refreshTab = function(){
-        $('#loading').modal('show');
-        $.getJSON(document.API_URL+'/get_all_tabs', '', function(ret){
-          if(ret['tabs'] === undefined){
-            alert('Error refreshing tabs');
-          } else {
-            $tabs = $('#tabs').html('');
-            ret['tabs'].sort(function(a,b){
-              return parseInt(a['priority']) > parseInt(b['priority']);
-            });
-            $.each(ret['tabs'], function(i,t){
-              $tabs.append($('<li>').addClass('divider-vertical'));
-              var $a = $('<a>').text(t['name']).attr('href','#');
-              $a.click(function(e){
-                e.preventDefault();
-                focusTab($(this).parent());
-              });
-              $tabs.append($('<li>').addClass('itemCount').append($a));
-            });
-            $tabs.append($('<li>').addClass('divider-vertical'));
-            focusTab(0);
-            $('#loading').modal('hide');
-          }
-        });
-      };
-      getNowTab = function(){
-        return $('.itemCount.active').text();
-      };
-      focusTab = function(n){
-        $.each($('.itemCount'), function(i, tab){
-          var $tab = $(tab);
-          if($tab.is(n) || (typeof(n)=="number"&&i==n) || (typeof(n)=="string"&&n==$tab.text()))
-            $tab.addClass('active');
-          else
-            $tab.removeClass('active');
-        });
-      };
+
       $('#delete-tab').click(function(e){
         e.preventDefault();
         showDeleteTabForm(getNowTab());
       });
+
       $('#edit-tab').click(function(e){
         e.preventDefault();
         showEditTabForm(getNowTab());
       });
 
-      doLogout = function(){
-        $('#loading').modal('show');
-        $.getJSON(document.API_URL + '/logout', '', function(ret){
-          $('#loading').modal('hide');
-          $('#login').modal('show');
-          showBlackface();
-        })
-      };
-
-      showBlackface = function(){
-        $('body').html('');
-        $('body').attr('style','background-color: #000000;');
-        var $div = $('<div>').attr('style', 'margin: 150px auto');
-        $div.append($('<img>').attr('src', 'img/logo.svg').attr('style','padding-left:40%'));
-        $('body').append($div);
-        var sound = new Audio('img/haha.mp3');
-        sound.play();
-      };
       $(document).ready(function(){
         appendNewSummary('网易头条', ['Tag1', 'Tag2'], '清华大学期末考试取消');
         setArticle('网易头条', '清华大学期末考试取消', 'BlahGeek', 'blah blah blah')
       });
 
-			checkLogin = function() {
-				makeGetRequest('/test_login');
-			};
       setTimeout(checkLogin, 0);
+      
     </script>
 
 
