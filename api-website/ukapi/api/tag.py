@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Fri Dec 13 13:41:04 2013 +0800
+# Date: Fri Dec 13 15:29:02 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -75,8 +75,8 @@ def set_tag():
 @api_method('/get_all_tags')
 @login_required
 def get_all_tags():
-    """get all general tags to choose from"""
-    tags = list(get_mongo('general_tags').find())
+    """get all tags to choose from"""
+    tags = list(get_mongo('tags').find())
     ret = map(lambda doc: {'name': doc['_id'], 'cnt': doc['cnt']}, tags)
     return {'tags': ret}
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 01:55:24 2013 +0800
+# $Date: Fri Dec 13 15:27:02 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""

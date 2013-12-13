@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukdbconn.py
-# $Date: Thu Dec 12 11:55:37 2013 +0800
+# $Date: Fri Dec 13 15:26:38 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """database connections"""
@@ -16,7 +16,6 @@ except ImportError:
     from pymongo import Connection as MongoClient
 
 from pymongo.errors import DuplicateKeyError
-from bson.binary import Binary
 
 _db = None
 
@@ -63,15 +62,15 @@ def get_user(username):
     return u[0]
 
 
-def declare_general_tag(tags):
-    """ declare the existant of a general tag, increment the cnt by 1
+def declare_tag(tags):
+    """ declare the existant of a tag, increment the cnt by 1
     tags: list of string
     {
         _id: 'tagname',
         cnt: integer            # number of items under this tag
     }
     """
-    coll_name = 'general_tags'
+    coll_name = 'tags'
     db = get_mongo()
     for tag in tags:
         db.command('findAndModify', coll_name,
