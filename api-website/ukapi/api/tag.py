@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Fri Dec 13 15:29:02 2013 +0800
+# Date: Fri Dec 13 16:13:31 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -34,7 +34,10 @@ def add_tag():
     u = get_user(current_user.username)
     for tab in u['tab']:
         if tabname == tab['name']:
-            tab['tags'].append(tagname)
+            l = tab['tags']
+            l.append(tagname)
+            l = list(set(l))
+            tab['tags'] = l
             get_mongo('user').save(u)
             log_info('user {0} add tag {1} to tab \
                      {2}'.format(current_user.username, tagname, tabname))
@@ -110,19 +113,19 @@ def del_tag():
     return {'error': 'no such tab'}
 
 
-@api_method('/get_tag_article')
-def get_tag_article():
-    """get all article under a tag
-    GET /get_tag_article?tag=tagname
-    """
-    try:
-        tagname = request.args['tag']
-        assert isinstance(tagname, basestring)
-    except:
-        return {'error': 'illegal format'}
-    itemdb = get_mongo('item')
-    rst = list(itemdb.find({'tag': tagname,
-                            'fetcher_type': FETCHER_TYPE_GENERAL},
-                           {'fetcher_name': 0, '_id': 0}))
-    rst = parse_article(rst)
-    return {'data': rst}
+#@api_method('/get_tag_article')
+#def get_tag_article():
+    #"""get all article under a tag
+    #GET /get_tag_article?tag=tagname
+    #"""
+    #try:
+        #tagname = request.args['tag']
+        #assert isinstance(tagname, basestring)
+    #except:
+        #return {'error': 'illegal format'}
+    #itemdb = get_mongo('item')
+    #rst = list(itemdb.find({'tag': tagname,
+                            #'fetcher_type': FETCHER_TYPE_GENERAL},
+                           #{'fetcher_name': 0, '_id': 0}))
+    #rst = parse_article(rst)
+    #return {'data': rst}
