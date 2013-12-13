@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 00:09:37 2013 +0800
+# $Date: Sat Dec 14 01:54:18 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
 from test_config import username, password
@@ -40,7 +40,7 @@ def fetch(username, password):
                         item['content'] = innerHTML(soup.find('textarea'))
                     elif itemtype == 'download':
                         item['title'] = thisitem.item_dict['name']
-                        item['content'] = u'下载地址:<a href="{}">{}</a>'.format(item['title'], thisitem.get_url())
+                        item['content'] = u'下载地址:<a href="{}">{}</a>'.format(thisitem.get_url(), item['title'])
                     items.append(item)
     except RuntimeError as error:
         print error.message
