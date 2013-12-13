@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # File: bitcoin.py
-# Date: Fri Dec 13 13:31:27 2013 +0800
+# Date: Fri Dec 13 14:57:41 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import register_fetcher

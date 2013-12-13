@@ -8,6 +8,7 @@ from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
+from ..util import parse_entry_time
 
 import feedparser
 import socket
@@ -34,5 +35,5 @@ def quora_rss_fetcher(ctx):
         except:
             content = entry.summary
         ctx.new_item(TextOnlyItem(entry.title, content), ['quora'],
-                     {'id': entry.id})
+                     parse_entry_time(entry), {'id': entry.id})
         log_info(u'quora rss: new entry: {} {}'.format(entry.id, entry.title))

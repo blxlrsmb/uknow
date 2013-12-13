@@ -1,10 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: util.py
-# $Date: Fri Dec 13 01:55:03 2013 +0800
+# $Date: Fri Dec 13 15:18:33 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from ukdbconn import get_mongo, DuplicateKeyError
+import time
 
 
 def get_db_coll():
@@ -29,3 +30,13 @@ def get_db_set(user_id, set_name):
     if rst:
         return rst[0].get(set_name, [])
     return []
+
+
+def parse_entry_time(entry=None):
+    """return 9-tuple time for a given entry"""
+    try:
+        return entry.published_parsed
+        return entry.created_parsed
+        return entry.updated_parsed
+    except:
+        return time.localtime()
