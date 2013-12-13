@@ -78,7 +78,9 @@ showAddTabForm = function(){
 	$('#form-modal').modal('show');
 };
 
-showDeleteTabForm = function(tabname){
+showDeleteTabForm = function(){
+	var $tab = getNowTab();
+	var tabname = $tab.text();
 	makeBasicForm('Delete tab "'+tabname+'" ?',
 								[{name: 'name', type: 'hidden', value: tabname}],
 								'/del_tab',
@@ -89,7 +91,10 @@ showDeleteTabForm = function(tabname){
 	$('#form-modal').modal('show');
 };
 
-showEditTabForm = function(tabname){
+showEditTabForm = function(){
+	var $tab = getNowTab();
+	var tabname = $tab.text();
+	var tags = $tab.data('tags');
 	$.getJSON(document.API_URL+'/get_all_tags', '', function(alltags){
 		var tagnames = $.map(alltags['tags'], function(x){return x['name'];});
 		makeBasicForm('Edit tab "' + tabname + '"',
@@ -101,10 +106,18 @@ showEditTabForm = function(tabname){
 											multiple: '',
 											style: 'width:100%;',
 										}],
-										'/set_tag');
+										'/set_tag',
+										function(ret){
+											if(ret['success'] == 1){
+												$('#form-modal').modal('hide');
+											}
+											if(ret['error'] !== undefined)
+												alert(ret['error']);
+										});
 	var $select = $('#form-name');
 	$.each(tagnames, function(i, tagname){
 		var $option = $('<option>').attr('value', tagname).text(tagname);
+		if(tags.indexOf(tagname) != -1) $option.attr('selected');
 		$select.append($option);
 	});
 	$select.chosen({width: "100%"});

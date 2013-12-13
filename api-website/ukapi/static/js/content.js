@@ -36,7 +36,9 @@ refreshTab = function(){
           e.preventDefault();
           focusTab($(this).parent());
         });
-        $tabs.append($('<li>').addClass('itemCount').append($a));
+        var $li = $('<li>').addClass('itemCount').append($a);
+        $li.data('tags', t['tags']);
+        $tabs.append($li);
       });
       $tabs.append($('<li>').addClass('divider-vertical'));
       focusTab(0);
@@ -46,7 +48,7 @@ refreshTab = function(){
 };
 
 getNowTab = function(){
-  return $('.itemCount.active').text();
+  return $('.itemCount.active');
 };
 
 focusTab = function(n){
@@ -57,4 +59,18 @@ focusTab = function(n){
     else
       $tab.removeClass('active');
   });
+};
+
+setWholePageArticle = function(tabname){
+    $('#loading').modal('show');
+    $.getJSON(document.API_URL+'/get_tab_article',
+              {tab: tabname},
+              function(ret){
+                $('#summaries').html('');
+                $.each(ret['data'], function(i, article){
+                    var content = article['other']['content'];
+                    appendNewSummary(content['base'], article['tag'], article['desc']);
+                });
+                $('#loading').modal('hide');
+              });
 };
