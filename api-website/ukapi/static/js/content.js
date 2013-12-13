@@ -63,6 +63,7 @@ focusTab = function(n){
     else
       $tab.removeClass('active');
   });
+  setWholePageArticle();
 };
 
 getNowArticle = function(){
@@ -114,4 +115,11 @@ setWholePageArticle = function(){
                 focusArticle(0);
                 $('#loading').modal('hide');
               });
+};
+
+refresh = function(){
+  $('#loading').modal('show');
+  $.getJSON('/refresh', '', function(ret){
+    $('#loading').modal('hide');
+  });
 };

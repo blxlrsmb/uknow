@@ -118,8 +118,8 @@ showEditTabForm = function(){
 												alert(ret['error']);
 											else{
 												doRefreshTab(ret['tabs']);
-												focusTab(tabname);
 												$('#form-modal').modal('hide');
+												setTimeout(focusTab, 500, tabname);
 											}
 										});
 		var $select = $('#form-name');
