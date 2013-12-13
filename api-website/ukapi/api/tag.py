@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Thu Dec 12 23:55:50 2013 +0800
+# Date: Fri Dec 13 11:01:47 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -56,6 +56,7 @@ def set_tag():
         tags = data['name']
         tabname = data['tab']
         assert isinstance(tabname, basestring)
+        assert isinstance(tags, list)
         for tag in tags:
             assert isinstance(tag, basestring)
     except:
@@ -86,8 +87,8 @@ def del_tag():
     """
     GET /del_tag?name=xxx&tab=xxx
     """
-    data = request.args
     try:
+        data = request.args
         tagname = data['name']
         tabname = data['tab']
         assert isinstance(tagname, basestring) \

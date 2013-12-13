@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: test_api_website.py
-# $Date: Fri Dec 13 04:50:24 2013 +0800
+# $Date: Fri Dec 13 11:00:09 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 import unittest
@@ -265,13 +265,15 @@ class TagTest(unittest.TestCase, APITestBase):
         self.assertError(
             self.post('/set_tag', hello='world'), 'illegal format')
 
-        res = self.post('/set_tag', name=tagname, tab=newtabname)
+        res = self.post('/set_tag', name=[tagname], tab=newtabname)
         self.assertTrue('tabs' in res)
         self.assertTrue(type(res['tabs']) == list)
 
 #        self.assertError(self.get('/del_tag', name=tagname,
 #            tab=self.TEST_TAB_NAME), 'no such tab')
-        self.assertSucceed(self.get('/del_tag', name=tagname, tab=newtabname))
+        res = self.get('/del_tag', name=tagname, tab=newtabname)
+        self.assertTrue('tabs' in res)
+        self.assertTrue(isinstance(res['tabs'], list))
         self.assertError(
             self.get('/del_tag', name=tagname, tab='nonsense'),
             'no such tab')

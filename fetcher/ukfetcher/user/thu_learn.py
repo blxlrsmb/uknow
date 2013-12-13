@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Fri Dec 13 01:56:26 2013 +0800
+# $Date: Fri Dec 13 11:02:51 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -9,7 +9,7 @@
 from . import UserFetcherBase
 
 from ukitem import TextOnlyItem
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 
 class ThuLearFetcher(UserFetcherBase):
