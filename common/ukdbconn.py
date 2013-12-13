@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukdbconn.py
-# $Date: Fri Dec 13 15:26:38 2013 +0800
+# $Date: Fri Dec 13 15:31:17 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """database connections"""
@@ -16,6 +16,7 @@ except ImportError:
     from pymongo import Connection as MongoClient
 
 from pymongo.errors import DuplicateKeyError
+from bson.binary import Binary
 
 _db = None
 
