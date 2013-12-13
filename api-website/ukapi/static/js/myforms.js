@@ -56,7 +56,9 @@ makeBasicForm = function(title, data, url, onsuccess){
 		e.preventDefault();
 		var dic = {};
 		$.each(data, function(i, input){
-			dic[input['name']] = $('#form-'+input['name']).val();
+			var tmp = $('#form-'+input['name']).val();
+			if(tmp === null) tmp = [];
+			dic[input['name']] = tmp;
 		});
 		if($form.data('usingget'))
 			$.getJSON(url, dic, onsuccess);
