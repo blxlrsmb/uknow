@@ -117,9 +117,8 @@ showEditTabForm = function(){
 											if(ret['error'] !== undefined)
 												alert(ret['error']);
 											else{
-												doRefreshTab(ret['tabs']);
 												$('#form-modal').modal('hide');
-												setTimeout(focusTab, 500, tabname);
+												doRefreshTab(ret['tabs']);
 											}
 										});
 		var $select = $('#form-name');

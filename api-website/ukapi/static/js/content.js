@@ -36,7 +36,7 @@ doRefreshTab = function(tabs){
     $tabs.append($li);
   });
   $tabs.append($('<li>').addClass('divider-vertical'));
-  focusTab(0);
+  setTimeout(focusTab, 500, 0);
 };
 
 refreshTab = function(){
