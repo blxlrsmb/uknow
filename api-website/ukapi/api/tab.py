@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Fri Dec 13 13:29:34 2013 +0800
+# Date: Fri Dec 13 13:37:22 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -101,8 +101,9 @@ def get_tab_article():
 
 
 def parse_article(docs):
-    ret = {}
+    rst = []
     for doc in docs:
+        ret = {}
         ret['time'] = \
             doc['creation_time'].strftime('%Y/%m/%d %H:%M')
         try:
@@ -113,4 +114,5 @@ def parse_article(docs):
         ret['title'] = item.render_title()
         ret['content'] = item.render_content()
         ret['tags'] = doc['tag']
-    return ret
+        rst.append(ret)
+    return rst

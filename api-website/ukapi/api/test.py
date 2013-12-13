@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: test.py
-# $Date: Wed Dec 11 18:38:22 2013 +0800
+# $Date: Fri Dec 13 13:35:58 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """test with user id"""
@@ -30,6 +30,6 @@ def test():
             if isinstance(v, datetime):
                 d[k] = str(v)
             elif isinstance(v, Binary):
-                d[k] = ItemDescBase.deserialize(v).render_as_text()
+                d[k] = ItemDescBase.deserialize(v).render_title()
     map(chg, data)
     return {'data': data}
