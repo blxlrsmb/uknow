@@ -162,6 +162,7 @@ doEditFetcher = function(){
 	var to_enable = [];
 	var to_disable = [];
 	var new_fetchers = $(document).data('new-fetchers');
+	if(new_fetchers === null) new_fetchers = [];
 	$.each($(document).data('old-fetchers'), function(i, fetcher){
 		if(fetcher['enabled'] && new_fetchers.indexOf(fetcher['id'])==-1 ) to_disable.push(fetcher);
 		if(!fetcher['enabled'] && new_fetchers.indexOf(fetcher['id'])!=-1 ) to_enable.push(fetcher);
@@ -176,7 +177,7 @@ doEditFetcher = function(){
 			'/fetcher/enable',
 			function(ret){
 				$('#form-modal').modal('hide');
-				setTimeout(doEditFetcher, 300);
+				setTimeout(doEditFetcher, 500);
 			}).data('usingget', true);
 		$('#form-modal').modal('show');
 		return;
