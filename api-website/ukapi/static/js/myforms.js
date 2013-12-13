@@ -58,8 +58,12 @@ makeBasicForm = function(title, data, url, onsuccess){
 		$.each(data, function(i, input){
 			dic[input['name']] = $('#form-'+input['name']).val();
 		});
-		makePostRequest(dic, url, onsuccess);
+		if($form.data('usingget'))
+			$.getJSON(url, dic, onsuccess);
+		else
+			makePostRequest(dic, url, onsuccess);
 	});
+	return $form;
 };
 
 showAddTabForm = function(){
@@ -112,6 +116,7 @@ showEditTabForm = function(){
 												alert(ret['error']);
 											else{
 												doRefreshTab(ret['tabs']);
+												focusTab(tabname);
 												$('#form-modal').modal('hide');
 											}
 										});
@@ -123,5 +128,60 @@ showEditTabForm = function(){
 		});
 		$select.chosen({width: "100%"});
 		$('#form-modal').modal('show');
+	});
+};
+
+showEditFetcherForm = function(){
+	$.getJSON(document.API_URL+'/fetcher/list', '', function(ret){
+		var fetchers = ret['fetcher'];
+		var $form = makeBasicForm('Select fetchers',
+            [{name: 'fetcher',
+							type: 'select',
+							'data-placeholder': 'Select fetchers',
+							multiple: '',
+            }], '#');
+		var $select = $('#form-fetcher');
+		$.each(fetchers, function(i, fetcher){
+			var $option = $('<option>').attr('value', fetcher['id']).text(fetcher['name']);
+			if(fetcher['enabled']) $option.attr('selected', '');
+			$selected.append($option);
+		});
+		$select.chosen({width: "100%"});
+		$(document).data('old-fetchers', fetchers);
+		$form.on('submit', function(e){
+			e.preventDefault();
+			$(document).data('new-fetchers', $select.val());
+			$('#form-modal').modal('hide');
+			setTimeout(doEditFetcher, 300);
+		});
+		$('#form-modal').modal('show');
+	});
+};
+
+doEditFetcher = function(){
+	var to_enable = [];
+	var to_disable = [];
+	var new_fetchers = $(document).data('new-fetchers');
+	$.each($(document).data('old-fetchers'), function(i, fetcher){
+		if(fetcher['enabled'] && new_fetchers.indexOf(fetcher['id'])==-1 ) to_disable.push(fetcher);
+		if(!fetcher['enabled'] && new_fetchers.indexOf(fetcher['id'])!=-1 ) to_enable.push(fetcher);
+	});
+	if(to_enable.length > 0){
+		var fetcher = to_enable.pop();
+		fetcher['enabled'] = true;
+		makeBasicForm('Configure fetcher "'+fetcher['name']+'"',
+      [{name: 'username'},
+       {name: 'password', type: 'password'},
+       {name: 'fetcher_id', type: 'hidden', value: fetcher['id']}],
+			'/fetcher/enable',
+			function(ret){
+				$('#form-modal').modal('hide');
+				setTimeout(doEditFetcher, 300);
+			}).data('usingget', true);
+		$('#form-modal').modal('show');
+		return;
+	}
+	$.each(to_disable, function(i, fetcher){
+		$.getJSON('/fetcher/disable', {fetcher_id: fetcher['id']});
 	});
 };

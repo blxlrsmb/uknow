@@ -65,8 +65,10 @@ focusTab = function(n){
   });
 };
 
-setWholePageArticle = function(tabname){
+setWholePageArticle = function(){
     $('#loading').modal('show');
+    var $tab = getNowTab();
+    var tabname = $tab.text();
     $.getJSON(document.API_URL+'/get_tab_article',
               {tab: tabname},
               function(ret){
