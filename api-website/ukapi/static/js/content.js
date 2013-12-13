@@ -65,6 +65,34 @@ focusTab = function(n){
   });
 };
 
+getNowArticle = function(){
+  return $('.well.summary.active');
+};
+
+focusArticle = function(n){
+  $.each($('.well.summary'), function(i, article){
+    var $article = $(article);
+    if($article.is(n) || (typeof(n)=="number"&&i==n)){
+      $article.addClass('active');
+      var data = $article.data('data');
+      setArticle(data['time'], data['title'], data['url'], data['content']);
+    }
+    else
+      $article.removeClass('active');
+  });
+};
+
+prevArticle = function(){
+  var $prev = getNowArticle().prev();
+  if($prev.length === 0) return;
+  focusArticle($prev);
+};
+nextArticle = function(){
+  var $next = getNowArticle().next();
+  if($next.length === 0) return;
+  focusArticle($next);
+};
+
 setWholePageArticle = function(){
     $('#loading').modal('show');
     var $tab = getNowTab();
@@ -74,11 +102,12 @@ setWholePageArticle = function(){
               function(ret){
                 var $summaries = $('#summaries').html('');
                 $.each(ret['data'], function(i, article){
-                    var $article = appendNewSummary(article['creation_time'],
+                    var $article = appendNewSummary(article['time'],
                       article['tags'], article['title']);
                     $article.data('data', article);
                     $summaries.append($article);
                 });
+                focusArticle(0);
                 $('#loading').modal('hide');
               });
 };
