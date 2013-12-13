@@ -1,22 +1,23 @@
 
-appendNewSummary = function(source, tags, title){
-  var $pubname = $('<div>').addClass('span6 pub-name').text(source);
-  var $pubdate = $('<div>').addClass('span6 pub-date');
-  $.map(tags, function(t, i){
-    $pubdate.append(' ').append($('<span>').addClass('label').text(t));
-  });
+appendNewSummary = function(data){
+  var $pubname = $('<div>').addClass('span6 pub-name').text(data['source']);
   var $article = $('<article>').addClass('well summary');
-  $article.append($('<div>').addClass('row-fluid').append($pubname).append($pubdate));
-  $article.append($('<h3>').addClass('pub-title').text(title));
+  $article.append($('<div>').addClass('row-fluid').append($pubname));
+  $article.append($('<h3>').addClass('pub-title').text(data['title']));
   $('#summaries').append($article);
   return $article;
 };
 
-setArticle = function(source, title, author, content){
-  $('#article-source').text(source);
-  $('#article-title').text(title);
-  $('#article-author').html($('<a>').attr('href', author).attr('target', '_blank').text(author));
-  $('#article-content').html(content);
+setArticle = function(data){
+  var $source = $('#article-source').html();
+  $source.text(data['time']+"  ");
+  $.each(data['tags'], function(i, tag){
+    $source.appent($('<span class="label">').text(tag));
+  });
+  $('#article-title').text(data['title']);
+  $('#article-content').html(data['content']);
+  var link = data['url'];
+  $('#article-author').html($('<a>').attr('href', link).attr('target', '_blank').text(link));
 };
 
 doRefreshTab = function(tabs){
@@ -77,7 +78,7 @@ focusArticle = function(n, scroll){
       if(scroll !== undefined && scroll)
         $('#summaries').scrollTo($article);
       var data = $article.data('data');
-      setArticle(data['time'], data['title'], data['url'], data['content']);
+      setArticle(data);
     }
     else
       $article.removeClass('active');
@@ -108,11 +109,16 @@ setWholePageArticle = function(){
               function(ret){
                 var $summaries = $('#summaries').html('');
                 if(ret['data'].length === 0){
-                  setArticle('Aha!', 'No article here!', 'http://uknow.net9.org', 'rt');
+                  setArticle({
+                    time: 'Aha!',
+                    title: 'No article here!',
+                    url: 'http://uknow.net9.org',
+                    content: 'rt',
+                    tags: []
+                  });
                 }
                 $.each(ret['data'], function(i, article){
-                    var $article = appendNewSummary(article['time'],
-                      article['tags'], article['title']);
+                    var $article = appendNewSummary(article);
                     $article.data('data', article);
                     $article.click(function(e){
                       e.preventDefault();
