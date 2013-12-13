@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Thu Dec 12 23:15:30 2013 +0800
+# $Date: Fri Dec 13 04:56:22 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
@@ -42,8 +42,8 @@ def auto_tagging(ctx, doc):
                 return
         tags = _tagger.predict_one(content)
 #        log_info(content)
-        log_info(doc['tag'])
-        log_info(tags)
+        log_info('original tag: ' + str(doc['tag']))
+        log_info('autotagging: ' + str(tags))
         doc['tag'] = list(set(doc['tag'] + tags))
     """auto tag """
 
