@@ -51,7 +51,7 @@ makeBasicForm = function(title, data, url, onsuccess){
 		$form.append($control_group);
 	});
 	$form.append($('<div class="control-group"><div class="controls" id="form-btns">'+
-								 '<button type="submit" class="btn">Go!</button></div></div>'));
+                 '<button type="submit" class="btn">Go!</button></div></div>'));
 	$form.on('submit', function(e){
 		e.preventDefault();
 		var dic = {};
@@ -75,36 +75,39 @@ showAddTabForm = function(){
 										if(ret['error'] !== undefined)
 											alert(ret['error']);
 									});
-									$('#form-modal').modal('show');
+	$('#form-modal').modal('show');
 };
 
 showDeleteTabForm = function(tabname){
 	makeBasicForm('Delete tab "'+tabname+'" ?',
 								[{name: 'name', type: 'hidden', value: tabname}],
 								'/del_tab',
-								refreshTab);
-								$('#form-modal').modal('show');
+								function(ret){
+									$('#form-modal').modal('hide');
+									refreshTab();
+								});
+	$('#form-modal').modal('show');
 };
 
 showEditTabForm = function(tabname){
 	$.getJSON(document.API_URL+'/get_all_tags', '', function(alltags){
 		var tagnames = $.map(alltags['tags'], function(x){return x['name'];});
-		makeBasicForm('Edit tab "' + tabname + '"?',
-									[{name: 'name', type: 'hidden', value: tabname},
+		makeBasicForm('Edit tab "' + tabname + '"',
+									[{name: 'tab', type: 'hidden', value: tabname},
 										{
-											name: 'tags',
+											name: 'name',
 											type: 'select',
 											'data-placeholder': 'No tag selected',
 											multiple: '',
 											style: 'width:100%;',
 										}],
-										'/set_tags');
-										var $select = $('#form-tags');
-										$.each(tagnames, function(i, tagname){
-											var $option = $('<option>').attr('value', tagname).text(tagname);
-											$select.append($option);
-										});
-										$select.chosen({width: "100%"});
-										$('#form-modal').modal('show');
+										'/set_tag');
+	var $select = $('#form-tags');
+	$.each(tagnames, function(i, tagname){
+		var $option = $('<option>').attr('value', tagname).text(tagname);
+		$select.append($option);
+	});
+	$select.chosen({width: "100%"});
+	$('#form-modal').modal('show');
 	});
 };

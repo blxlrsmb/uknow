@@ -4,6 +4,7 @@ checkLogin = function() {
   $('#loading').modal('show');
   $.getJSON('/test_login', '', function(){
     $('#loading').modal('hide');
+    refreshTab();
   }).fail(redirectLoginPage);
 };
 
