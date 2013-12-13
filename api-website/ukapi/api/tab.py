@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Fri Dec 13 13:37:22 2013 +0800
+# Date: Fri Dec 13 13:40:58 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_api as log_info
 from ukfetcher.general import FETCHER_TYPE_GENERAL
-from ukitem import ItemDescBase
+from ..util import parse_article
 
 import json
 
@@ -98,21 +98,3 @@ def get_tab_article():
                            {'fetcher_name': 0, '_id': 0}))
     rst = parse_article(rst)
     return {'data': rst}
-
-
-def parse_article(docs):
-    rst = []
-    for doc in docs:
-        ret = {}
-        ret['time'] = \
-            doc['creation_time'].strftime('%Y/%m/%d %H:%M')
-        try:
-            ret['url'] = doc['other']['id']
-        except:
-            pass
-        item = ItemDescBase.deserialize(doc['desc'])
-        ret['title'] = item.render_title()
-        ret['content'] = item.render_content()
-        ret['tags'] = doc['tag']
-        rst.append(ret)
-    return rst
