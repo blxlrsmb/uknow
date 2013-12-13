@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Fri Dec 13 11:01:47 2013 +0800
+# Date: Fri Dec 13 13:41:04 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_api as log_info
 from ukfetcher.general import FETCHER_TYPE_GENERAL
-from ukitem import ItemDescBase
+from ..util import parse_article
 
 import json
 
@@ -124,8 +124,5 @@ def get_tag_article():
     rst = list(itemdb.find({'tag': tagname,
                             'fetcher_type': FETCHER_TYPE_GENERAL},
                            {'fetcher_name': 0, '_id': 0}))
-    for item in rst:
-        item['creation_time'] = \
-            item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
-        item['desc'] = ItemDescBase.deserialize(item['desc']).render_as_text()
+    rst = parse_article(rst)
     return {'data': rst}
