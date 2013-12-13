@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Sat Dec 14 01:44:34 2013 +0800
+# $Date: Sat Dec 14 03:06:24 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -10,7 +10,7 @@ from . import UserFetcherBase
 
 from ukitem import TextOnlyItem
 from uklogger import log_fetcher as log_info
-from ukdbconn import DuplicateKeyError, get_mongo
+from ukdbconn import DuplicateKeyError
 from lib.thu_learn.fetch import fetch
 
 
@@ -34,8 +34,9 @@ class ThuLearFetcher(UserFetcherBase):
         conf = cls.load_config(ctx.user_id)
         if not conf:
             return
+        print 'running'
 
-        coll = get_mongo('fetcher_thu_learn_items_id')
+        coll = ctx.get_mongo_collection()
         entries = fetch(conf['username'], conf['password'])
         for entry in entries:
             try:
@@ -43,9 +44,7 @@ class ThuLearFetcher(UserFetcherBase):
             except DuplicateKeyError:
                 continue
             ctx.new_item(
-                TextOnlyItem(u"{}--{}".format(entry['title'],
-                                              entry['summary']),
-                             entry['content']),
-                ['THU learn'], None, entry['id'])
+                TextOnlyItem(entry['title'], entry['content']),
+                ['THU learn'], None, {'id': entry['id']})
             log_info(u'thu learn: new entry: {} {}'.format(entry['id'],
                                                            entry['title']))

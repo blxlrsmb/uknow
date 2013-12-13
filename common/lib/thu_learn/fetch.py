@@ -1,11 +1,12 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 01:54:18 2013 +0800
+# $Date: Sat Dec 14 03:06:09 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
 from test_config import username, password
 from items import login, course as Course, item as Item, item_name_dict
+from uklogger import log_exc
 
 from BeautifulSoup import BeautifulSoup
 
@@ -23,9 +24,7 @@ def fetch(username, password):
             for itemtype in item_name_dict:
                 for j in course.get_item_list(itemtype):
                     thisitem = Item(j, itemtype)
-                    item = {'id': thisitem.get_url(),
-                            'summary': u'{}-{}'.format(i['name'], item_name_dict[itemtype])
-                            }
+                    item = {'id': thisitem.get_url() }
                     if itemtype == 'notice':
                         data = thisitem.get_data()
                         soup = BeautifulSoup(data)
@@ -41,12 +40,14 @@ def fetch(username, password):
                     elif itemtype == 'download':
                         item['title'] = thisitem.item_dict['name']
                         item['content'] = u'下载地址:<a href="{}">{}</a>'.format(thisitem.get_url(), item['title'])
+                    item['title'] = i['name'] + '\n' + item['title']
                     items.append(item)
-    except RuntimeError as error:
-        print error.message
+    except Exception as e:
+        log_exc(str(e))
+
     return items
 
 if __name__=='__main__':
     entries = fetch(username, password)
     for entry in entries:
-        print u'summary:{}\ntitle:{}\nid:{}\ncontent:{}'.format(entry['summary'], entry['title'], entry['id'], entry['content'])
+        print u'title:{}\nid:{}\ncontent:{}'.format(entry['title'], entry['id'], entry['content'])
