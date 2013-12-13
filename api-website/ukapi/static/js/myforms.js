@@ -108,19 +108,17 @@ showEditTabForm = function(){
 										}],
 										'/set_tag',
 										function(ret){
-											if(ret['success'] == 1){
-												$('#form-modal').modal('hide');
-											}
 											if(ret['error'] !== undefined)
 												alert(ret['error']);
+											else doRefreshTab(ret['tabs']);
 										});
-	var $select = $('#form-name');
-	$.each(tagnames, function(i, tagname){
-		var $option = $('<option>').attr('value', tagname).text(tagname);
-		if(tags.indexOf(tagname) != -1) $option.attr('selected');
-		$select.append($option);
-	});
-	$select.chosen({width: "100%"});
-	$('#form-modal').modal('show');
+		var $select = $('#form-name');
+		$.each(tagnames, function(i, tagname){
+			var $option = $('<option>').attr('value', tagname).text(tagname);
+			if(tags.indexOf(tagname) != -1) $option.attr('selected', '');
+			$select.append($option);
+		});
+		$select.chosen({width: "100%"});
+		$('#form-modal').modal('show');
 	});
 };

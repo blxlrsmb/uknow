@@ -19,29 +19,33 @@ setArticle = function(source, title, author, content){
   $('#article-content').html(content);
 };
 
+doRefreshTab = function(tabs){
+  var $tabs = $('#tabs').html('');
+  tabs.sort(function(a,b){
+    return (parseInt(a['priority'], 10) > parseInt(b['priority'], 10));
+  });
+  $.each(tabs, function(i,t){
+    $tabs.append($('<li>').addClass('divider-vertical'));
+    var $a = $('<a>').text(t['name']).attr('href','#');
+    $a.click(function(e){
+      e.preventDefault();
+      focusTab($(this).parent());
+    });
+    var $li = $('<li>').addClass('itemCount').append($a);
+    $li.data('tags', t['tags']);
+    $tabs.append($li);
+  });
+  $tabs.append($('<li>').addClass('divider-vertical'));
+  focusTab(0);
+};
+
 refreshTab = function(){
   $('#loading').modal('show');
   $.getJSON(document.API_URL+'/get_all_tabs', '', function(ret){
     if(ret['tabs'] === undefined){
       alert('Error refreshing tabs');
     } else {
-      $tabs = $('#tabs').html('');
-      ret['tabs'].sort(function(a,b){
-        return (parseInt(a['priority'], 10) > parseInt(b['priority'], 10));
-      });
-      $.each(ret['tabs'], function(i,t){
-        $tabs.append($('<li>').addClass('divider-vertical'));
-        var $a = $('<a>').text(t['name']).attr('href','#');
-        $a.click(function(e){
-          e.preventDefault();
-          focusTab($(this).parent());
-        });
-        var $li = $('<li>').addClass('itemCount').append($a);
-        $li.data('tags', t['tags']);
-        $tabs.append($li);
-      });
-      $tabs.append($('<li>').addClass('divider-vertical'));
-      focusTab(0);
+      doRefreshTab(ret['tabs']);
       $('#loading').modal('hide');
     }
   });
