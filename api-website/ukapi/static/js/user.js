@@ -3,7 +3,6 @@ redirectLoginPage = function(){window.location.replace('/static/login.html');};
 checkLogin = function() {
   $('#loading').modal('show');
   $.getJSON('/test_login', '', function(){
-    $('#loading').modal('hide');
     setTimeout(refreshTab, 500);
   }).fail(redirectLoginPage);
 };
