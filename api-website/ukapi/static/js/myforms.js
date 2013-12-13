@@ -69,6 +69,7 @@ showAddTabForm = function(){
 									'/add_tab',
 									function(ret){
 										if(ret['success'] == 1){
+											$('#form-modal').modal('hide');
 											setTimeout(refreshTab, 500);
 										}
 										if(ret['error'] !== undefined)
@@ -82,6 +83,7 @@ showDeleteTabForm = function(tabname){
 								[{name: 'name', type: 'hidden', value: tabname}],
 								'/del_tab',
 								function(ret){
+									$('#form-modal').modal('hide');
 									setTimeout(refreshTab, 500);
 								});
 	$('#form-modal').modal('show');
@@ -95,12 +97,12 @@ showEditTabForm = function(tabname){
 										{
 											name: 'name',
 											type: 'select',
-											'data-placeholder': 'No tag selected',
+											'data-placeholder': 'Select tags for this tab.',
 											multiple: '',
 											style: 'width:100%;',
 										}],
 										'/set_tag');
-	var $select = $('#form-tags');
+	var $select = $('#form-name');
 	$.each(tagnames, function(i, tagname){
 		var $option = $('<option>').attr('value', tagname).text(tagname);
 		$select.append($option);
