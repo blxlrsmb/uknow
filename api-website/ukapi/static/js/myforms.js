@@ -144,7 +144,7 @@ showEditFetcherForm = function(){
 		$.each(fetchers, function(i, fetcher){
 			var $option = $('<option>').attr('value', fetcher['id']).text(fetcher['name']);
 			if(fetcher['enabled']) $option.attr('selected', '');
-			$selected.append($option);
+			$select.append($option);
 		});
 		$select.chosen({width: "100%"});
 		$(document).data('old-fetchers', fetchers);
