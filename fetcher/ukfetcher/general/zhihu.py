@@ -19,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('zhihu_rss', sleep_time=1800)
+@register_fetcher('zhihu', sleep_time=1800)
 def zhihu_rss_fetcher(ctx):
     """fetcher zhihu.com/rss/, save each title with tag `zhihu`"""
     URL = 'http://www.zhihu.com/rss'

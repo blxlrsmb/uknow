@@ -19,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('stackoverflow_rss', sleep_time=360)
+@register_fetcher('Stackoverflow', sleep_time=360)
 def stackoverflow_rss_fetcher(ctx):
     """fetcher stackoverflow.com/feeds,
     save each title with tag `stackoverflow`"""
@@ -32,7 +32,7 @@ def stackoverflow_rss_fetcher(ctx):
         except DuplicateKeyError:
             continue
         ctx.new_item(TextOnlyItem(entry.title, entry.summary),
-                     ['stackoverflow'], parse_entry_time(entry),
+                     ['Stackoverflow'], parse_entry_time(entry),
                      {'id': entry.id})
         log_info(u'stackoverflow: new entry: {} {}'.format(entry.id,
                                                            entry.title))

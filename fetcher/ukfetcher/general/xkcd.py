@@ -19,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('xkcd_rss', sleep_time=1800)
+@register_fetcher('xkcd', sleep_time=1800)
 def xkcd_rss_fetcher(ctx):
     """fetcher xkcd.com/rss.xml, save each title with tag `xkcd`"""
     URL = 'http://www.xkcd.com/rss.xml'

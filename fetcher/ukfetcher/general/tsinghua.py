@@ -55,7 +55,7 @@ class Tsinghua:
         return Tsinghua._libNewsParse(URL)
 
 
-@register_fetcher('tsinghua_portal', sleep_time=1800)
+@register_fetcher('Tsinghua News', sleep_time=1800)
 def tsinghua_portal_fetcher(ctx):
     """fetcher portal.tsinghua.edu.cn, save each title with tag `portal`"""
     coll = ctx.get_mongo_collection()

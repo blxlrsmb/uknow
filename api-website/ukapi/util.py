@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: util.py
-# $Date: Fri Dec 13 13:43:01 2013 +0800
+# $Date: Fri Dec 13 16:06:48 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from flask_login import current_user, login_required
@@ -29,5 +29,6 @@ def parse_article(docs):
         ret['title'] = item.render_title()
         ret['content'] = item.render_content()
         ret['tags'] = doc['tag']
+        ret['source'] = doc['fetcher_name']
         rst.append(ret)
     return rst

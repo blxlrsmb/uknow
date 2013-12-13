@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Fri Dec 13 15:07:09 2013 +0800
+# $Date: Fri Dec 13 16:04:13 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -78,7 +78,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('chinadaily_rss', sleep_time=1800)
+@register_fetcher('China Daily', sleep_time=1800)
 def chinadaily_rss_fetcher(ctx):
     """china daily rss fetcher"""
     for item in rss_list:
@@ -94,7 +94,7 @@ def chinadaily_rss_fetcher(ctx):
                 coll.insert({'_id': _get_id(category, entry)})
             except DuplicateKeyError:
                 continue
-            tags = ['china daily', category]
+            tags = ['China Daily', category]
             if 'category' in entry:
                 tags.append(entry.category.lower())
             content = _get_content(category, entry)
