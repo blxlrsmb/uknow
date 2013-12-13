@@ -110,7 +110,10 @@ showEditTabForm = function(){
 										function(ret){
 											if(ret['error'] !== undefined)
 												alert(ret['error']);
-											else doRefreshTab(ret['tabs']);
+											else{
+												doRefreshTab(ret['tabs']);
+												$('#form-modal').modal('hide');
+											}
 										});
 		var $select = $('#form-name');
 		$.each(tagnames, function(i, tagname){
