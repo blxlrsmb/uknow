@@ -29,6 +29,10 @@ def quora_rss_fetcher(ctx):
             coll.insert({'_id': entry.id})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, entry.summary), ['quora'],
-                     {'id': entry.id, 'content': entry.content})
+        try:
+            content = entry.content[0].value
+        except:
+            content = entry.summary
+        ctx.new_item(TextOnlyItem(entry.title, content), ['quora'],
+                     {'id': entry.id})
         log_info(u'quora rss: new entry: {} {}'.format(entry.id, entry.title))

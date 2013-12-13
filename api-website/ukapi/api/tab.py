@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Thu Dec 12 23:55:10 2013 +0800
+# Date: Fri Dec 13 13:37:22 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -96,8 +96,23 @@ def get_tab_article():
     rst = list(itemdb.find({'tag': {'$in': tags},
                             'fetcher_type': FETCHER_TYPE_GENERAL},
                            {'fetcher_name': 0, '_id': 0}))
-    for item in rst:
-        item['creation_time'] = \
-            item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
-        item['desc'] = ItemDescBase.deserialize(item['desc']).render_as_text()
+    rst = parse_article(rst)
     return {'data': rst}
+
+
+def parse_article(docs):
+    rst = []
+    for doc in docs:
+        ret = {}
+        ret['time'] = \
+            doc['creation_time'].strftime('%Y/%m/%d %H:%M')
+        try:
+            ret['url'] = doc['other']['id']
+        except:
+            pass
+        item = ItemDescBase.deserialize(doc['desc'])
+        ret['title'] = item.render_title()
+        ret['content'] = item.render_content()
+        ret['tags'] = doc['tag']
+        rst.append(ret)
+    return rst

@@ -3,7 +3,7 @@ API_PORT = 5000
 
 API_RUN_OPTIONS = {
     'debug': True,
-    'use_reloader': False  # for coverage test to work
+    'use_reloader': True  # for coverage test to work
 }
 
 FRONTEND_RUN_OPTIONS = {

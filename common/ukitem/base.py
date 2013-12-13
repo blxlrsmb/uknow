@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: base.py
-# $Date: Wed Dec 11 20:02:59 2013 +0800
+# $Date: Fri Dec 13 13:18:25 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """
@@ -54,8 +54,12 @@ class ItemDescBase(object):
         this should be a class method, and return value should be constant"""
 
     @abstractmethod
-    def render_as_text(self):
-        """render this desc as human-readable text"""
+    def render_title(self):
+        """render the title of this desc as human-readable text"""
+
+    @abstractmethod
+    def render_content(self):
+        """render the contetn of this desc as human-readable text"""
 
     def serialize(self):
         return self.get_desc_name() + SERIALIZATION_SEP + self._do_serialize()

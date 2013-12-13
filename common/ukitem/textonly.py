@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: textonly.py
-# $Date: Wed Dec 11 20:03:12 2013 +0800
+# $Date: Fri Dec 13 13:18:40 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 
@@ -33,5 +33,8 @@ class TextOnlyItem(ItemDescBase):
     def get_desc_name():
         return 'textonly'
 
-    def render_as_text(self):
-        return u'Title: {}\nContent: {}'.format(self.title, self.content)
+    def render_title(self):
+        return u'{}'.format(self.title)
+
+    def render_content(self):
+        return u'{}'.format(self.content)
