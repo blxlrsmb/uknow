@@ -70,11 +70,13 @@ getNowArticle = function(){
   return $('.well.summary.active');
 };
 
-focusArticle = function(n){
+focusArticle = function(n, scroll){
   $.each($('.well.summary'), function(i, article){
     var $article = $(article);
     if($article.is(n) || (typeof(n)=="number"&&i==n)){
       $article.addClass('active');
+      if(scroll !== undefined && scroll)
+        $('#summaries').scrollTo($article);
       var data = $article.data('data');
       setArticle(data['time'], data['title'], data['url'], data['content']);
     }
@@ -86,12 +88,12 @@ focusArticle = function(n){
 prevArticle = function(){
   var $prev = getNowArticle().prev();
   if($prev.length === 0) return;
-  focusArticle($prev);
+  focusArticle($prev, true);
 };
 nextArticle = function(){
   var $next = getNowArticle().next();
   if($next.length === 0) return;
-  focusArticle($next);
+  focusArticle($next, true);
 };
 
 setWholePageArticle = function(){
@@ -115,7 +117,7 @@ setWholePageArticle = function(){
                     });
                     $summaries.append($article);
                 });
-                focusArticle(0);
+                focusArticle(0, true);
                 $('#loading').modal('hide');
               });
 };
