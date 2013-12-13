@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Thu Dec 12 19:32:11 2013 +0800
+# $Date: Fri Dec 13 15:08:46 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -24,9 +24,9 @@ class GeneralFetcherContext(FetcherContext):
         super(GeneralFetcherContext, self).__init__(
             FETCHER_TYPE_GENERAL, fetcher_name)
 
-    def new_item(self, desc, inital_tags, other=None):
+    def new_item(self, desc, inital_tags, create_time=None, other=None):
         declare_general_tag(inital_tags)
-        return self._do_new_item(desc, inital_tags, other)
+        return self._do_new_item(desc, inital_tags, create_time)
 
 
 class register_fetcher(register_fetcher_base):

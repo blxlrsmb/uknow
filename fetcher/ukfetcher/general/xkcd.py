@@ -8,6 +8,7 @@ from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
+from ..util import parse_entry_time
 
 import feedparser
 import socket
@@ -29,7 +30,8 @@ def xkcd_rss_fetcher(ctx):
             coll.insert({'_id': entry.id})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, entry.description), ['xkcd'],
+        ctx.new_item(TextOnlyItem(entry.title, entry.description),
+                     ['xkcd'], parse_entry_time(entry),
                      {'id': entry.id})
         log_info(u'xkcd rss: new entry: {} {}'.format(entry.id,
                                                       entry.title))

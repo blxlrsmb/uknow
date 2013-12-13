@@ -8,6 +8,7 @@ from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
+from ..util import parse_entry_time
 
 import feedparser
 import socket
@@ -31,7 +32,7 @@ def stackoverflow_rss_fetcher(ctx):
         except DuplicateKeyError:
             continue
         ctx.new_item(TextOnlyItem(entry.title, entry.summary),
-                     ['stackoverflow'],
-                     {'id': entry.id, 'content': entry.summary})
+                     ['stackoverflow'], parse_entry_time(entry),
+                     {'id': entry.id})
         log_info(u'stackoverflow: new entry: {} {}'.format(entry.id,
                                                            entry.title))

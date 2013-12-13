@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: textonly.py
-# $Date: Fri Dec 13 13:18:40 2013 +0800
+# $Date: Fri Dec 13 15:01:13 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 
