@@ -70,7 +70,7 @@ showAddTabForm = function(){
 									function(ret){
 										if(ret['success'] == 1){
 											$('#form-modal').modal('hide');
-											setTimeout(refreshTab, 300);
+											setTimeout(refreshTab, 500);
 										}
 										if(ret['error'] !== undefined)
 											alert(ret['error']);
@@ -84,7 +84,7 @@ showDeleteTabForm = function(tabname){
 								'/del_tab',
 								function(ret){
 									$('#form-modal').modal('hide');
-									setTimeout(refreshTab, 300);
+									setTimeout(refreshTab, 500);
 								});
 	$('#form-modal').modal('show');
 };
