@@ -72,10 +72,12 @@ setWholePageArticle = function(){
     $.getJSON(document.API_URL+'/get_tab_article',
               {tab: tabname},
               function(ret){
-                $('#summaries').html('');
+                var $summaries = $('#summaries').html('');
                 $.each(ret['data'], function(i, article){
-                    var content = article['other']['content'];
-                    appendNewSummary(content['base'], article['tag'], article['desc']);
+                    var $article = appendNewSummary(article['creation_time'],
+                      article['tags'], article['title']);
+                    $article.data('data', article);
+                    $summaries.append($article);
                 });
                 $('#loading').modal('hide');
               });
