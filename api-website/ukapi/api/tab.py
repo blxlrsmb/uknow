@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Fri Dec 13 15:55:07 2013 +0800
+# Date: Fri Dec 13 16:16:19 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -102,6 +102,6 @@ def get_tab_article():
                                     'other.user_id': current_user.username
                                 }
                             ]},
-                           {'fetcher_name': 0, '_id': 0}))
+                           {'_id': 0}))
     rst = parse_article(rst)
     return {'data': rst}
