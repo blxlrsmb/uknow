@@ -15,7 +15,7 @@ appendNewSummary = function(source, tags, title){
 setArticle = function(source, title, author, content){
   $('#article-source').text(source);
   $('#article-title').text(title);
-  $('#article-author').html($('<a>').attr('href', author).text(author));
+  $('#article-author').html($('<a>').attr('href', author).attr('target', '_blank').text(author));
   $('#article-content').html(content);
 };
 
