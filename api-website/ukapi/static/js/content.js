@@ -102,6 +102,9 @@ setWholePageArticle = function(){
               {tab: tabname},
               function(ret){
                 var $summaries = $('#summaries').html('');
+                if(ret['data'].length === 0){
+                  setArticle('Aha!', 'No article here!', 'http://uknow.net9.org', 'rt');
+                }
                 $.each(ret['data'], function(i, article){
                     var $article = appendNewSummary(article['time'],
                       article['tags'], article['title']);
