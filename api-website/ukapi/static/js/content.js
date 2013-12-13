@@ -105,6 +105,10 @@ setWholePageArticle = function(){
                     var $article = appendNewSummary(article['time'],
                       article['tags'], article['title']);
                     $article.data('data', article);
+                    $article.click(function(e){
+                      e.preventDefault();
+                      focusArticle($(this));
+                    });
                     $summaries.append($article);
                 });
                 focusArticle(0);
