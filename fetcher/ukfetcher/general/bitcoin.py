@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # File: bitcoin.py
-# Date: Thu Dec 12 20:32:13 2013 +0800
+# Date: Fri Dec 13 16:03:51 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import register_fetcher
@@ -22,10 +22,10 @@ def getPrice():
     return float(price.replace(",", ""))
 
 
-@register_fetcher('bitcoin', sleep_time=60)
+@register_fetcher('Bitcoin', sleep_time=60)
 def bitcoin_fetcher(ctx):
     """fetcher btcchina.com, save with tag `bitcoin`"""
     price = getPrice()
-    ctx.new_item(TextOnlyItem("Last Bitcoin Price",
-                              u"¥" + str(price)), ['bitcoin'])
+    ctx.new_item(TextOnlyItem("Last Bitcoin Price: " +
+                              u"¥" + str(price), ""), ['Bitcoin'])
     log_info(u'bitcoin price update: {}'.format(price))

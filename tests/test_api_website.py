@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: test_api_website.py
-# $Date: Fri Dec 13 04:50:24 2013 +0800
+# $Date: Fri Dec 13 16:10:36 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 import unittest
@@ -216,11 +216,11 @@ class TagTest(unittest.TestCase, APITestBase):
             self.assertEqual(len(res['tabs'][0]['tags']), i + 1)
             self.assertTrue(tagname in res['tabs'][0]['tags'])
 
-    def test202_get_tag(self):
-        self.clear_cookie()
-        self.login()
-        res = self.get('/get_tag_article', tag=self.TEST_TAG_NAME + '0')
-        self.assertEqual(res, dict(data=[]))  # nothing here
+    #def test202_get_tag(self):
+        #self.clear_cookie()
+        #self.login()
+        #res = self.get('/get_tag_article', tag=self.TEST_TAG_NAME + '0')
+        #self.assertEqual(res, dict(data=[]))  # nothing here
 
     def test203_del_tag(self):
         self.clear_cookie()
@@ -265,13 +265,15 @@ class TagTest(unittest.TestCase, APITestBase):
         self.assertError(
             self.post('/set_tag', hello='world'), 'illegal format')
 
-        res = self.post('/set_tag', name=tagname, tab=newtabname)
+        res = self.post('/set_tag', name=[tagname], tab=newtabname)
         self.assertTrue('tabs' in res)
         self.assertTrue(type(res['tabs']) == list)
 
 #        self.assertError(self.get('/del_tag', name=tagname,
 #            tab=self.TEST_TAB_NAME), 'no such tab')
-        self.assertSucceed(self.get('/del_tag', name=tagname, tab=newtabname))
+        res = self.get('/del_tag', name=tagname, tab=newtabname)
+        self.assertTrue('tabs' in res)
+        self.assertTrue(isinstance(res['tabs'], list))
         self.assertError(
             self.get('/del_tag', name=tagname, tab='nonsense'),
             'no such tab')

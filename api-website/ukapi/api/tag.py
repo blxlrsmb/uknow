@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tag.py
-# Date: Thu Dec 12 23:55:50 2013 +0800
+# Date: Fri Dec 13 16:13:31 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -9,7 +9,7 @@ from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_api as log_info
 from ukfetcher.general import FETCHER_TYPE_GENERAL
-from ukitem import ItemDescBase
+from ..util import parse_article
 
 import json
 
@@ -34,7 +34,10 @@ def add_tag():
     u = get_user(current_user.username)
     for tab in u['tab']:
         if tabname == tab['name']:
-            tab['tags'].append(tagname)
+            l = tab['tags']
+            l.append(tagname)
+            l = list(set(l))
+            tab['tags'] = l
             get_mongo('user').save(u)
             log_info('user {0} add tag {1} to tab \
                      {2}'.format(current_user.username, tagname, tabname))
@@ -56,6 +59,7 @@ def set_tag():
         tags = data['name']
         tabname = data['tab']
         assert isinstance(tabname, basestring)
+        assert isinstance(tags, list)
         for tag in tags:
             assert isinstance(tag, basestring)
     except:
@@ -74,8 +78,8 @@ def set_tag():
 @api_method('/get_all_tags')
 @login_required
 def get_all_tags():
-    """get all general tags to choose from"""
-    tags = list(get_mongo('general_tags').find())
+    """get all tags to choose from"""
+    tags = list(get_mongo('tags').find())
     ret = map(lambda doc: {'name': doc['_id'], 'cnt': doc['cnt']}, tags)
     return {'tags': ret}
 
@@ -86,8 +90,8 @@ def del_tag():
     """
     GET /del_tag?name=xxx&tab=xxx
     """
-    data = request.args
     try:
+        data = request.args
         tagname = data['name']
         tabname = data['tab']
         assert isinstance(tagname, basestring) \
@@ -109,22 +113,19 @@ def del_tag():
     return {'error': 'no such tab'}
 
 
-@api_method('/get_tag_article')
-def get_tag_article():
-    """get all article under a tag
-    GET /get_tag_article?tag=tagname
-    """
-    try:
-        tagname = request.args['tag']
-        assert isinstance(tagname, basestring)
-    except:
-        return {'error': 'illegal format'}
-    itemdb = get_mongo('item')
-    rst = list(itemdb.find({'tag': tagname,
-                            'fetcher_type': FETCHER_TYPE_GENERAL},
-                           {'fetcher_name': 0, '_id': 0}))
-    for item in rst:
-        item['creation_time'] = \
-            item['creation_time'].strftime('%Y-%m-%d %H:%M:%S')
-        item['desc'] = ItemDescBase.deserialize(item['desc']).render_as_text()
-    return {'data': rst}
+#@api_method('/get_tag_article')
+#def get_tag_article():
+    #"""get all article under a tag
+    #GET /get_tag_article?tag=tagname
+    #"""
+    #try:
+        #tagname = request.args['tag']
+        #assert isinstance(tagname, basestring)
+    #except:
+        #return {'error': 'illegal format'}
+    #itemdb = get_mongo('item')
+    #rst = list(itemdb.find({'tag': tagname,
+                            #'fetcher_type': FETCHER_TYPE_GENERAL},
+                           #{'fetcher_name': 0, '_id': 0}))
+    #rst = parse_article(rst)
+    #return {'data': rst}

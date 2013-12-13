@@ -8,6 +8,7 @@ from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
+from ..util import parse_entry_time
 
 import feedparser
 import socket
@@ -18,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('quora_rss', sleep_time=1800)
+@register_fetcher('Quora', sleep_time=1800)
 def quora_rss_fetcher(ctx):
     """fetcher quora.com/rss/, save each title with tag `quora`"""
     URL = 'https://www.quora.com/rss'
@@ -29,6 +30,10 @@ def quora_rss_fetcher(ctx):
             coll.insert({'_id': entry.id})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, entry.summary), ['quora'],
-                     {'id': entry.id, 'content': entry.content})
+        try:
+            content = entry.content[0].value
+        except:
+            content = entry.summary
+        ctx.new_item(TextOnlyItem(entry.title, content), ['Quora'],
+                     parse_entry_time(entry), {'id': entry.id})
         log_info(u'quora rss: new entry: {} {}'.format(entry.id, entry.title))

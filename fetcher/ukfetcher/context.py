@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Fri Dec 13 00:47:53 2013 +0800
+# $Date: Fri Dec 13 16:29:19 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -18,12 +18,13 @@ mongo document: {
 from .prefilter import prefilter
 
 from ukitem import ItemDescBase
-from ukdbconn import get_mongo, global_counter, Binary
+from ukdbconn import get_mongo, global_counter, Binary, declare_tag
 
 
 from abc import ABCMeta, abstractmethod
-from datetime import datetime
 from copy import deepcopy
+import time
+from datetime import datetime
 
 FETCHER_TYPE_GENERAL = 0
 FETCHER_TYPE_USER = 1
@@ -53,14 +54,17 @@ class FetcherContext(object):
         self.fetcher_type = fetcher_type
         self.fetcher_name = fetcher_name
 
-    def _do_new_item(self, desc, inital_tag, other):
+    def _do_new_item(self, desc, initial_tag, create_time=None, other=None):
         """helper function for implementing :meth:`new_item`"""
         assert isinstance(desc, ItemDescBase), \
             'bad desc: {!r}'.format(type(desc))
-        assert isinstance(inital_tag, list) and \
-            all([isinstance(i, basestring) for i in inital_tag]), \
-            'bad inital_tag: {!r}'.format(inital_tag)
+        assert isinstance(initial_tag, list) and \
+            all([isinstance(i, basestring) for i in initial_tag]), \
+            'bad initial_tag: {!r}'.format(initial_tag)
 
+        declare_tag(initial_tag)
+        if create_time is None:
+            create_time = time.localtime()
         db = get_mongo('item')
         item_id = global_counter('item')
         db.ensure_index('fetcher_type')
@@ -72,9 +76,9 @@ class FetcherContext(object):
             'fetcher_type': self.fetcher_type,
             'fetcher_name': self.fetcher_name,
             'desc': deepcopy(desc),
-            'tag': inital_tag,
+            'tag': initial_tag,
             'other': other,
-            'creation_time': datetime.utcnow()}
+            'creation_time': datetime.fromtimestamp(time.mktime(create_time))}
         prefilter.apply(self, doc)
         doc['desc'] = Binary(doc['desc'].serialize())
         db.insert(doc)
@@ -82,13 +86,14 @@ class FetcherContext(object):
         return item_id
 
     @abstractmethod
-    def new_item(self, desc, inital_tag, other=None):
+    def new_item(self, desc, inital_tag, create_time=None, other=None):
         """add an item into database
         :param fetcher_type: one of FETCHER_TYPE_USER or FETCHER_TYPE_GENERAL
         :param fetcher_name: str, name of fetcher
         :param desc: :class:`ItemDescBase` object
         :param initial_tag: list of str, initial tags
         :param other: any bson-serializable object
+        :param other: :class: `time.struct_time` object
         :return: int, item id"""
 
     def get_mongo_collection(self):

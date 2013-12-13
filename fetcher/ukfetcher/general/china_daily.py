@@ -1,14 +1,14 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 22:44:36 2013 +0800
+# $Date: Fri Dec 13 16:04:13 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
     the corpora can be used to train text classifier"""
 
 from . import register_fetcher
-from functools import wraps
+from ..util import parse_entry_time
 import feedparser
 import socket
 from ukitem import TextOnlyItem
@@ -63,6 +63,8 @@ def _get_id(category, entry):
 def _get_content(category, entry):
     for val in ['content', 'text', 'description']:
         try:
+            if val == 'content':
+                return entry[val][0].value
             return entry[val]
         except KeyError:
             continue
@@ -76,7 +78,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('chinadaily_rss', sleep_time=1800)
+@register_fetcher('China Daily', sleep_time=1800)
 def chinadaily_rss_fetcher(ctx):
     """china daily rss fetcher"""
     for item in rss_list:
@@ -92,13 +94,13 @@ def chinadaily_rss_fetcher(ctx):
                 coll.insert({'_id': _get_id(category, entry)})
             except DuplicateKeyError:
                 continue
-            tags = ['china daily', category]
+            tags = ['China Daily', category]
             if 'category' in entry:
                 tags.append(entry.category.lower())
+            content = _get_content(category, entry)
             ctx.new_item(
-                TextOnlyItem(entry.title, entry.summary),
-                tags,
-                {'id': _get_id(category, entry),
-                 'content': _get_content(category, entry)})
+                TextOnlyItem(entry.title, content),
+                tags, parse_entry_time(entry),
+                {'id': _get_id(category, entry)})
             log_info(u'China Daily rss: new entry: {} {}' . format(
                 _get_id(category, entry), entry.title))

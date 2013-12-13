@@ -5,7 +5,7 @@
 from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 import requests
 from BeautifulSoup import BeautifulSoup
@@ -55,7 +55,7 @@ class Tsinghua:
         return Tsinghua._libNewsParse(URL)
 
 
-@register_fetcher('tsinghua_portal', sleep_time=1800)
+@register_fetcher('Tsinghua News', sleep_time=1800)
 def tsinghua_portal_fetcher(ctx):
     """fetcher portal.tsinghua.edu.cn, save each title with tag `portal`"""
     coll = ctx.get_mongo_collection()
@@ -65,16 +65,16 @@ def tsinghua_portal_fetcher(ctx):
             coll.insert({'_id': entry['link']})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry['title'], ""), ['portal'],
-                     {"id": entry['link']})
-        log_info(u'Tsinghua Portal: new entry: {} {}'.format(entry['link'],
-                                                             entry['title']))
+        ctx.new_item(TextOnlyItem(entry['title'], ""), ['Tsinghua info'],
+                     other={"id": entry['link']})
+        log_info(u'Tsinghua Info: new entry: {} {}'.format(entry['link'],
+                                                           entry['title']))
     for entry in Tsinghua.getLibNotices():
         try:
             coll.insert({'_id': entry['link']})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry['title'], ""), ['library'],
+        ctx.new_item(TextOnlyItem(entry['title'], ""), ['Tsinghua library'],
                      {"id": entry['link']})
         log_info(u'Tsinghua Library: new entry: {} {}'.format(entry['link'],
                                                               entry['title']))

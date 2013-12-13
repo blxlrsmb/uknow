@@ -8,6 +8,7 @@ from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
+from ..util import parse_entry_time
 
 import feedparser
 import socket
@@ -18,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('zhihu_rss', sleep_time=1800)
+@register_fetcher('zhihu', sleep_time=1800)
 def zhihu_rss_fetcher(ctx):
     """fetcher zhihu.com/rss/, save each title with tag `zhihu`"""
     URL = 'http://www.zhihu.com/rss'
@@ -29,7 +30,8 @@ def zhihu_rss_fetcher(ctx):
             coll.insert({'_id': entry.link})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, ""), ['zhihu'],
-                     {'id': entry.link, 'content': entry.description})
-        log_info(u'zhihu rss: new entry: {} {}'.format(entry.link,
-                                                       entry.title))
+        ctx.new_item(TextOnlyItem(entry.title, entry.description), ['zhihu'],
+                     parse_entry_time(entry),
+                     {'id': entry.link})
+        log_info(u'zhihu: new entry: {} {}'.format(entry.link,
+                                                   entry.title))
