@@ -29,7 +29,7 @@ def zhihu_rss_fetcher(ctx):
             coll.insert({'_id': entry.link})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, ""), ['zhihu'],
-                     {'id': entry.link, 'content': entry.description})
-        log_info(u'zhihu rss: new entry: {} {}'.format(entry.link,
-                                                       entry.title))
+        ctx.new_item(TextOnlyItem(entry.title, entry.description), ['zhihu'],
+                     {'id': entry.link})
+        log_info(u'zhihu: new entry: {} {}'.format(entry.link,
+                                                   entry.title))

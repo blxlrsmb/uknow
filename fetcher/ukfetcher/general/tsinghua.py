@@ -65,16 +65,16 @@ def tsinghua_portal_fetcher(ctx):
             coll.insert({'_id': entry['link']})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry['title'], ""), ['portal'],
+        ctx.new_item(TextOnlyItem(entry['title'], ""), ['Tsinghua info'],
                      {"id": entry['link']})
-        log_info(u'Tsinghua Portal: new entry: {} {}'.format(entry['link'],
-                                                             entry['title']))
+        log_info(u'Tsinghua Info: new entry: {} {}'.format(entry['link'],
+                                                           entry['title']))
     for entry in Tsinghua.getLibNotices():
         try:
             coll.insert({'_id': entry['link']})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry['title'], ""), ['library'],
+        ctx.new_item(TextOnlyItem(entry['title'], ""), ['Tsinghua library'],
                      {"id": entry['link']})
         log_info(u'Tsinghua Library: new entry: {} {}'.format(entry['link'],
                                                               entry['title']))

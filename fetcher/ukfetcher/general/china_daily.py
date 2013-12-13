@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Thu Dec 12 22:44:36 2013 +0800
+# $Date: Fri Dec 13 13:23:08 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
@@ -63,6 +63,8 @@ def _get_id(category, entry):
 def _get_content(category, entry):
     for val in ['content', 'text', 'description']:
         try:
+            if val == 'content':
+                return entry[val][0].value
             return entry[val]
         except KeyError:
             continue
@@ -95,10 +97,10 @@ def chinadaily_rss_fetcher(ctx):
             tags = ['china daily', category]
             if 'category' in entry:
                 tags.append(entry.category.lower())
+            content = _get_content(category, entry)
             ctx.new_item(
-                TextOnlyItem(entry.title, entry.summary),
+                TextOnlyItem(entry.title, content),
                 tags,
-                {'id': _get_id(category, entry),
-                 'content': _get_content(category, entry)})
+                {'id': _get_id(category, entry)})
             log_info(u'China Daily rss: new entry: {} {}' . format(
                 _get_id(category, entry), entry.title))

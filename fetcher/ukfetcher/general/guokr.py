@@ -29,6 +29,10 @@ def guokr_rss_fetcher(ctx):
             coll.insert({'_id': entry.id})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, entry.summary), ['guokr'],
-                     {'id': entry.id, 'content': entry.content})
-        log_info(u'guokr rss: new entry: {} {}'.format(entry.id, entry.title))
+        try:
+            content = entry.content[0].value
+        except:
+            content = entry.summary
+        ctx.new_item(TextOnlyItem(entry.title, content), ['guokr'],
+                     {'id': entry.id})
+        log_info(u'guokr: new entry: {} {}'.format(entry.id, entry.title))

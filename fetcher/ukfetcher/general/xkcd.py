@@ -29,7 +29,7 @@ def xkcd_rss_fetcher(ctx):
             coll.insert({'_id': entry.id})
         except DuplicateKeyError:
             continue
-        ctx.new_item(TextOnlyItem(entry.title, ""), ['xkcd'],
-                     {'id': entry.id, 'content': entry.description})
+        ctx.new_item(TextOnlyItem(entry.title, entry.description), ['xkcd'],
+                     {'id': entry.id})
         log_info(u'xkcd rss: new entry: {} {}'.format(entry.id,
                                                       entry.title))

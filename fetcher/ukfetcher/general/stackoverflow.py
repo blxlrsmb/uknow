@@ -33,5 +33,5 @@ def stackoverflow_rss_fetcher(ctx):
         ctx.new_item(TextOnlyItem(entry.title, entry.summary),
                      ['stackoverflow'],
                      {'id': entry.id, 'content': entry.summary})
-        log_info(u'stackoverflow rss: new entry: {} {}'.format(entry.id,
-                                                               entry.title))
+        log_info(u'stackoverflow: new entry: {} {}'.format(entry.id,
+                                                           entry.title))
