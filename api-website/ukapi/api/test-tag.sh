@@ -1,6 +1,6 @@
 #!/bin/bash -e
 # File: test-tag.sh
-# Date: Thu Dec 12 20:46:24 2013 +0800
+# Date: Fri Dec 13 15:53:55 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 DEST="http://localhost:5000"
 
@@ -8,7 +8,7 @@ if [[ $1 == "login" ]]; then
 	curl -X POST -d "{\"username\":\"testuser\", \"password\": \"testpass\" }" \
 		-H "Content-Type:application/json" $DEST/login -c 'cookie.txt'
 elif [[ $1 == "add" ]]; then
-	curl -X POST -d "{\"name\":\"guokr\", \"tab\": \"tab1\" }" \
+	curl -X POST -d "{\"name\":\"thu learn\", \"tab\": \"tab1\" }" \
 		-H "Content-Type:application/json" $DEST/add_tag -b 'cookie.txt'
 elif [[ $1 == "getall" ]]; then
 	curl -H "Content-Type:application/json" $DEST/get_all_tags -b 'cookie.txt'

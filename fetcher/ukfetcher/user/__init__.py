@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 15:27:02 2013 +0800
+# $Date: Fri Dec 13 15:51:10 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -27,8 +27,12 @@ class UserFetcherContext(FetcherContext):
             FETCHER_TYPE_USER, fetcher_name)
         self.user_id = user_id
 
-    def new_item(self, desc, inital_tag, other=None):
-        return self._do_new_item(desc, inital_tag, other)
+    def new_item(self, desc, inital_tag, create_time=None, other=None):
+        try:
+            other['user_id'] = self.user_id
+        except:
+            other = {'user_id': self.user_id}
+        return self._do_new_item(desc, inital_tag, create_time, other)
 
 
 class register_fetcher(register_fetcher_base):

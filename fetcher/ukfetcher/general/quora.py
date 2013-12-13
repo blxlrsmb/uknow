@@ -19,7 +19,7 @@ def fetch_rss(feed_url):
     return feedparser.parse(feed_url)
 
 
-@register_fetcher('quora_rss', sleep_time=1800)
+@register_fetcher('Quora', sleep_time=1800)
 def quora_rss_fetcher(ctx):
     """fetcher quora.com/rss/, save each title with tag `quora`"""
     URL = 'https://www.quora.com/rss'
@@ -34,6 +34,6 @@ def quora_rss_fetcher(ctx):
             content = entry.content[0].value
         except:
             content = entry.summary
-        ctx.new_item(TextOnlyItem(entry.title, content), ['quora'],
+        ctx.new_item(TextOnlyItem(entry.title, content), ['Quora'],
                      parse_entry_time(entry), {'id': entry.id})
         log_info(u'quora rss: new entry: {} {}'.format(entry.id, entry.title))

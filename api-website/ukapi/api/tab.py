@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 # File: tab.py
-# Date: Fri Dec 13 13:40:58 2013 +0800
+# Date: Fri Dec 13 15:55:07 2013 +0800
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
@@ -9,6 +9,7 @@ from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_api as log_info
 from ukfetcher.general import FETCHER_TYPE_GENERAL
+from ukfetcher.user import FETCHER_TYPE_USER
 from ..util import parse_article
 
 import json
@@ -94,7 +95,13 @@ def get_tab_article():
     tags = tab[0]['tags']
     itemdb = get_mongo('item')
     rst = list(itemdb.find({'tag': {'$in': tags},
-                            'fetcher_type': FETCHER_TYPE_GENERAL},
+                            '$or': [
+                                {'fetcher_type': FETCHER_TYPE_GENERAL},
+                                {
+                                    'fetcher_type': FETCHER_TYPE_USER,
+                                    'other.user_id': current_user.username
+                                }
+                            ]},
                            {'fetcher_name': 0, '_id': 0}))
     rst = parse_article(rst)
     return {'data': rst}
