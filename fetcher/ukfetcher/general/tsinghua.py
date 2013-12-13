@@ -5,7 +5,7 @@
 from . import register_fetcher
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
-from uklogger import log_info
+from uklogger import log_fetcher as log_info
 
 import requests
 from BeautifulSoup import BeautifulSoup

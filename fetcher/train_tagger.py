@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: train_tagger.py
-# $Date: Thu Dec 12 20:41:56 2013 +0800
+# $Date: Fri Dec 13 11:24:08 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """train tagger from tags in the database"""
@@ -20,8 +20,10 @@ def main():
             labels = item['tag']
             if len(labels) == 0:
                 continue
-            doc = item['other']['content'][0]['value']
-            data.append((doc, labels))
+            doc = item['other']['content']
+            if len(doc) > 0 and 'value' in doc[0]:
+                doc = doc[0]['value']
+                data.append((doc, labels))
 
     print("#documents: {}" . format(len(data)))
     print("training ...\n")
