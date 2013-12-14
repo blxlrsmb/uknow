@@ -1,14 +1,13 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: china_daily.py
-# $Date: Fri Dec 13 16:04:13 2013 +0800
+# $Date: Sat Dec 14 17:56:12 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """China Daily fetcher. As china daily rss has been categorized automatically,
     the corpora can be used to train text classifier"""
 
-from . import register_fetcher
-from ..util import parse_entry_time
+from . import register_fetcher, parse_entry_time
 import feedparser
 import socket
 from ukitem import TextOnlyItem

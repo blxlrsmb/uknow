@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Fri Dec 13 16:29:19 2013 +0800
+# $Date: Sat Dec 14 16:17:06 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """mongo model and fetcher execution context
@@ -61,6 +61,7 @@ class FetcherContext(object):
         assert isinstance(initial_tag, list) and \
             all([isinstance(i, basestring) for i in initial_tag]), \
             'bad initial_tag: {!r}'.format(initial_tag)
+        initial_tag = map(unicode, initial_tag)
 
         declare_tag(initial_tag)
         if create_time is None:
@@ -86,7 +87,7 @@ class FetcherContext(object):
         return item_id
 
     @abstractmethod
-    def new_item(self, desc, inital_tag, create_time=None, other=None):
+    def new_item(self, desc, initial_tag, create_time=None, other=None):
         """add an item into database
         :param fetcher_type: one of FETCHER_TYPE_USER or FETCHER_TYPE_GENERAL
         :param fetcher_name: str, name of fetcher

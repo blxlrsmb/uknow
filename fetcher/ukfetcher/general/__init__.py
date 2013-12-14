@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 16:29:09 2013 +0800
+# $Date: Sat Dec 14 17:55:00 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
@@ -86,3 +86,12 @@ def start_server():
             i.join()
     except KeyboardInterrupt:
         uklogger.log_info('got KeyboardInterrupt, exit')
+
+
+def parse_entry_time(entry=None):
+    """return 9-tuple time for a given entry"""
+    for i in ['published_parsed', 'created_parsed', 'updated_parsed']:
+        t = getattr(entry, i, None)
+        if t:
+            return t
+    return time.localtime()

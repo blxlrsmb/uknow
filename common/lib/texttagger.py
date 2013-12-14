@@ -1,7 +1,7 @@
-#!/usr/bin/python2
+#!../../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: texttagger.py
-# $Date: Thu Dec 12 21:42:31 2013 +0800
+# $Date: Sat Dec 14 16:14:33 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """text tagger, used by prefilter"""
@@ -14,6 +14,8 @@ import html2text
 import tfidf
 import cPickle as pickle
 import re
+
+LABLE_PREFIX = u'autotag:'
 
 
 def _html2text_wo_new_line(html):
@@ -108,6 +110,7 @@ class TextTagger(object):
             and x[1] > self.prob_lower_bound,
             ans)
         labels = map(operator.itemgetter(0), ans)
+        labels = [LABLE_PREFIX + i for i in labels]
         return labels
 
     def dump(self, file_name):

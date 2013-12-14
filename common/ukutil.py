@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: ukutil.py
-# $Date: Wed Dec 11 20:02:48 2013 +0800
+# $Date: Sat Dec 14 18:01:43 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """common utility functions"""
@@ -27,3 +27,8 @@ def import_all_modules(file_path, pkg_name):
     for _, module_name, _ in walk_packages(
             [os.path.dirname(file_path)], pkg_name + '.'):
         import_module(module_name)
+
+
+def is_in_unittest():
+    """return whether currently in unittest mode"""
+    return os.getenv('IN_UKNOW_TEST') is not None

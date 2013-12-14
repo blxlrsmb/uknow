@@ -1,15 +1,15 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Fri Dec 13 04:56:22 2013 +0800
+# $Date: Sat Dec 14 16:08:38 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
 
 from . import prefilter
-import ukconfig
-from lib.texttagger import TextTagger
 from uklogger import log_info
+from lib.texttagger import TextTagger
+import ukconfig
 
 _tagger = None
 
@@ -27,24 +27,11 @@ def auto_tagging(ctx, doc):
         except IOError:
             log_info('tagger model not found.')
             return
-    if _tagger and ('other' in doc) and doc['other'] \
-            and ('content' in doc['other']):
-        content = doc['other']['content']
-        if not isinstance(content, basestring):
-            if isinstance(content, list):
-                content = content[0]
-            if isinstance(content, dict):
-                if 'value' in content:
-                    content = content['value']
-                else:
-                    return
-            else:
-                return
-        tags = _tagger.predict_one(content)
-#        log_info(content)
-        log_info('original tag: ' + str(doc['tag']))
-        log_info('autotagging: ' + str(tags))
-        doc['tag'] = list(set(doc['tag'] + tags))
+
+    tags = _tagger.predict_one(doc['desc'].content)
+    log_info('original tag: ' + str(doc['tag']))
+    log_info('autotagging: ' + str(tags))
+    doc['tag'] = list(set(doc['tag'] + tags))
     """auto tag """
 
 # vim: foldmethod=marker

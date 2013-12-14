@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: standalone_server.py
-# $Date: Fri Dec 13 19:02:46 2013 +0800
+# $Date: Sat Dec 14 17:25:13 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from ukapi import get_app
@@ -12,7 +12,7 @@ import sys
 def sigint_handler(s, f):
     """receive the SIGINT signal from unittest script
     and exit correctly"""
-    print('SIGINT received')
+    print('api standalone server: SIGINT received, exit')
     sys.exit()
 
 
@@ -21,7 +21,7 @@ def main():
 
     app = get_app()
     try:
-        app.config.from_pyfile('config.py')
+        app.config.from_pyfile('api_website_config.py')
     except IOError:
         print 'WARNING: No configuration found, using builtin defaults.'
 

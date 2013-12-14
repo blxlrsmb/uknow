@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: train_tagger.py
-# $Date: Fri Dec 13 11:24:08 2013 +0800
+# $Date: Sat Dec 14 16:14:43 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """train tagger from tags in the database"""
@@ -9,24 +9,29 @@
 
 import ukconfig
 from ukdbconn import get_mongo
+from ukitem import ItemDescBase
 from lib.texttagger import TextTagger
+
+import random
+
+MAX_DATA_SIZE = 100
 
 
 def main():
     db = get_mongo('item')
     data = []
     for item in db.find():
-        if 'other' in item and item['other'] and 'content' in item['other']:
-            labels = item['tag']
-            if len(labels) == 0:
-                continue
-            doc = item['other']['content']
-            if len(doc) > 0 and 'value' in doc[0]:
-                doc = doc[0]['value']
-                data.append((doc, labels))
+        desc = ItemDescBase.deserialize(item['desc'])
+        labels = item['tag']
+        if not labels:
+            continue
+        doc = desc.content
+        data.append((doc, labels))
 
     print("#documents: {}" . format(len(data)))
     print("training ...\n")
+    random.shuffle(data)
+    data = data[:MAX_DATA_SIZE]
     tagger = TextTagger(nr_min_word_count=3)
     tagger.fit(data)
     print("writing model...\n")

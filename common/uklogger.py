@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: uklogger.py
-# $Date: Thu Dec 12 19:59:56 2013 +0800
+# $Date: Sat Dec 14 17:13:36 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """utilities for handling logging"""
 
 import traceback
 from termcolor import colored
+
+from ukutil import is_in_unittest
 
 
 def log_api(msg):
@@ -42,3 +44,6 @@ def log_exc(exc):
     """log an unexpected exception"""
     log_err('Caught unexpected exception: {}\n{}'.format(
         exc, traceback.format_exc()))
+
+if is_in_unittest():
+    log_api = log_fetcher = log_info = lambda msg: None

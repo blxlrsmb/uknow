@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 02:32:12 2013 +0800
+# $Date: Sat Dec 14 16:45:43 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """website API entry points"""
@@ -44,9 +44,11 @@ class api_method(object):
     def __init__(self, url_rule, **kwargs):
         self.url_rule = url_rule
         self.url_rule_extra_kwargs = kwargs
-        if 'methods' in self.url_rule_extra_kwargs \
-                and 'POST' in self.url_rule_extra_kwargs['methods']:
-            self.url_rule_extra_kwargs['methods'].append('OPTIONS')
+
+        meth = self.url_rule_extra_kwargs.get('methods', None)
+        if meth is not None:
+            if 'POST' in meth:
+                meth.append('OPTIONS')
 
     def __call__(self, func):
         self.api_implementation = func

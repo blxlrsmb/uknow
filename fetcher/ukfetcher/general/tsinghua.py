@@ -75,6 +75,6 @@ def tsinghua_portal_fetcher(ctx):
         except DuplicateKeyError:
             continue
         ctx.new_item(TextOnlyItem(entry['title'], ""), ['Tsinghua library'],
-                     {"id": entry['link']})
+                     other={"id": entry['link']})
         log_info(u'Tsinghua Library: new entry: {} {}'.format(entry['link'],
                                                               entry['title']))

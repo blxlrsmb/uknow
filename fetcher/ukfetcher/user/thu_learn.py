@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Sat Dec 14 03:06:24 2013 +0800
+# $Date: Sat Dec 14 17:41:12 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -11,13 +11,24 @@ from . import UserFetcherBase
 from ukitem import TextOnlyItem
 from uklogger import log_fetcher as log_info
 from ukdbconn import DuplicateKeyError
+from ukutil import is_in_unittest
 from lib.thu_learn.fetch import fetch
+
+import uuid
 
 
 class ThuLearFetcher(UserFetcherBase):
     @staticmethod
     def get_name():
-        return "THU learn"
+        return "thu_learn"
+
+    @staticmethod
+    def get_config_type():
+        return ["username", "password"]
+
+    @staticmethod
+    def get_disp_name():
+        return u'清华大学网络学堂'
 
     @classmethod
     def enable(cls, user_id, config):
@@ -34,10 +45,15 @@ class ThuLearFetcher(UserFetcherBase):
         conf = cls.load_config(ctx.user_id)
         if not conf:
             return
-        print 'running'
 
         coll = ctx.get_mongo_collection()
-        entries = fetch(conf['username'], conf['password'])
+        if is_in_unittest():
+            entries = [{'id': 'test-{}'.format(uuid.uuid4()),
+                        'title': 'thu learn in testcase',
+                        'content': '{}@{}'.format(conf['username'],
+                                                  conf['password'])}]
+        else:
+            entries = fetch(conf['username'], conf['password'])
         for entry in entries:
             try:
                 coll.insert({'_id': str(ctx.user_id) + entry['id']})

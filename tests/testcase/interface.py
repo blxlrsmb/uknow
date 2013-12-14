@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
-# $File: base.py
-# $Date: Fri Dec 13 03:33:19 2013 +0800
+# $File: interface.py
+# $Date: Sat Dec 14 17:28:07 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """API Interface"""
@@ -10,9 +10,9 @@ import urllib
 import urllib2
 import cookielib
 import json
-import config
+import api_website_config
 
-API_PORT = config.API_PORT
+API_PORT = api_website_config.API_PORT
 API_HOST = 'localhost'
 PROTOCOL = 'http'
 

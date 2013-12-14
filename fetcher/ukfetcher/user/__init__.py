@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 15:51:10 2013 +0800
+# $Date: Sat Dec 14 16:41:06 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -10,13 +10,14 @@ from ..base import register_fetcher_base
 from ..context import FetcherContext, FETCHER_TYPE_USER
 from ..util import insert_db_item, remove_db_item, get_db_set
 
-from ukutil import import_all_modules
+from ukutil import import_all_modules, is_in_unittest
 import ukconfig
 import uklogger
 
 from celery import Celery
 
 from abc import ABCMeta, abstractmethod
+import os
 
 
 class UserFetcherContext(FetcherContext):
@@ -45,6 +46,16 @@ class register_fetcher(register_fetcher_base):
 
     _impl = None
     """implementation class"""
+
+    @property
+    def config_type(self):
+        """config type of this fetcher"""
+        return self._impl.get_config_type()
+
+    @property
+    def disp_name(self):
+        """get display name on webpage"""
+        return self._impl.get_disp_name()
 
     def __init__(self, name, impl):
         super(register_fetcher, self).__init__(name)
@@ -79,7 +90,7 @@ class UserFetcherBaseMeta(ABCMeta):
     def __new__(cls, name, base, attr):
         obj = super(UserFetcherBaseMeta, cls).__new__(cls, name, base, attr)
         if name != 'UserFetcherBase':
-            register_fetcher(obj.get_name(), obj)
+            register_fetcher(obj.get_name(), obj())
         return obj
 
 
@@ -88,7 +99,17 @@ class UserFetcherBase(object):
 
     @abstractmethod
     def get_name():
-        """static constant method, return name of this fetcher"""
+        """static constant method, return name of this fetcher, must be
+        globally unique"""
+
+    @abstractmethod
+    def get_disp_name():
+        """static constant method, name of this fetcher to be displayed on
+        webpage"""
+
+    @abstractmethod
+    def get_config_type():
+        """static constant method, return config type of this fetcher"""
 
     @abstractmethod
     def enable(user_id, config):
@@ -165,7 +186,10 @@ def get_celery_task():
         except Exception as ex:
             uklogger.log_exc(ex)
 
-    _celery_task = on_user_activated.delay
+    if is_in_unittest():
+        _celery_task = on_user_activated
+    else:
+        _celery_task = on_user_activated.delay
     return _celery_task
 
 

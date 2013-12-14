@@ -1,14 +1,15 @@
-#!../manage/exec-in-virtualenv.sh
+#!../../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
-# $File: test_api_website.py
-# $Date: Sat Dec 14 14:12:06 2013 +0800
+# $File: api_website.py
+# $Date: Sat Dec 14 18:00:12 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
+
+from interface import APIInterface
 
 import unittest
 import random
 import string
 import cookielib
-from interface import APIInterface
 from urllib2 import HTTPError
 from functools import wraps
 
@@ -140,6 +141,8 @@ class LoginTest(unittest.TestCase, APITestBase):
 
 
 class TabTest(unittest.TestCase, APITestBase):
+    REAL_TAG_NAME = 'Guokr'
+
     def test100_tab_add_fail(self):
         self.clear_cookie()
         try:
@@ -170,9 +173,9 @@ class TabTest(unittest.TestCase, APITestBase):
     def test103_tab_get(self):
         self.clear_cookie()
         self.login()
-        for i in range(self.NR_TEST_TABS):
-            res = self.get('/get_tab_article', tab='tab{}' .format(i))
-            self.assertEqual(res, {'data': []})
+        self.post('/add_tag', name=self.REAL_TAG_NAME, tab='tab0', priority=1)
+        res = self.get('/get_tab_article', tab='tab0')
+        self.assertTrue(len(res['data']) > 0)
 
     def test104_tab_del(self):
         self.clear_cookie()
@@ -286,6 +289,51 @@ class TagTest(unittest.TestCase, APITestBase):
         self.assertSucceed(self.post('/del_tab', name=self.TEST_TAB_NAME))
 
 
+class UserFetcherTest(unittest.TestCase, APITestBase):
+
+    TARGET_FETCHER_ID = 'thu_learn'
+    USERNAME = 'thu_test'
+    PASSWORD = 'thu_test'
+
+    def test300_fetcher_list(self):
+        self.clear_cookie()
+        self.login()
+        res = self.get('/fetcher/list')
+        found = False
+        for i in res['fetcher']:
+            if i['id'] == self.TARGET_FETCHER_ID:
+                found = True
+                self.assertFalse(i['enabled'])
+            self.assertFalse(i['enabled'])
+        self.assertTrue(found)
+
+    def test301_enable_fetcher(self):
+        self.login()
+        res = self.get('/fetcher/enable',
+                       fetcher_id=self.TARGET_FETCHER_ID,
+                       username=self.USERNAME,
+                       password=self.PASSWORD)
+        self.assertSucceed(res)
+        res = self.get('/fetcher/list')
+        for i in res['fetcher']:
+            if i['id'] == self.TARGET_FETCHER_ID:
+                self.assertTrue(i['enabled'])
+            else:
+                self.assertFalse(i['enabled'])
+
+    def test302_refresh(self):
+        self.login()
+        self.get('/refresh')
+
+    def test303_disable_fetcher(self):
+        self.login()
+        res = self.get('/fetcher/disable', fetcher_id=self.TARGET_FETCHER_ID)
+        self.assertSucceed(res)
+        res = self.get('/fetcher/list')
+        for i in res['fetcher']:
+            self.assertFalse(i['enabled'])
+
+
 class MiscTest(unittest.TestCase, APITestBase):
 
     def test900_test_test(self):
@@ -295,7 +343,7 @@ class MiscTest(unittest.TestCase, APITestBase):
 
 
 def main():
-    unittest.main()
+    unittest.main(verbosity=2)
 
 
 if __name__ == '__main__':

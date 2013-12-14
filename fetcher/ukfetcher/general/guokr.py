@@ -4,11 +4,10 @@
 
 """Simple RSS fetcher"""
 
-from . import register_fetcher
+from . import register_fetcher, parse_entry_time
 from ukitem import TextOnlyItem
 from ukdbconn import DuplicateKeyError
 from uklogger import log_fetcher as log_info
-from ..util import parse_entry_time
 
 import feedparser
 import socket
