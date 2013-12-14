@@ -1,17 +1,21 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 01:54:53 2013 +0800
+# $Date: Sat Dec 14 20:07:30 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """provide fetcher background service, and also utilities for managing
 fetchers
 
-mongo doc: collection: ukfetcher_user_config
+public mongo doc: collection: item
 {
-    _id: user_id
-    fetcher: list of fetchers
-    prefilter: list of prefilters
+    _id: unique int64 id
+    fetcher_type: int, indexed
+    fetcher_name: str, indexed
+    desc: binary of ItemDescBase
+    tag: list of str, indexed
+    other: null, or dict of anything
+    creation_time: datetime, UTC, indexed
 }
 """
 
@@ -19,6 +23,8 @@ from .user import get_celery_task as get_user_fetcher_celery_task
 from .user import register_fetcher as _user_register_fetcher
 from .user import load_all_fetcher as _load_all_fetcher
 from .util import get_db_set
+
+from .context import FETCHER_TYPE_USER, FETCHER_TYPE_GENERAL
 
 
 def get_user_fetcher_list():

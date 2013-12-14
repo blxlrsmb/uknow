@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Sat Dec 14 16:08:38 2013 +0800
+# $Date: Sat Dec 14 20:00:43 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
@@ -28,7 +28,7 @@ def auto_tagging(ctx, doc):
             log_info('tagger model not found.')
             return
 
-    tags = _tagger.predict_one(doc['desc'].content)
+    tags = _tagger.predict_one(doc['desc'].render_content())
     log_info('original tag: ' + str(doc['tag']))
     log_info('autotagging: ' + str(tags))
     doc['tag'] = list(set(doc['tag'] + tags))

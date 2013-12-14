@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Sat Dec 14 16:41:06 2013 +0800
+# $Date: Sat Dec 14 19:54:03 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -29,10 +29,10 @@ class UserFetcherContext(FetcherContext):
         self.user_id = user_id
 
     def new_item(self, desc, inital_tag, create_time=None, other=None):
-        try:
-            other['user_id'] = self.user_id
-        except:
+        if other is None:
             other = {'user_id': self.user_id}
+        else:
+            other['user_id'] = self.user_id
         return self._do_new_item(desc, inital_tag, create_time, other)
 
 
@@ -137,7 +137,7 @@ class UserFetcherBase(object):
 
     @classmethod
     def del_config(cls, user_id):
-        """save the config using default method"""
+        """remove config for a user"""
         cls.get_mongo_collection().remove({'_id': user_id})
 
     @classmethod

@@ -3,7 +3,7 @@ appendNewSummary = function(data){
   var $pubname = $('<div>').addClass('span6 pub-name').text(data['source']);
   var $article = $('<article>').addClass('well summary');
   $article.append($('<div>').addClass('row-fluid').append($pubname));
-  $article.append($('<h3>').addClass('pub-title').text(data['title']));
+  $article.append($('<h3>').addClass('pub-title').html(data['title']));
   $('#summaries').append($article);
   return $article;
 };
@@ -15,7 +15,7 @@ setArticle = function(data){
     $source.append($('<span class="label">').text(tag));
     $source.append(' ');
   });
-  $('#article-title').text(data['title']);
+  $('#article-title').html(data['title']);
   $('#article-content').html(data['content']);
   var link = data['url'];
   $('#article-author').html($('<a>').attr('href', link).attr('target', '_blank').text(link));

@@ -247,3 +247,9 @@ section.controls div.bottom {
 .form-text {
 	display: block;
 }
+
+span.highlight {
+	font-size: 2em;
+	font-color: red;
+	background-color: yellow;
+}
