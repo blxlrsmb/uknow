@@ -6,16 +6,16 @@
 \begin{center}
 \begin{table}[!ht]
 	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-		Component & Language & Environment & Lines & Remark \\\hline
-        fetcher & Python2 & POSIX & 747 & Including general and user ones\\ \hline
-        prefilter & Python2 & POSIX & 54 & Not including Training material \\ \hline
-        api-website & Python2 & POSIX & 426 & Not including execute scripts\\ \hline
-        frontend-page & HTML/JS/CSS & POSIX & 558 & CSS:212 JavaScript:153 HTML:193\\ \hline
-        manage & Python2/Shell etc & POSIX & 117 & Management scripts \\ \hline
-        library & Python2 & POSIX & 699 & Common library for all components \\ \hline
-        tests & Python2/Shell & POSIX & 336 & Including unit test and benchmark \\ \hline
-        sum &  & POSIX & 2437 & \\ \hline
+		\shline
+		Component     & Language          & Environment & Lines & Remarks                            \\ \shline
+		fetcher       & Python2           & POSIX       & 747   & Including general and user fetchers \\ \hline
+		prefilter     & Python2           & POSIX       & 54    & Not including machine learning model   \\ \hline
+		api-website   & Python2           & POSIX       & 426   & Not including execute scripts     \\ \hline
+		frontend-page & HTML/JS/CSS       & POSIX       & 558   & CSS:212 JavaScript:153 HTML:193   \\ \hline
+		manage        & Python2/Shell     & POSIX       & 117   & Management scripts                \\ \hline
+		common        & Python2           & POSIX       & 699   & Common library for all components \\ \hline
+		tests         & Python2/Shell     & POSIX       & 336   & Including unit test and benchmark \\ \hline
+		sum           &                   & POSIX       & 2437  &                                   \\ \shline
 	\end{tabular}
 \end{table}
 \end{center}
@@ -23,7 +23,7 @@
 \subsection{Document Introduction}
 \label{sec:introduction}
 	In the following sections of this document, we will present test scheme and
-	results in detail.
+	results in details.
 
 	In~\secref{test_scheme}, the methodology and environment the test is conducted
 	is described. Detailed and accurate test procedure will be present in~\secref{test_procedure}.
