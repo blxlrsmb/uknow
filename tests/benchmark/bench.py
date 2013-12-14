@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: bench.py
-# $Date: Sat Dec 14 23:34:54 2013 +0800
+# $Date: Sat Dec 14 23:57:04 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 import os
@@ -120,6 +120,7 @@ TESTS = {
     }
 }
 
+
 def get_login_cookie():
     from urllib2 import Request, build_opener, HTTPCookieProcessor, HTTPHandler
     import cookielib
@@ -128,13 +129,13 @@ def get_login_cookie():
     opener = build_opener(HTTPCookieProcessor(cj), HTTPHandler())
 
     req = Request(
-        "http://localhost:5000/login?" + \
-        "username={username}&password={password}" . format(
-            **USER))
+        "http://localhost:5000/login?" +
+        "username={username}&password={password}" . format(**USER))
     f = opener.open(req)
 
     html = f.read()
     return cj
+
 
 def gen_ab_cookie_args(cookies):
     args = []
@@ -143,23 +144,28 @@ def gen_ab_cookie_args(cookies):
         args.append("{}={}" . format(cookie.name, cookie.value))
     return args
 
+
 def get_url(page):
     return 'http://{}:{}{}' . format(HOST, PORT, page)
+
 
 def get_output_path_by_page(page):
     assert page.startswith('/')
     return os.path.join(OUTPUT_DIR, page[1:].replace('/', '.'))
 
+
 def mkdir_p(path):
     try:
         os.makedirs(path)
-    except OSError as exc: # Python >2.5
+    except OSError as exc:  # Python >2.5
         if exc.errno == errno.EEXIST and os.path.isdir(path):
             pass
-        else: raise
+        else:
+            raise
 
-def plot_single_line(x, y, xlabel = '', ylabel = '', title = '',
-        output = ''):
+
+def plot_single_line(x, y, xlabel='', ylabel='', title='',
+                     output=''):
     import matplotlib.pyplot as plt
     import numpy as np
 
@@ -167,9 +173,9 @@ def plot_single_line(x, y, xlabel = '', ylabel = '', title = '',
 
     plt.title(title)
 
-    plt.plot(x, y, lw = 2, color = '#9061C2')
+    plt.plot(x, y, lw=2, color='#9061C2')
     #plt.legend(loc = 3, fancybox = True, shadow = True)
-    plt.grid(color = 'gray', linestyle = 'dashed')
+    plt.grid(color='gray', linestyle='dashed')
     plt.ylim([0, max(max(y), 1.0) * 1.1])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
@@ -178,8 +184,9 @@ def plot_single_line(x, y, xlabel = '', ylabel = '', title = '',
     plt.savefig(output)
     plt.close(fig)
 
-def plot_multi_line(data, xlabel = '', ylabel = '', title = '',
-        output = ''):
+
+def plot_multi_line(data, xlabel='', ylabel='', title='',
+                    output=''):
     """:param data is a list of tuple (x, y, label) or (x, y)"""
     import matplotlib.pyplot as plt
 
@@ -188,14 +195,15 @@ def plot_multi_line(data, xlabel = '', ylabel = '', title = '',
     plt.title(title)
 
     colors = ['#9061C2', '#BE80FF', '#02779E', '#4E9CB5',
-            '#327CCB', '#14B694', '#EB540A', '#2DFF78',
-            '#1A20BA', '#251137', '#4C6C0A', '#0B2DE5']
+              '#327CCB', '#14B694', '#EB540A', '#2DFF78',
+              '#1A20BA', '#251137', '#4C6C0A', '#0B2DE5']
 
     for ind, (x, y, label) in enumerate(data):
-        plt.plot(x, y, label = label, lw = 2, color = colors[ind % len(colors)])
+        plt.plot(x, y, label=label, lw=2,
+                 color=colors[ind % len(colors)])
 
-    plt.legend(loc = 4, fancybox = True, shadow = True)
-    plt.grid(color = 'gray', linestyle = 'dashed')
+    plt.legend(loc=4, fancybox=True, shadow=True)
+    plt.grid(color='gray', linestyle='dashed')
     plt.ylim([0, max(max(y), 1.0) * 1.1])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
@@ -204,6 +212,7 @@ def plot_multi_line(data, xlabel = '', ylabel = '', title = '',
     plt.savefig(output)
 
     plt.close(fig)
+
 
 def plot_page_serv_time(page):
     import numpy as np
@@ -213,11 +222,12 @@ def plot_page_serv_time(page):
         data = [i.rstrip().split(',') for i in f]
     xlabel, ylabel = data[0]
     data = np.array(map(lambda x: map(float, x), data[1:]))
-    x, y = data[:,0], data[:,1]
+    x, y = data[:, 0], data[:, 1]
     title = 'benchmark of page {} with {} request at concurrency of {}' \
             . format(page, NR_REQUESTS, CONCURRENCY)
 
     plot_single_line(x, y, xlabel, ylabel, title, fpath + '.serv-time.png')
+
 
 def start_bench_prog(page):
     """return Popen instance"""
@@ -248,8 +258,10 @@ def plot_cpu_stats(page, time_checkpoint, cpu_times):
     title = 'cpu benchmark of page {} with {} request at concurrency of {}' \
             . format(page, NR_REQUESTS, CONCURRENCY)
     output = get_output_path_by_page(page) + ".cpu.png"
-    plot_single_line(x, cpu_times, xlabel = 'time in s', ylabel = 'cpu time percentage',
-            title = title, output = output)
+    plot_single_line(
+        x, cpu_times, xlabel='time in s', ylabel='cpu time percentage',
+        title=title, output=output)
+
 
 def plot_memory_stats(page, time_checkpoint, memory_info):
     import numpy as np
@@ -258,47 +270,38 @@ def plot_memory_stats(page, time_checkpoint, memory_info):
             . format(page, NR_REQUESTS, CONCURRENCY)
     output = get_output_path_by_page(page) + ".mem.png"
     x = map(lambda x: x - time_checkpoint[0], time_checkpoint)
-    y = memory_info[:,1] / 2**20
-    plot_single_line(x, y, xlabel = 'time in s',
-        ylabel = 'Memory Usage in MB',
-        title = title, output = output)
+    y = memory_info[:, 1] / 2 ** 20
+    plot_single_line(x, y, xlabel='time in s',
+                     ylabel='Memory Usage in MB',
+                     title=title, output=output)
 
 
 def plot_io_stats(page, time_checkpoint, io_counters):
     assert(len(time_checkpoint) == len(io_counters))
     import numpy as np
     io_counters = np.array(io_counters)
-    title = 'IO count benchmark of page {} with {} request at concurrency of {}' \
-            . format(page, NR_REQUESTS, CONCURRENCY)
+    title = \
+        'IO count benchmark of page {} with {} request at concurrency of {}' \
+        .format(page, NR_REQUESTS, CONCURRENCY)
     output = get_output_path_by_page(page) + ".io-count.png"
     x = map(lambda x: x - time_checkpoint[0], time_checkpoint)
-    print io_counters[:,0]
-    print io_counters[:,0] - io_counters[0][0]
+    print io_counters[:, 0]
+    print io_counters[:, 0] - io_counters[0][0]
     plot_multi_line([
-        (x, io_counters[:,0] - io_counters[0][0], 'read count'),
-        (x, io_counters[:,1] - io_counters[0][1], 'write count')],
-        xlabel = 'time in s', ylabel = 'IO count',
-        title = title, output = output)
-
-#    title = 'IO bytes benchmark of page {} with {} request at concurrency of {}' \
-#            . format(page, NR_REQUESTS, CONCURRENCY)
-#    output = get_output_path_by_page(page) + ".io-bytes.png"
-#    plot_multi_line([
-#        (x, io_counters[:,2], 'read bytes'),
-#        (x, io_counters[:,3], 'write bytes')],
-#        xlabel = 'time in s', ylabel = 'IO bytes',
-#        title = title, output = output)
-
-
+        (x, io_counters[:, 0] - io_counters[0][0], 'read count'),
+        (x, io_counters[:, 1] - io_counters[0][1], 'write count')],
+        xlabel='time in s', ylabel='IO count',
+        title=title, output=output)
 
 
 def get_cpu_time(pid):
     p = subprocess.Popen(['ps', '-u', '--pid', str(pid)],
-        stdout=subprocess.PIPE)
+                         stdout=subprocess.PIPE)
     p.wait()
     stdoutdata, stderrdata = p.communicate()
     stdoutdata.split('\n')
     return float(stdoutdata.split('\n')[1].split()[2])
+
 
 def benchmark_page(page):
     global SERVER_PID
@@ -312,7 +315,7 @@ def benchmark_page(page):
 
     SLEEP_INTERVAL = 0.01
     try:
-        while bench_prog.poll() == None:
+        while bench_prog.poll() is None:
             time_checkpoint.append(time.time())
             cpu_times.append(get_cpu_time(SERVER_PID))
             memory_info.append(p.get_memory_info())
@@ -323,7 +326,7 @@ def benchmark_page(page):
         bench_prog.terminate()
 
     min_n = min(len(time_checkpoint), len(cpu_times),
-            len(memory_info), len(io_counters))
+                len(memory_info), len(io_counters))
     time_checkpoint = time_checkpoint[:min_n]
     cpu_times = cpu_times[:min_n]
     memory_info = memory_info[:min_n]
@@ -332,6 +335,7 @@ def benchmark_page(page):
     plot_cpu_stats(page, time_checkpoint, cpu_times)
     plot_memory_stats(page, time_checkpoint, memory_info)
     plot_io_stats(page, time_checkpoint, io_counters)
+
 
 def get_server_pid():
     global SERVER_PROC_NAME
@@ -342,6 +346,7 @@ def get_server_pid():
                 procs.append(i)
                 break
     return sorted(procs, key=lambda x: x.pid)[-1].pid
+
 
 def main():
     global login_cookie_args, SERVER_PID

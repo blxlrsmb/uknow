@@ -1,50 +1,47 @@
 \section{Test Procedure}
 \label{sec:test_procedure}
-  \subsection{Testers}
-    zxytim, ppwwyyxx, vuryleo, jiakai
-  \subsection{Period}
-    18:00 Dec 13th, 2013 to 18:00 Dec 14th, 2013.
-  \subsection{Functional Tests}
+\subsection{Testers}
+zxytim, ppwwyyxx, vuryleo, jiakai
+\subsection{Period}
+18:00 Dec 13th, 2013 to 18:00 Dec 14th, 2013.
+\subsection{Functional Tests}
 \begin{enumerate}
 
-    \item Test Case Designing
-      First, read the API list, select out APIs that need to be tested.
-      Then, design use cases for each API based on its function.
-      At last, translate test cases into proper request format and add them into the test suite.
+  \item Test Case Designing
+    First, read the API list, select out APIs that need to be tested.
+    Then, design use cases for each API based on its function.
+    At last, translate test cases into proper request format and add them into the test suite.
 
-      Several cases that designed to test the robustness of the APIs are recorded as well.
-      These cases will perform illegal requests such as requests with wrong format, permission overstep and injection.
-    \item Environment Setting
-      At first, use virtualenv to build a virtual python environment for this project.
-      Then use install tool located in manage suite to set up runtime environment for it.
+    Several cases that designed to test the robustness of the APIs are recorded as well.
+    These cases will perform illegal requests such as requests with wrong format, permission overstep and injection.
+  \item Environment Setting
+    At first, use virtualenv to build a virtual python environment for this project.
+    Then use install tool located in manage suite to set up runtime environment for it.
 
-      In order to provide production environment, a mongodb server and a redis server is also required.
-    \item Software Configuring
-      In this test, the default configure is applied. So no interfere is needed in this step.
-    \item Test Configuring
-      In order to test some third party function, correct authentication information is required.
-      The configure file can be found easily in test suite.
-    \item Test Executing
-      Execute test entry scripts to do the tests.
-    \item Log Analyzing
-      After getting the test log, parse out the useful information and ordinate them into proper format.
+    In order to provide production environment, a mongodb server and a redis server is also required.
+  \item Software Configuring
+    In this test, the default configure is applied. So no interfere is needed in this step.
+  \item Test Configuring
+    In order to test some third party function, correct authentication information is required.
+    The configure file can be found easily in test suite.
+  \item Test Executing
+    Execute test entry scripts to do the tests.
+  \item Log Analyzing
+    After getting the test log, parse out the useful information and ordinate them into proper format.
 
 \end{enumerate}
-  \subsection{Performance Tests}
-    \subsubsection{Test Case Designing}
-      Several APIs that may have heavy loads are picked out to get the worst performance data.
-      Then a random set of APIs is generated in order to test the average performance.
-      Besides, some APIs that may be requested most frequently are selected to get the common performance.
+\subsection{Performance Tests}
+\subsubsection{Test Case Designing}
+Several APIs that may have heavy loads are selected to get the performance data at the worse state.
+Then a random set of APIs are generated in order to test the average performance.
+Besides, APIs that are requested most frequently are selected to get the common performance.
+\subsubsection{Environment Setting}
+In propose of simulating real world performance,
+client and server are located on different machines, so the network transform is considered.
 
-      After all, translate the test requests in functional test into well formed Internet requests
-      and put them in proper places.
-    \subsubsection{Environment Setting}
-      In propose of simulating real world performance,
-      client and server are located on different machines, so the network transform is considered.
-
-      To do so, deploy the project in production mode on one machine, and get the test suite on another.
-    \subsubsection{Test Executing}
-      Execute test entry scripts to do the tests.
-    \subsubsection{Log Analyzing}
-      Performance test will generate plenty of log.
-      So a data visualization procedure is taken to display the data in different collections and patterns.
+To do so, deploy the project in production mode on one machine, and get the test suite on another.
+\subsubsection{Test Executing}
+Execute test entry scripts to do the tests.
+\subsubsection{Log Analyzing}
+Performance test will generate plenty of log.
+So a data visualization procedure is taken to display the data in different collections and patterns.
