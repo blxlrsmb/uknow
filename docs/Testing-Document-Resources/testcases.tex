@@ -1,84 +1,94 @@
 \section{Test Cases}
 \label{app:testcase}
-  \subsection{Sample}
-    \begin{center}
-    \begin{tabular}{c|c|c|c|c|c}
-      \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Sample & Whether the API website works & None & answer=42 & answer=42 & \\\hline
-    \end{tabular}
-    \end{center}
+\subsection{Sample}
+\begin{center}
+  \begin{tabular}{c|c|c|c|c|c}
+    \hline
+    Name   & Purpose                       & Input & Expect    & Real      & status \\ \hline
+    Sample & Whether the API website works & None  & answer=42 & answer=42 &        \\ \hline
+  \end{tabular}
+\end{center}
+\begin{landscape} \footnotesize
   \subsection{User Management Test}
-    \begin{center}
+  \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Login Fail & Login with unregistered username & Fake user & no such user & no such user & \\\hline
-      Register & Register a new user & Unregistered user & User's information & User's information & Logged in \\\hline
-      Register Duplicate & Register with a registered username & Register user & user already exists & user already exists & \\ \hline
-      Login & Login & Register user & Users' information & Users' information & Logged in \\ \hline
-      Logout & Logout when logged in& None & Login Page & Login Page & Logged out \\ \hline
-      Logout Fail & Logout when not logged in & None & 401 error & 401 error & \\ \hline
-      Login Fail & Login with incorrect password & Incorrect user & wrong password & wrong password & \\ \hline
-      Login Illegal & Login with illegal format & Illegal request & 400 error & 400 error & \\ \hline
-      Register Illegal & Register with illegal format & Illegal request & 400 error & 400 error & \\ \hline
-      Register Too Short & Register with short field & Short field & field too short & field too short & \\ \hline
-      Login Test & Determine whether logged in & Logged in required API & 200 & 200 & \\ \hline
+      Name               & Purpose                            & Input                  & Expect              & Real                & status     \\ \hline
+      Login Fail         & Login with unregistered username    & Fake user              & no such user        & no such user        &            \\ \hline
+      Register           & Register a new user                 & Unregistered user      & User's information  & User's information  & Logged in  \\ \hline
+      Register Duplicate & Register with a registered username & Register user          & user already exists & user already exists &            \\ \hline
+      Login              & Login                               & Register user          & Users' information  & Users' information  & Logged in  \\ \hline
+      Logout             & Logout when logged in               & None                   & Login Page          & Login Page          & Logged out \\ \hline
+      Logout Fail        & Logout when not logged in           & None                   & 401 error           & 401 error           &            \\ \hline
+      Login Fail         & Login with incorrect password       & Incorrect user         & wrong password      & wrong password      &            \\ \hline
+      Login Illegal      & Login with illegal format           & Illegal request        & 400 error           & 400 error           &            \\ \hline
+      Register Illegal   & Register with illegal format        & Illegal request        & 400 error           & 400 error           &            \\ \hline
+      Register Too Short & Register with short field           & Short field            & field too short     & field too short     &            \\ \hline
+      Login Test         & Determine whether logged in         & Logged in required API & 200                 & 200                 &            \\ \hline
     \end{tabular}
-    \end{center}
+  \end{center}
   \subsection{Tab Test}
+  \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Add Fail & Add Tab when not logged in & Tab information & 401 error & 401 error & \\ \hline
-      Add Fail & Add Tab with illegal format & Illegal request & 400 error & 400 error & \\ \hline
-      Add & Add Tab & Tab information & Tab information & Tab information & \\ \hline
-      Add & Add Tab that exists & Tab information & tab already exists & tab already exists & \\ \hline
-      Get All & Get all Tabs & None & Tab information & Tab information & \\ \hline
-      Get & Get specific Tab & Tab name & Tab information & Tab information & \\ \hline
-      Delete & Delete specific Tab & Tab name & Tab information & Tab information & \\ \hline
-      Delete & Delete not exists Tab & Tab name & Ignored & Ignored & \\ \hline
+      Name     & Purpose                     & Input           & Expect             & Real               & status \\ \hline
+      Add Fail & Add Tab when not logged in  & Tab information & 401 error          & 401 error          &        \\ \hline
+      Add Fail & Add Tab with illegal format & Illegal request & 400 error          & 400 error          &        \\ \hline
+      Add      & Add Tab                     & Tab information & Tab information    & Tab information    &        \\ \hline
+      Add      & Add Tab that exists         & Tab information & tab already exists & tab already exists &        \\ \hline
+      Get All  & Get all Tabs                & None            & Tab information    & Tab information    &        \\ \hline
+      Get      & Get specific Tab            & Tab name        & Tab information    & Tab information    &        \\ \hline
+      Delete   & Delete specific Tab         & Tab name        & Tab information    & Tab information    &        \\ \hline
+      Delete   & Delete not exists Tab       & Tab name        & Ignored            & Ignored            &        \\ \hline
     \end{tabular}
+  \end{center}
   \subsection{Tag Test}
+  \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Add Fail & Add Tag when not logged in & Tag information & 401 error & 401 error & \\ \hline
-      Add Fail & Add Tag with illegal format & Illegal request & 400 error & 400 error & \\ \hline
-      Add & Add Tag & Tag information & Tag information & Tag information & \\ \hline
-      Add & Add Tag that exists & Tag information & tab already exists & tab already exists & \\ \hline
-      Get All & Get all Tags & None & Tag information & Tag information & \\ \hline
-      Get & Get specific Tag & Tag name & Tag information & Tag information & \\ \hline
-      Delete & Delete specific Tag & Tag name & Tag information & Tag information & \\ \hline
-      Delete & Delete not exists Tag & Tag name & Ignored & Ignored & \\ \hline
+      Name     & Purpose                     & Input           & Expect             & Real               & status \\ \hline
+      Add Fail & Add Tag when not logged in  & Tag information & 401 error          & 401 error          &        \\ \hline
+      Add Fail & Add Tag with illegal format & Illegal request & 400 error          & 400 error          &        \\ \hline
+      Add      & Add Tag                     & Tag information & Tag information    & Tag information    &        \\ \hline
+      Add      & Add Tag that exists         & Tag information & tab already exists & tab already exists &        \\ \hline
+      Get All  & Get all Tags                & None            & Tag information    & Tag information    &        \\ \hline
+      Get      & Get specific Tag            & Tag name        & Tag information    & Tag information    &        \\ \hline
+      Delete   & Delete specific Tag         & Tag name        & Tag information    & Tag information    &        \\ \hline
+      Delete   & Delete not exists Tag       & Tag name        & Ignored            & Ignored            &        \\ \hline
     \end{tabular}
+  \end{center}
   \subsection{User Fetcher Test}
+  \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Get All & Get all Fetcher & None & Fetcher information & Fetcher information & \\ \hline
-      Enable & Enable a Fetcher & ID and configure & Fetcher information & Fetcher information & \\ \hline
-      Refresh & Refresh Fetcher & None & Fetch result & Fetch result & \\ \hline
-      Disable & Disable a Fetcher & ID & Fetcher information & Fetcher information & \\ \hline
+      Name    & Purpose           & Input            & Expect              & Real                & status \\ \hline
+      Get All & Get all Fetcher   & None             & Fetcher information & Fetcher information &        \\ \hline
+      Enable  & Enable a Fetcher  & ID and configure & Fetcher information & Fetcher information &        \\ \hline
+      Refresh & Refresh Fetcher   & None             & Fetch result        & Fetch result        &        \\ \hline
+      Disable & Disable a Fetcher & ID               & Fetcher information & Fetcher information &        \\ \hline
     \end{tabular}
+  \end{center}
   \subsection{Misc}
+  \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
-      Name & Propose & Input & Expect & Real & status \\ \hline
-      Get All Entries & Get all Entries & None & Entries information & Entries information & \\ \hline
+      Name            & Purpose         & Input & Expect              & Real                & status \\ \hline
+      Get All Entries & Get all Entries & None  & Entries information & Entries information &        \\ \hline
     \end{tabular}
-  \subsection{Performance Test}
-    \subsubsection{Heavy Load API}
-      \begin{enumerate}
-        \item Get All Fetcher
-        \item Get All Tab
-        \item Get All Tag
-        \item Get All Entries
-      \end{enumerate}
-    \subsubsection{Common API}
-      \begin{enumerate}
-        \item Login
-        \item Register
-        \item Logout
-        \item Get All Entries
-      \end{enumerate}
+  \end{center}
+\end{landscape}
+\subsection{Performance Test}
+\subsubsection{Heavy Load API}
+\begin{enumerate}
+  \item Get All Fetcher
+  \item Get All Tab
+  \item Get All Tag
+  \item Get All Entries
+\end{enumerate}
+\subsubsection{Common API}
+\begin{enumerate}
+  \item Login
+  \item Register
+  \item Logout
+  \item Get All Entries
+\end{enumerate}
