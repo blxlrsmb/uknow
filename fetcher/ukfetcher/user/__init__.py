@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Fri Dec 13 15:51:10 2013 +0800
+# $Date: Sat Dec 14 16:26:18 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for user-specific items"""
@@ -46,8 +46,8 @@ class register_fetcher(register_fetcher_base):
     _impl = None
     """implementation class"""
 
-    def __init__(self, name, impl):
-        super(register_fetcher, self).__init__(name)
+    def __init__(self, name, param, impl):
+        super(register_fetcher, self).__init__(name, param)
         self._impl = impl
         self(impl.run)
 
@@ -79,7 +79,7 @@ class UserFetcherBaseMeta(ABCMeta):
     def __new__(cls, name, base, attr):
         obj = super(UserFetcherBaseMeta, cls).__new__(cls, name, base, attr)
         if name != 'UserFetcherBase':
-            register_fetcher(obj.get_name(), obj)
+            register_fetcher(obj.get_name(), obj.get_config_param(), obj)
         return obj
 
 

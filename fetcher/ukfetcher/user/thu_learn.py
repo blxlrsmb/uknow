@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Sat Dec 14 03:06:24 2013 +0800
+# $Date: Sat Dec 14 16:23:55 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -18,6 +18,10 @@ class ThuLearFetcher(UserFetcherBase):
     @staticmethod
     def get_name():
         return "THU learn"
+
+    @staticmethod
+    def get_config_param():
+        return ['username', 'password']
 
     @classmethod
     def enable(cls, user_id, config):
