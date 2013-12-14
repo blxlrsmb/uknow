@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 03:06:09 2013 +0800
+# $Date: Sat Dec 14 14:10:19 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
-from test_config import username, password
 from items import login, course as Course, item as Item, item_name_dict
 from uklogger import log_exc
 
@@ -35,8 +34,7 @@ def fetch(username, password):
                         soup = BeautifulSoup(data)
                         item['title'] = soup.find('td',
                                 {'class':'tr_2'}).getText().replace('&nbsp;',
-                                '')
-                        item['content'] = innerHTML(soup.find('textarea'))
+                                '') item['content'] = innerHTML(soup.find('textarea'))
                     elif itemtype == 'download':
                         item['title'] = thisitem.item_dict['name']
                         item['content'] = u'下载地址:<a href="{}">{}</a>'.format(thisitem.get_url(), item['title'])
@@ -48,6 +46,7 @@ def fetch(username, password):
     return items
 
 if __name__=='__main__':
+    from test_config import username, password
     entries = fetch(username, password)
     for entry in entries:
         print u'title:{}\nid:{}\ncontent:{}'.format(entry['title'], entry['id'], entry['content'])
