@@ -36,9 +36,15 @@
       and put them in proper places.
     \subsubsection{Environment Setting}
       In propose of simulating real world performance,
-      client and server are located on different machines, so the network transform is considered.
+	  client and server are located on different machines, so the network
+	  transmission is considered.
 
-      To do so, deploy the project in production mode on one machine, and get the test suite on another.
+	  To do so, deploy the project in production mode on one machine, and get
+	  the test suite on another.
+
+	  Network throughput benchmark is tested using ApacheBench\footnote{http://httpd.apache.org/docs/2.2/programs/ab.html}, with concurrency of 4 and 10,000 requests on each API.
+	  The CPU, memory and IO count usage of server program will be intensively examined.
+
     \subsubsection{Test Executing}
       Execute test entry scripts to do the tests.
     \subsubsection{Log Analyzing}
