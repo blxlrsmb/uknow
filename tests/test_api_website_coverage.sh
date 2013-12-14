@@ -16,7 +16,7 @@ source ../manage/setenv.sh
 python2 -m coverage run ../api-website/standalone_server.py > /tmp/test_api_website.log &
 SERVER_PID=$!
 
-count_down 3
+count_down 4
 
 ./test_api_website.py
 RET_VAL=$?
