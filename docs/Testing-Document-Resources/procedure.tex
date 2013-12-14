@@ -5,27 +5,31 @@
   \subsection{Period}
     18:00 Dec 13th, 2013 to 18:00 Dec 14th, 2013.
   \subsection{Functional Tests}
-    \subsubsection{Test Case Designing}
-      First, read the API list, select out APIs that need to be tested.
-      Then, design use cases for each API base on its function.
-      At last, transform test cases into proper request format and add them into the test suite.
+\begin{enumerate}
 
-      After all, several cases that designed to test the robustness of the APIs are recorded as well.
-      These cases will perform illegal request such as wrong format, permission overstep and injection.
-    \subsubsection{Environment Setting}
+    \item Test Case Designing
+      First, read the API list, select out APIs that need to be tested.
+      Then, design use cases for each API based on its function.
+      At last, translate test cases into proper request format and add them into the test suite.
+
+      Several cases that designed to test the robustness of the APIs are recorded as well.
+      These cases will perform illegal requests such as requests with wrong format, permission overstep and injection.
+    \item Environment Setting
       At first, use virtualenv to build a virtual python environment for this project.
       Then use install tool located in manage suite to set up runtime environment for it.
 
       In order to provide production environment, a mongodb server and a redis server is also required.
-    \subsubsection{Software Configuring}
-      In this test, the default configure is applied. So no action is needed in this step.
-    \subsubsection{Test Configuring}
+    \item Software Configuring
+      In this test, the default configure is applied. So no interfere is needed in this step.
+    \item Test Configuring
       In order to test some third party function, correct authentication information is required.
       The configure file can be found easily in test suite.
-    \subsubsection{Test Executing}
+    \item Test Executing
       Execute test entry scripts to do the tests.
-    \subsubsection{Log Analyzing}
-      After getting the test log, parse the useful information out and ordinate them into proper format.
+    \item Log Analyzing
+      After getting the test log, parse out the useful information and ordinate them into proper format.
+
+\end{enumerate}
   \subsection{Performance Tests}
     \subsubsection{Test Case Designing}
       Several APIs that may have heavy loads are picked out to get the worst performance data.
