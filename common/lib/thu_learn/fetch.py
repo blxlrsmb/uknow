@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 03:06:09 2013 +0800
+# $Date: Sat Dec 14 14:10:24 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
-from test_config import username, password
 from items import login, course as Course, item as Item, item_name_dict
 from uklogger import log_exc
 
