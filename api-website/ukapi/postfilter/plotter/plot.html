@@ -1,48 +1,116 @@
-<style>
-	.plotting-container {
-		box-sizing: border-box;
-		width: 850px;
-		height: 450px;
-		padding: 20px 15px 15px 15px;
-		margin: 15px auto 30px auto;
-		border: 1px solid #ddd;
-		background: #fff;
-		background: linear-gradient(#f6f6f6 0, #fff 50px);
-		background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-		background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-		background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-		background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
-		box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-		-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-		-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-		-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-		-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-	}
-	.plotting-placeholder {
-		width: 100%;
-		height: 100%;
-		font-size: 14px;
-		line-height: 1.2em;
-	}
-</style>
-<script language="javascript" type="text/javascript"
-		src="__URL__?q=jquery.js"></script>
-<script language="javascript" type="text/javascript"
-		src="__URL__?q=jflot.js"></script>
-<script language="javascript" type="text/javascript"
-		src="__URL__?q=jflot.time.js"></script>
-<script type="text/javascript">
+<!doctype html>
+<!--
+	$File: plot.html
+	$Date: Sun Dec 15 00:36:28 2013 +0800
+	$Author: jiakai <jia.kai66@gmail.com>
+-->
+<html>
+<head>
+	<style>
+		.container {
+			box-sizing: border-box;
+			width: 650px;
+			height: 450px;
+			padding: 20px 15px 15px 15px;
+			margin: 15px auto 30px auto;
+			border: 1px solid #ddd;
+			background: #fff;
+			background: linear-gradient(#f6f6f6 0, #fff 50px);
+			background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+			background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+			background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+			background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+			box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+			-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+		}
+		.placeholder {
+			width: 100%;
+			font-size: 14px;
+			line-height: 1.2em;
+		}
+		#placeholder {
+			height: 300px;
+		}
+		#overview {
+			height: 125px;
+		}
+	</style>
 
-	$(function() {
-		var d = [[ __DATA__ ]];
+	<script language="javascript" type="text/javascript"
+			src="__URL__?q=jquery.js"></script>
+	<script language="javascript" type="text/javascript"
+			src="__URL__?q=jflot.js"></script>
+	<script language="javascript" type="text/javascript"
+			src="__URL__?q=jflot.time.js"></script>
+	<script language="javascript" type="text/javascript"
+			src="__URL__?q=jflot.selection.js"></script>
+	<script type="text/javascript">
 
-		$.plot("#placeholder", [d], {
-			xaxis: { mode: "time" }
+		$(function() {
+			var d =  [__DATA__];
+
+			var overview = $.plot("#overview", d, {
+				legend: { show: false },
+				series: {
+					lines: {
+						show: true,
+						lineWidth: 1
+					},
+					shadowSize: 0
+				},
+				xaxis: { mode: "time" },
+				grid: { color: "#999" },
+				selection: { mode: "x" }
+
+			});
+
+			options = {
+				selection: { mode: "x" },
+				xaxis: { mode: "time" }
+			}
+
+			var plot = $.plot('#placeholder', d, options);
+
+			$("#placeholder").bind("plotselected",
+				function(event, ranges) {
+
+					// clamp the zooming to prevent eternal zoom
+					if (ranges.xaxis.to - ranges.xaxis.from < 0.00001) {
+						ranges.xaxis.to = ranges.xaxis.from + 0.00001;
+					}
+
+					// do the zooming
+
+					var xmin = ranges.xaxis.from, xmax = ranges.xaxis.to;
+
+					plot = $.plot("#placeholder", d,
+						$.extend(true, {}, options, {
+							xaxis: { min: xmin, max: xmax },
+						})
+					);
+
+					// don't fire event on the overview to prevent eternal loop
+
+					overview.setSelection(ranges, true);
+			});
+
+
+			$("#overview").bind("plotselected", function (event, ranges) {
+				plot.setSelection(ranges);
+			});
+
 		});
+	</script>
+</head>
+<body>
 
-	});
-</script>
-
-<div class="plotting-container">
-	<div id="placeholder" class="plotting-placeholder"></div>
+<div class="container">
+	<div id="overview" class="placeholder"></div>
+	<div id="placeholder" class="placeholder"></div>
 </div>
+
+</body>
+</html>
