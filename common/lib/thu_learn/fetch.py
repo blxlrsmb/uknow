@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 17:32:48 2013 +0800
+# $Date: Sat Dec 14 22:49:33 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
 from items import login, course as Course, item as Item, item_name_dict
@@ -15,7 +15,7 @@ def innerHTML(soupNode):
 def fetch(username, password):
     items = []
     courses = login(username, password)
-    for i in courses[:1]:
+    for i in courses:
         print u'parsing {} ...'.format(i['name'])
         course = Course(i)
         for itemtype in item_name_dict:

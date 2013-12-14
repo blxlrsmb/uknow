@@ -1,11 +1,12 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: util.py
-# $Date: Fri Dec 13 16:06:48 2013 +0800
+# $Date: Sat Dec 14 22:34:37 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
+from .postfilter import apply_postfilter
+
 from flask_login import current_user, login_required
-from ukitem import ItemDescBase
 
 
 def get_current_user_id():
@@ -16,7 +17,7 @@ def parse_article(docs):
     """ parse an item from database,
     return a sorted dict with url, title, content, time"""
     rst = []
-    docs.sort(key=lambda x: x['creation_time'], reverse=True)
+    apply_postfilter(get_current_user_id(), docs)
     for doc in docs:
         ret = {}
         ret['time'] = \
@@ -25,7 +26,7 @@ def parse_article(docs):
             ret['url'] = doc['other']['id']
         except:
             pass
-        item = ItemDescBase.deserialize(doc['desc'])
+        item = doc['desc']
         ret['title'] = item.render_title()
         ret['content'] = item.render_content()
         ret['tags'] = doc['tag']

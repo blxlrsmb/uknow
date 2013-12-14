@@ -203,13 +203,13 @@ doEditFetcher = function(){
 		fetcher['enabled'] = true;
 
 		var formArgs = [];
-		filter['config'].forEach(function(conf_name) {
+		fetcher['config'].forEach(function(conf_name) {
 			var c = {name: conf_name}
-			if (name == 'password')
+			if (conf_name == 'password')
 				c['type'] = 'password'
 			formArgs.push(c);
 		});
-		formArgs.push({ name: 'filter_id', type: 'hidden', value: filter['id'] });
+		formArgs.push({ name: 'fetcher_id', type: 'hidden', value: fetcher['id'] });
 
 		makeBasicForm('Configure fetcher "'+fetcher['name']+'"', formArgs,
 			'/fetcher/enable',

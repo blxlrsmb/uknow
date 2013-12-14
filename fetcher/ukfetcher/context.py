@@ -1,19 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: context.py
-# $Date: Sat Dec 14 16:17:06 2013 +0800
+# $Date: Sat Dec 14 20:06:57 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
-
-"""mongo model and fetcher execution context
-mongo document: {
-    _id: unique int64 id
-    fetcher_type: int, indexed
-    fetcher_name: str, indexed
-    desc: binary
-    tag: list of str, indexed
-    other: anything
-    creation_time: datetime, UTC, indexed
-}"""
 
 from .prefilter import prefilter
 
@@ -61,6 +50,8 @@ class FetcherContext(object):
         assert isinstance(initial_tag, list) and \
             all([isinstance(i, basestring) for i in initial_tag]), \
             'bad initial_tag: {!r}'.format(initial_tag)
+        assert other is None or isinstance(other, dict), \
+            'bad other arg: {!r}'.format(other)
         initial_tag = map(unicode, initial_tag)
 
         declare_tag(initial_tag)
@@ -93,9 +84,9 @@ class FetcherContext(object):
         :param fetcher_name: str, name of fetcher
         :param desc: :class:`ItemDescBase` object
         :param initial_tag: list of str, initial tags
-        :param other: any bson-serializable object
-        :param other: :class: `time.struct_time` object
-        :return: int, item id"""
+        :param create_time: :class: `time.struct_time` object
+        :param other: None or a bson-serializable dict
+        :return: item id as int"""
 
     def get_mongo_collection(self):
         """create a mongo collection to store fetcher-specific data"""

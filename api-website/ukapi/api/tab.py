@@ -5,12 +5,11 @@
 # Author: Yuxin Wu <ppwwyyxxc@gmail.com>
 
 from . import api_method, request
+from ..util import parse_article
 from flask_login import current_user, login_required
 from ukdbconn import get_mongo, get_user
 from uklogger import log_api as log_info
-from ukfetcher.general import FETCHER_TYPE_GENERAL
-from ukfetcher.user import FETCHER_TYPE_USER
-from ..util import parse_article
+from ukfetcher import FETCHER_TYPE_GENERAL, FETCHER_TYPE_USER
 
 import json
 
@@ -80,7 +79,7 @@ def del_tab():
 @api_method('/get_tab_article')
 @login_required
 def get_tab_article():
-    """get all article under a tab
+    """get all articles under a tab
     GET /get_tab_article?tab=tabname
     """
     try:

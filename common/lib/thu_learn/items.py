@@ -28,9 +28,11 @@ def login(user, password, if_this_only = True):
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookielib.CookieJar()))
         urllib2.install_opener(opener)
         para = urlencode({'userid':user, 'userpass':password})
-        urllib2.urlopen(loginurl, para)
-        first_html = urllib2.urlopen(courselist_url).read()
+        login_page = urllib2.urlopen(loginurl, para).read()
+        if '密码错误' in login_page or '没有登陆网络学堂的权限' in login_page:
+            raise RuntimeError('Wrong username or password\n')
         ret = tuple()
+        first_html = urllib2.urlopen(courselist_url).read()
         if not if_this_only:
             terms = termlist_parser_soup(first_html).terms
             for i in terms:
@@ -39,7 +41,7 @@ def login(user, password, if_this_only = True):
         ret += courselist_parser_soup(first_html).courses
         return ret
     except urllib2.HTTPError:
-        raise RuntimeError(u'用户名密码错误\n')
+        raise RuntimeError('Error occurs on login\n')
 
 class course:
     def __init__(self, course_dict):

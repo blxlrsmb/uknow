@@ -1,7 +1,7 @@
 #!../manage/exec-in-virtualenv.sh
 # -*- coding: utf-8 -*-
 # $File: train_tagger.py
-# $Date: Sat Dec 14 16:14:43 2013 +0800
+# $Date: Sat Dec 14 20:00:05 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """train tagger from tags in the database"""
@@ -14,7 +14,7 @@ from lib.texttagger import TextTagger
 
 import random
 
-MAX_DATA_SIZE = 100
+MAX_DATA_SIZE = 140
 
 
 def main():
@@ -25,7 +25,7 @@ def main():
         labels = item['tag']
         if not labels:
             continue
-        doc = desc.content
+        doc = desc.render_content()
         data.append((doc, labels))
 
     print("#documents: {}" . format(len(data)))

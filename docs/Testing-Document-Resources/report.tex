@@ -1,14 +1,11 @@
 % $File: report.tex
-% $Date: Sat Dec 14 17:08:44 2013 +0800
+% $Date: Sat Dec 14 23:08:38 2013 +0800
 % $Author: wyx <ppwwyyxxc@gmail.com>
 
 \documentclass[11pt,a4paper]{article}
-\usepackage{threeparttable}
-\usepackage{dirtree}
-\usepackage{keystroke}
 
 
-\usepackage{fontspec,amsmath,amssymb,zhspacing,verbatim,minted,listings,zhmath}
+\usepackage{fontspec,amsmath,amssymb,verbatim,minted,listings,zhmath}
 \usepackage{titlesec, titletoc}
 \usepackage{pdfpages}
 \usepackage{enumerate}
@@ -16,6 +13,7 @@
 \usepackage[backend=biber]{biblatex}
 %\usepackage[dvips]{graphicx}
 \usepackage{subfigure}
+\usepackage{lscape}
 \usepackage{indentfirst}
 \usepackage{float}			% don't automatically change location of figure [H]
 \usepackage{chngpage}		% use \changetext to change page size
@@ -50,6 +48,7 @@ basicstyle=\footnotesize\ttfamily}
 \bibliography{refs.bib}
 \newcommand{\figref}[1]{\hyperref[fig:#1]{Fig. \ref*{fig:#1}}}
 \newcommand{\secref}[1]{\hyperref[sec:#1]{Sec. \ref*{sec:#1}}}
+\newcommand{\appref}[1]{\hyperref[app:#1]{App. \ref*{app:#1}}}
 \newcommand{\tabref}[1]{\hyperref[tab:#1]{Tab. \ref*{tab:#1}}}
 
 % math function
@@ -61,7 +60,7 @@ basicstyle=\footnotesize\ttfamily}
 
 \input{mint-defs.tex}
 
-\title{Uknow InfoHub \\ \small Design Document}
+\title{Uknow InfoHub \\ \small Test Report}
 \author{BlXLRSMB Team}
 \date{}
 
@@ -84,6 +83,8 @@ basicstyle=\footnotesize\ttfamily}
 \input{procedure}
 \input{result}
 \input{evaluation}
+\appendix
+\input{testcases}
 %\includepdf{img/cover-normal}
 
 \printbibliography

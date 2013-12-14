@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Sat Dec 14 18:08:22 2013 +0800
+# $Date: Sat Dec 14 22:58:38 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -59,8 +59,11 @@ class ThuLearFetcher(UserFetcherBase):
         else:
             try:
                 entries = fetch(conf['username'], conf['password'])
+                print entries
             except Exception as e:
-                ctx.new_item(TextOnlyItem(u'网络学堂抓取失败' + str(e), ''),
+                print e
+                ctx.new_item(TextOnlyItem(u'网络学堂抓取失败:' +
+                                          str(e), ''),
                              ['THU learn'])
                 log_exc(e)
                 return
