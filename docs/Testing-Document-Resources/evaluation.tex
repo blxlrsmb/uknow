@@ -1,2 +1,25 @@
 \section{Test Evaluation}
 \label{sec:test_evaluation}
+  \subsection{Software}
+    \subsubsection{Functional}
+      All APIs do the right work as what they are designed for.
+      And all APIs is robust even under sedulous injection or other kind of inroads.
+      Getting this result shows that the develop team knows lots of knowledge in network security field, and does a good design at the very beginning.
+    \subsubsection{Performance}
+      Both average performance and common performance are quite well, but there are still some work to do to speed worst case up.
+      However, the enhancement is limited, for in worst case the API will return plenty of data, and the bottleneck is network transform.
+
+      So, may a increment request API is needed in the future.
+      This kind of API will remember what they has provided and won't give them out again and again but it has changed.
+
+      Even though, the worst response time is admissible by user, so further enhancement can be arrested until it really make sense.
+  \subsection{Test}
+    \subsubsection{Functional}
+      Functional test includes legal and illegal cases, considered boundary situation and uncommon use case.
+      Besides, many common injection case are used, to test the security of the APIs.
+      This part of test cases are really completed and cover many professional assault method.
+    \subsubsection{Performance}
+      For better result that determines where the bottle neck is maybe a enhancement for the performance test.
+      Current result only shows the response time for whole APIs but doesn't have details like network transform time and database query time.
+      So further enhancement may don't have critical target or was done on unimportant part.
+
