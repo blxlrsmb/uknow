@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: fetch.py
-# $Date: Sat Dec 14 14:11:13 2013 +0800
+# $Date: Sat Dec 14 14:13:47 2013 +0800
 # $Author: Vury Leo <i@vuryleo.com>
 
 from items import login, course as Course, item as Item, item_name_dict
@@ -27,17 +27,23 @@ def fetch(username, password):
                     if itemtype == 'notice':
                         data = thisitem.get_data()
                         soup = BeautifulSoup(data)
-                        item['title'] = soup.find('td', {'class': 'tr_l2'}).getText()
-                        item['content'] = innerHTML(soup.findAll('td', {'class': 'tr_l2'})[1])
+                        item['title'] = \
+                            soup.find('td', {'class': 'tr_l2'}).getText()
+                        item['content'] = \
+                            innerHTML(
+                                soup.findAll('td', {'class': 'tr_l2'})[1])
                     elif itemtype == 'homework':
                         data = thisitem.get_data()
                         soup = BeautifulSoup(data)
-                        item['title'] = soup.find('td',
-                                {'class':'tr_2'}).getText().replace('&nbsp;',
-                                '') item['content'] = innerHTML(soup.find('textarea'))
+                        item['title'] = soup.find(
+                            'td',
+                            {'class':'tr_2'}).getText().replace('&nbsp;', '')
+                        item['content'] = innerHTML(soup.find('textarea'))
                     elif itemtype == 'download':
                         item['title'] = thisitem.item_dict['name']
-                        item['content'] = u'下载地址:<a href="{}">{}</a>'.format(thisitem.get_url(), item['title'])
+                        item['content'] = \
+                            u'下载地址:<a href="{}">{}</a>'.format(
+                                thisitem.get_url(), item['title'])
                     item['title'] = i['name'] + '\n' + item['title']
                     items.append(item)
     except Exception as e:
