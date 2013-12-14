@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: user_fetcher.py
-# $Date: Sat Dec 14 16:25:09 2013 +0800
+# $Date: Fri Dec 13 02:06:36 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from . import api_method
@@ -30,7 +30,7 @@ def get_fetcher_list():
     return {'fetcher': [{'id': i.fetcher_name,
                          'enabled': i.fetcher_name in enabled,
                          'name': i.fetcher_name,
-                         'config': i.fetcher_param}
+                         'config': ''}
                         for i in get_user_fetcher_list()]}
 
 

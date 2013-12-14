@@ -33,7 +33,6 @@ makeBasicForm = function(title, data, url, onsuccess){
 	$('#form-modal h3').text(title);
 	var $form = $('<form>').addClass('form-horizontal').attr('action', '#');
 	$('#form-modal .modal-body').html($form);
-	console.log(data)
 	$.each(data, function(i, input){
 		var name = 'form-' + input['name'];
 		if(input['type'] === undefined) input['type'] = 'text';
@@ -161,34 +160,6 @@ showEditFetcherForm = function(){
 	});
 };
 
-showEditFilterForm = function(){
-	$.getJSON(document.API_URL+'/filter/list', '', function(ret){
-		var filters = ret['filter'];
-		var $form = makeBasicForm('Select filters',
-            [{name: 'filter',
-							type: 'select',
-							'data-placeholder': 'Select filters',
-							multiple: '',
-            }], '#');
-		var $select = $('#form-filter');
-		$.each(filters, function(i, filter){
-			var $option = $('<option>').attr('value', filter['id']).text(filter['name']);
-			if(filter['enabled']) $option.attr('selected', '');
-			$select.append($option);
-		});
-		$select.chosen({width: "100%"});
-		$(document).data('old-filters', filters);
-		$form.off();
-		$form.on('submit', function(e){
-			e.preventDefault();
-			$(document).data('new-filters', $select.val());
-			$('#form-modal').modal('hide');
-			setTimeout(doEditFilter, 500);
-		});
-		$('#form-modal').modal('show');
-	});
-};
-
 doEditFetcher = function(){
 	var to_enable = [];
 	var to_disable = [];
@@ -201,17 +172,10 @@ doEditFetcher = function(){
 	if(to_enable.length > 0){
 		var fetcher = to_enable.pop();
 		fetcher['enabled'] = true;
-
-		var formArgs = [];
-		filter['config'].forEach(function(conf_name) {
-			var c = {name: conf_name}
-			if (name == 'password')
-				c['type'] = 'password'
-			formArgs.push(c);
-		});
-		formArgs.push({ name: 'filter_id', type: 'hidden', value: filter['id'] });
-
-		makeBasicForm('Configure fetcher "'+fetcher['name']+'"', formArgs,
+		makeBasicForm('Configure fetcher "'+fetcher['name']+'"',
+      [{name: 'username'},
+       {name: 'password', type: 'password'},
+       {name: 'fetcher_id', type: 'hidden', value: fetcher['id']}],
 			'/fetcher/enable',
 			function(ret){
 				$('#form-modal').modal('hide');
@@ -222,41 +186,5 @@ doEditFetcher = function(){
 	}
 	$.each(to_disable, function(i, fetcher){
 		$.getJSON('/fetcher/disable', {fetcher_id: fetcher['id']});
-	});
-};
-
-doEditFilter = function(){
-	var to_enable = [];
-	var to_disable = [];
-	var new_filters = $(document).data('new-filters');
-	if(new_filters === null) new_filters = [];
-	$.each($(document).data('old-filters'), function(i, filter){
-		if(filter['enabled'] && new_filters.indexOf(filter['id'])==-1 ) to_disable.push(filter);
-		if(!filter['enabled'] && new_filters.indexOf(filter['id'])!=-1 ) to_enable.push(filter);
-	});
-	if(to_enable.length > 0){
-		var filter = to_enable.pop();
-		filter['enabled'] = true;
-
-		var formArgs = [];
-		filter['config'].forEach(function(conf_name) {
-			var c = {name: conf_name}
-			if (name == 'password')
-				c['type'] = 'password'
-			formArgs.push(c);
-		});
-		formArgs.push({ name: 'filter_id', type: 'hidden', value: filter['id']});
-
-		makeBasicForm('Configure filter "' + filter['name'] + '"', formArgs ,
-			'/filter/enable',
-			function(ret){
-				$('#form-modal').modal('hide');
-				setTimeout(doEditfilter, 500);
-			}).data('usingget', true);
-		$('#form-modal').modal('show');
-		return;
-	}
-	$.each(to_disable, function(i, filter){
-		$.getJSON('/filter/disable', {filter_id: filter['id']});
 	});
 };
