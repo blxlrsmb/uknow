@@ -1,12 +1,15 @@
 \section{Test Cases}
 \label{app:testcase}
   \subsection{Sample}
+    \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
       Name & Propose & Input & Expect & Real & status \\ \hline
       Sample & Whether the API website works & None & answer=42 & answer=42 & \\\hline
     \end{tabular}
+    \end{center}
   \subsection{User Management Test}
+    \begin{center}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
       Name & Propose & Input & Expect & Real & status \\ \hline
@@ -22,6 +25,7 @@
       Register Too Short & Register with short field & Short field & field too short & field too short & \\ \hline
       Login Test & Determine whether logged in & Logged in required API & 200 & 200 & \\ \hline
     \end{tabular}
+    \end{center}
   \subsection{Tab Test}
     \begin{tabular}{c|c|c|c|c|c}
       \hline
@@ -64,7 +68,7 @@
       Get All Entries & Get all Entries & None & Entries information & Entries information & \\ \hline
     \end{tabular}
   \subsection{Performance Test}
-    \subsubsection{Hard Load API}
+    \subsubsection{Heavy Load API}
       \begin{enumerate}
         \item Get All Fetcher
         \item Get All Tab
