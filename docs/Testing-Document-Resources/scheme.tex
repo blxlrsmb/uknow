@@ -1,22 +1,24 @@
 \section{Test Scheme}
 \label{sec:test_scheme}
-  \subsection{Test Level}
-    This test use method which simulating users' requests
-    and determining whether whole project can response each request correctly.
-    If project gives the correct response as design for one request, logic that get involved in generating response will be considered as tested.
+\subsection{Test Level}
+These tests call methods which simulate users' requests
+and determine whether whole project can respond to each request correctly.
+If the project gives the correct response as designed for one request, logic that get involved in generating response will be considered as tested.
+Therefore, this test is at API level.
 
-    So, this test is on API level.
-
-  \subsection{Test Environment}
-    \subsubsection{Software Environment}
-    \begin{table}[H]
-        \begin{tabular}{c|c|c|c}
-          \hline
-          Name & Version & Purpose \\ \hline
-          Python UnitTest & ~2.7 & Simulating Request for each API \\ \hline
-          ApacheBench & >=2.3 & Performance Benchmark \\ \hline
-        \end{tabular}
-        \caption{Software Requirements\label{tab:Software}}
-      \end{table}
-    \subsubsection{Hardware Environment}
-      In order to run the test, a POSIX machine is required.
+\subsection{Test Environment}
+The unitest\footnote{\url{http://docs.python.org/2/library/unittest.html}}
+and coverage\footnote{\url{http://nedbatchelder.com/code/coverage/}} module in Python and
+Apache Bench \footnote{\url{http://httpd.apache.org/docs/2.2/programs/ab.html}}
+tool are mainly used for testing, as shown as following:
+\begin{table}[H]
+  \begin{tabular}{c|c|c}
+    \shline
+    Name            & Version & Purpose                         \\ \shline
+    Python unittest & ~2.7    & Simulating Request for each API \\ \hline
+    Python coverage & ~2.7    & Simulating Request for each API \\ \hline
+    ApacheBench     & >=2.3   & Performance Benchmark           \\ \shline
+  \end{tabular}
+  \centering
+  \caption{Software Requirements\label{tab:Software}}
+\end{table}

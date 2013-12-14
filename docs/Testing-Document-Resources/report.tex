@@ -1,5 +1,5 @@
 % $File: report.tex
-% $Date: Sat Dec 14 18:58:42 2013 +0800
+% $Date: Sun Dec 15 00:06:19 2013 +0800
 % $Author: wyx <ppwwyyxxc@gmail.com>
 
 \documentclass[11pt,a4paper]{article}
@@ -13,7 +13,9 @@
 \usepackage[backend=biber]{biblatex}
 %\usepackage[dvips]{graphicx}
 \usepackage{subfigure}
+\usepackage{lscape}
 \usepackage{indentfirst}
+\usepackage{tablefootnote}
 \usepackage{float}			% don't automatically change location of figure [H]
 \usepackage{chngpage}		% use \changetext to change page size
 \usepackage{caption}\captionsetup{hypcap=true}  % ref to jump to object instead of caption
@@ -47,6 +49,7 @@ basicstyle=\footnotesize\ttfamily}
 \bibliography{refs.bib}
 \newcommand{\figref}[1]{\hyperref[fig:#1]{Fig. \ref*{fig:#1}}}
 \newcommand{\secref}[1]{\hyperref[sec:#1]{Sec. \ref*{sec:#1}}}
+\newcommand{\appref}[1]{\hyperref[app:#1]{App. \ref*{app:#1}}}
 \newcommand{\tabref}[1]{\hyperref[tab:#1]{Tab. \ref*{tab:#1}}}
 
 % math function
@@ -58,7 +61,7 @@ basicstyle=\footnotesize\ttfamily}
 
 \input{mint-defs.tex}
 
-\title{Uknow InfoHub \\ \small Design Document}
+\title{Uknow InfoHub \\ \small Test Report}
 \author{BlXLRSMB Team}
 \date{}
 
@@ -81,6 +84,9 @@ basicstyle=\footnotesize\ttfamily}
 \input{procedure}
 \input{result}
 \input{evaluation}
+\appendix
+\input{testcases}
+\input{benchmark}
 %\includepdf{img/cover-normal}
 
 \printbibliography
