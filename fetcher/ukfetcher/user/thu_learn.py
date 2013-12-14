@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: thu_learn.py
-# $Date: Sat Dec 14 03:06:24 2013 +0800
+# $Date: Sat Dec 14 17:34:24 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """sample user fetcher"""
@@ -10,8 +10,11 @@ from . import UserFetcherBase
 
 from ukitem import TextOnlyItem
 from uklogger import log_fetcher as log_info
+from uklogger import log_exc
 from ukdbconn import DuplicateKeyError
 from lib.thu_learn.fetch import fetch
+
+import time
 
 
 class ThuLearFetcher(UserFetcherBase):
@@ -33,11 +36,17 @@ class ThuLearFetcher(UserFetcherBase):
     def run(cls, ctx):
         conf = cls.load_config(ctx.user_id)
         if not conf:
+            ctx.new_item(TextOnlyItem(u'网络学堂验证失败', ''), ['THU learn'])
             return
-        print 'running'
 
         coll = ctx.get_mongo_collection()
-        entries = fetch(conf['username'], conf['password'])
+        try:
+            entries = fetch(conf['username'], conf['password'])
+        except Exception as e:
+            ctx.new_item(TextOnlyItem(u'网络学堂抓取失败' + str(e), ''), ['THU learn'])
+            log_exc(e)
+            return
+
         for entry in entries:
             try:
                 coll.insert({'_id': str(ctx.user_id) + entry['id']})
@@ -45,6 +54,7 @@ class ThuLearFetcher(UserFetcherBase):
                 continue
             ctx.new_item(
                 TextOnlyItem(entry['title'], entry['content']),
-                ['THU learn'], None, {'id': entry['id']})
-            log_info(u'thu learn: new entry: {} {}'.format(entry['id'],
+                ['THU learn'], time.strptime(entry['create_time'], '%Y-%m-%d'),
+                {'id': entry['id']})
+            log_info(u'THU learn: new entry: {} {}'.format(entry['id'],
                                                            entry['title']))

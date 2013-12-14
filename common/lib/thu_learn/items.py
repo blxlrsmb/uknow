@@ -45,15 +45,11 @@ class course:
     def __init__(self, course_dict):
         self.course_dict = course_dict
     def get_item_list(self, itemtype):
-        url = url_dict[itemtype+'list_url'] + '?' + urlencode(self.course_dict)
+        url = url_dict[itemtype + 'list_url'] + '?' + urlencode(self.course_dict)
         f = urllib2.urlopen(url).read()
         f = f.replace(r'&nbsp;', ' ')
         return itemlist_parser_soup(f, itemtype).items
 
-import subprocess
-import os, sys, tempfile
-
-html_dumper = ['w3m', '-T', 'text/html', '-dump']
 class item:
     def __init__(self, item_dict, itemtype):
         self.item_dict = item_dict
