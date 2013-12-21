@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Sat Dec 14 20:00:43 2013 +0800
+# $Date: Sat Dec 21 19:05:42 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
@@ -9,6 +9,7 @@
 from . import prefilter
 from uklogger import log_info
 from lib.texttagger import TextTagger
+from ukdbconn import declare_tag
 import ukconfig
 
 _tagger = None
@@ -29,6 +30,7 @@ def auto_tagging(ctx, doc):
             return
 
     tags = _tagger.predict_one(doc['desc'].render_content())
+    declare_tag(tags)
     log_info('original tag: ' + str(doc['tag']))
     log_info('autotagging: ' + str(tags))
     doc['tag'] = list(set(doc['tag'] + tags))
