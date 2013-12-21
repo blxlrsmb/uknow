@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 # $File: autotagging.py
-# $Date: Sat Dec 21 19:05:42 2013 +0800
+# $Date: Sat Dec 21 23:06:18 2013 +0800
 # $Author: Xinyu Zhou <zxytim[at]gmail[dot]com>
 
 """auto tagging prefilter"""
