@@ -1,5 +1,5 @@
 ..  $File: devnotes.rst
-    $Date: Sat Nov 16 22:59:02 2013 +0800
+    $Date: Sat Dec 21 16:22:07 2013 +0800
     -----------------------------------------------------------------
     Copyright (C) 2012 the uknow development team <see AUTHORS file>
     Contributors to this file:
@@ -133,8 +133,6 @@ Documenting
 
 Write docstrings for every package, module, public class, public method, public
 function, etc. The documents should be written in English.
-
-Register all the global names in :ref:`global-name-list`.
 
 These documents are generated from `reStructuredText`_ sources and docstrings by
 `Sphinx`_.  Issue the following command to generate all the documents:
