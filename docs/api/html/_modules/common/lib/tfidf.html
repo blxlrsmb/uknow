@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.tfidf &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.tfidf</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/python2</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: tfidf.py</span>
+<span class="c"># $Date: Thu Dec 12 21:43:02 2013 +0800</span>
+<span class="c"># $Author: Xinyu Zhou &lt;zxytim[at]gmail[dot]com&gt;</span>
+
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+
+<div class="viewcode-block" id="TFIDF"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF">[docs]</a><span class="k">class</span> <span class="nc">TFIDF</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nthres</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NTHRES</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nthres</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c"># term -&gt; doc freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nd</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># number of doc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_nd</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c"># a document is a list of words</span>
+<div class="viewcode-block" id="TFIDF.add_document"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.add_document">[docs]</a>    <span class="k">def</span> <span class="nf">add_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nd</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_nd</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nd</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="TFIDF.dump"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shrink_by_df</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fout</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TFIDF.dumps"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.dumps">[docs]</a>    <span class="k">def</span> <span class="nf">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shrink_by_df</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TFIDF.shrink_by_df"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.shrink_by_df">[docs]</a>    <span class="k">def</span> <span class="nf">shrink_by_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">newdf</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">NTHRES</span><span class="p">:</span>
+                <span class="n">newdf</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">newdf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">cnt</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TFIDF.load"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fin</span><span class="p">)</span>
+
+    <span class="c"># a smooth wrapper for get df without add new item in dict</span></div>
+<div class="viewcode-block" id="TFIDF.df"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.df">[docs]</a>    <span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="c"># return: term -&gt; tf</span></div>
+<div class="viewcode-block" id="TFIDF.get_tf"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.get_tf">[docs]</a>    <span class="k">def</span> <span class="nf">get_tf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">ret</span>
+</div>
+<div class="viewcode-block" id="TFIDF.get_feature_vector"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.tfidf.TFIDF.get_feature_vector">[docs]</a>    <span class="k">def</span> <span class="nf">get_feature_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return: [(key_0, val_0), (key_1, val_1), ...], key start from 1&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tf</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">tf</span> <span class="ow">in</span> <span class="n">tfs</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="c"># a term that does not appear in corpus does not contribute</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">term2id</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            <span class="n">idf</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nd</span><span class="p">)</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tf</span><span class="p">))</span> <span class="o">*</span> <span class="n">idf</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+
+<span class="c"># vim: foldmethod=marker</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

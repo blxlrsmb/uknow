@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.texttagger &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.texttagger</h1><div class="highlight"><pre>
+<span class="c">#!../../manage/exec-in-virtualenv.sh</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: texttagger.py</span>
+<span class="c"># $Date: Sat Dec 14 16:14:33 2013 +0800</span>
+<span class="c"># $Author: Xinyu Zhou &lt;zxytim[at]gmail[dot]com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;text tagger, used by prefilter&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">jieba</span>
+<span class="kn">import</span> <span class="nn">html2text</span>
+<span class="kn">import</span> <span class="nn">tfidf</span>
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="kn">as</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">LABLE_PREFIX</span> <span class="o">=</span> <span class="s">u&#39;autotag:&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_html2text_wo_new_line</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">html2text</span><span class="o">.</span><span class="n">HTML2Text</span><span class="p">()</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">ignore_links</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">ignore_images</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">ignore_emphasis</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">ul_item_mark</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">emphasis_mark</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">strong_mark</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;[ \n]+&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">html</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="TextTagger"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.TextTagger">[docs]</a><span class="k">class</span> <span class="nc">TextTagger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;a text tagger that automatically tag texts&quot;&quot;&quot;</span>
+
+    <span class="n">classifier</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">tfidf_model</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prob_lower_bound</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">relative_threshold</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+                 <span class="n">nr_min_word_count</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param: prob_lower_bound: a number between 0 and 1, only take labels</span>
+<span class="sd">            that has a probability greater than this into account</span>
+<span class="sd">        :param: relative_threshold: consider all labels that has a probability</span>
+<span class="sd">            greater than the relative_threshold of maximum probability</span>
+<span class="sd">        :param: nr_min_word_count: only use words whose number of appearances</span>
+<span class="sd">            aboves this number&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">prob_lower_bound</span> <span class="o">=</span> <span class="n">prob_lower_bound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relative_threshold</span> <span class="o">=</span> <span class="n">relative_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nr_min_word_count</span> <span class="o">=</span> <span class="n">nr_min_word_count</span>
+
+    <span class="k">def</span> <span class="nf">_filter_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">words</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_document_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">_html2text_wo_new_line</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_words</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">jieba</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">cut_all</span><span class="o">=</span><span class="bp">True</span><span class="p">)))</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_words</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">jieba</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">cut_all</span><span class="o">=</span><span class="bp">False</span><span class="p">)))</span>
+        <span class="n">words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">nltk</span><span class="o">.</span><span class="n">bigrams</span><span class="p">(</span><span class="n">tokens</span><span class="p">)))</span>
+        <span class="n">words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">nltk</span><span class="o">.</span><span class="n">trigrams</span><span class="p">(</span><span class="n">tokens</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">words</span>
+
+<div class="viewcode-block" id="TextTagger.fit"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.TextTagger.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param training_data: a list of tuple, each tuple comprises of</span>
+<span class="sd">        raw text from database (may contain html code), and its label(s). e.g,</span>
+<span class="sd">        [(&#39;NBA 2k13&#39;, [&#39;sports&#39;, &#39;computer&#39;]), (&#39;hello world&#39;, &#39;programming&#39;)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_model</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">TFIDF</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nr_min_word_count</span><span class="p">)</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;training tfidf model ...&quot;</span><span class="p">)</span>
+        <span class="n">data_by_words</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">doc</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">training_data</span><span class="p">:</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_document_words</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">labels</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+                <span class="n">data_by_words</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">words</span><span class="p">,</span> <span class="n">l</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_model</span><span class="o">.</span><span class="n">add_document</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfidf_model</span><span class="o">.</span><span class="n">shrink_by_df</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;#tokens: {}&quot;</span> <span class="o">.</span> <span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfidf_model</span><span class="o">.</span><span class="n">term2id</span><span class="p">)))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;generating feature vector ...&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">words</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">data_by_words</span><span class="p">:</span>
+            <span class="n">feature_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_vector_by_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">dict</span><span class="p">(</span><span class="n">feature_vector</span><span class="p">),</span> <span class="n">label</span><span class="p">))</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;training NaiveBayesClassifier ...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_feature_vector_by_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfidf_model</span><span class="o">.</span><span class="n">get_feature_vector</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
+
+<div class="viewcode-block" id="TextTagger.predict_one"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.TextTagger.predict_one">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param: document: raw text from database, may contain html code&quot;&quot;&quot;</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_document_words</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+        <span class="n">feature_vector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_vector_by_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+        <span class="c"># prob_classify return a distribution</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="o">.</span><span class="n">prob_classify</span><span class="p">(</span><span class="n">feature_vector</span><span class="p">)</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">prob</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">samples</span><span class="p">())</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">samples</span><span class="p">(),</span> <span class="n">prob</span><span class="p">)</span>
+        <span class="n">max_prob</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_prob</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative_threshold</span>
+            <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">prob_lower_bound</span><span class="p">,</span>
+            <span class="n">ans</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">ans</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">LABLE_PREFIX</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">labels</span>
+</div>
+<div class="viewcode-block" id="TextTagger.dump"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.TextTagger.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fout</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TextTagger.load"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.TextTagger.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fin</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../../autogen/common.lib.html#common.lib.texttagger.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="n">training_data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s">&#39;I love this sandwich.&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;This is an amazing place!&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;I feel very good about these beers.&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;This is my best work.&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;What an awesome view&quot;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;I do not like this restaurant&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;I am tired of this stuff.&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;I can&#39;t deal with this&quot;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;He is my sworn enemy!&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;My boss is horrible.&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">u&#39;天气真不错！&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">u&#39;天气真糟糕！&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s">&#39;The beer was good.&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;I do not enjoy my job&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;I ain&#39;t feeling dandy today.&quot;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;I feel amazing!&quot;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&#39;Gary is a friend of mine.&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;I can&#39;t believe I&#39;m doing this.&quot;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">&quot;can&#39;t be good any more&quot;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">u&#39;你人很不错！&#39;</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s">u&#39;这人真糟糕！&#39;</span><span class="p">,</span> <span class="s">&#39;neg&#39;</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">tagger</span> <span class="o">=</span> <span class="n">TextTagger</span><span class="p">()</span>
+    <span class="n">tagger</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_data</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">doc</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">:</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tagger</span><span class="o">.</span><span class="n">predict_one</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">test</span><span class="p">()</span>
+
+<span class="c"># vim: foldmethod=marker</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

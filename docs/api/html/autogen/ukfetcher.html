@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukfetcher package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ukfetcher-package">
+<h1>ukfetcher package<a class="headerlink" href="#ukfetcher-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ukfetcher.general.html">ukfetcher.general package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.bitcoin">ukfetcher.general.bitcoin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.china_daily">ukfetcher.general.china_daily module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.guokr">ukfetcher.general.guokr module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.quora">ukfetcher.general.quora module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.sample">ukfetcher.general.sample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.stackoverflow">ukfetcher.general.stackoverflow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.tsinghua">ukfetcher.general.tsinghua module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.xkcd">ukfetcher.general.xkcd module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general.zhihu">ukfetcher.general.zhihu module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.general.html#module-ukfetcher.general">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ukfetcher.prefilter.html">ukfetcher.prefilter package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.prefilter.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.prefilter.html#module-ukfetcher.prefilter.autotagging">ukfetcher.prefilter.autotagging module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.prefilter.html#module-ukfetcher.prefilter">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ukfetcher.user.html">ukfetcher.user package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.user.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.user.html#module-ukfetcher.user.thu_learn">ukfetcher.user.thu_learn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukfetcher.user.html#module-ukfetcher.user">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ukfetcher.base">
+<span id="ukfetcher-base-module"></span><h2>ukfetcher.base module<a class="headerlink" href="#module-ukfetcher.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ukfetcher.base.register_fetcher_base">
+<em class="property">class </em><tt class="descclassname">ukfetcher.base.</tt><tt class="descname">register_fetcher_base</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/base.html#register_fetcher_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.base.register_fetcher_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>base class for decorator to register a new fetcher</p>
+<dl class="attribute">
+<dt id="ukfetcher.base.register_fetcher_base.fetcher_name">
+<tt class="descname">fetcher_name</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.base.register_fetcher_base.fetcher_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ukfetcher.base.register_fetcher_base.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukfetcher/base.html#register_fetcher_base.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.base.register_fetcher_base.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run the fetcher</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukfetcher.context">
+<span id="ukfetcher-context-module"></span><h2>ukfetcher.context module<a class="headerlink" href="#module-ukfetcher.context" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ukfetcher.context.FetcherContext">
+<em class="property">class </em><tt class="descclassname">ukfetcher.context.</tt><tt class="descname">FetcherContext</tt><big>(</big><em>fetcher_type</em>, <em>fetcher_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/context.html#FetcherContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.context.FetcherContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>context where a fetcher is executed</p>
+<dl class="attribute">
+<dt id="ukfetcher.context.FetcherContext.fetcher_name">
+<tt class="descname">fetcher_name</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.context.FetcherContext.fetcher_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>current fetcher name, str</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.context.FetcherContext.fetcher_type">
+<tt class="descname">fetcher_type</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.context.FetcherContext.fetcher_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>current fetcher type, in (FETCHER_TYPE_GENERAL, FETCHER_TYPE_USER)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ukfetcher.context.FetcherContext.get_mongo_collection">
+<tt class="descname">get_mongo_collection</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukfetcher/context.html#FetcherContext.get_mongo_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.context.FetcherContext.get_mongo_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a mongo collection to store fetcher-specific data</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="ukfetcher.context.FetcherContext.get_mongo_collection_for_fetcher_name">
+<em class="property">classmethod </em><tt class="descname">get_mongo_collection_for_fetcher_name</tt><big>(</big><em>fetcher_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/context.html#FetcherContext.get_mongo_collection_for_fetcher_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.context.FetcherContext.get_mongo_collection_for_fetcher_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a mongo collection to store fetcher-specific data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ukfetcher.context.FetcherContext.new_item">
+<tt class="descname">new_item</tt><big>(</big><em>desc</em>, <em>initial_tag</em>, <em>create_time=None</em>, <em>other=None</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/context.html#FetcherContext.new_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.context.FetcherContext.new_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>add an item into database
+:param fetcher_type: one of FETCHER_TYPE_USER or FETCHER_TYPE_GENERAL
+:param fetcher_name: str, name of fetcher
+:param desc: <tt class="xref py py-class docutils literal"><span class="pre">ItemDescBase</span></tt> object
+:param initial_tag: list of str, initial tags
+:param create_time: :class: <cite>time.struct_time</cite> object
+:param other: None or a bson-serializable dict
+:return: item id as int</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.context.FetcherContext.user_id">
+<tt class="descname">user_id</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.context.FetcherContext.user_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>user id as integer, or None if unavailable</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukfetcher.util">
+<span id="ukfetcher-util-module"></span><h2>ukfetcher.util module<a class="headerlink" href="#module-ukfetcher.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ukfetcher.util.get_db_set">
+<tt class="descclassname">ukfetcher.util.</tt><tt class="descname">get_db_set</tt><big>(</big><em>user_id</em>, <em>set_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/util.html#get_db_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.util.get_db_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ukfetcher.util.insert_db_item">
+<tt class="descclassname">ukfetcher.util.</tt><tt class="descname">insert_db_item</tt><big>(</big><em>user_id</em>, <em>set_name</em>, <em>item_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/util.html#insert_db_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.util.insert_db_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>insert an item into a set in mongodb</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukfetcher.util.remove_db_item">
+<tt class="descclassname">ukfetcher.util.</tt><tt class="descname">remove_db_item</tt><big>(</big><em>user_id</em>, <em>set_name</em>, <em>item_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/util.html#remove_db_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.util.remove_db_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>insert an item into a set in mongodb</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukfetcher">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ukfetcher" title="Permalink to this headline">¶</a></h2>
+<p>provide fetcher background service, and also utilities for managing
+fetchers</p>
+<p>public mongo doc: collection: item
+{</p>
+<blockquote>
+<div>_id: unique int64 id
+fetcher_type: int, indexed
+fetcher_name: str, indexed
+desc: binary of ItemDescBase
+tag: list of str, indexed
+other: null, or dict of anything
+creation_time: datetime, UTC, indexed</div></blockquote>
+<p>}</p>
+<dl class="function">
+<dt id="ukfetcher.disable_user_fetcher">
+<tt class="descclassname">ukfetcher.</tt><tt class="descname">disable_user_fetcher</tt><big>(</big><em>user_id</em>, <em>fetcher_name</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher.html#disable_user_fetcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.disable_user_fetcher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ukfetcher.enable_user_fetcher">
+<tt class="descclassname">ukfetcher.</tt><tt class="descname">enable_user_fetcher</tt><big>(</big><em>user_id</em>, <em>fetcher_name</em>, <em>config</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher.html#enable_user_fetcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.enable_user_fetcher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ukfetcher.get_enabled_user_fetcher">
+<tt class="descclassname">ukfetcher.</tt><tt class="descname">get_enabled_user_fetcher</tt><big>(</big><em>user_id</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher.html#get_enabled_user_fetcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.get_enabled_user_fetcher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ukfetcher.get_user_fetcher_list">
+<tt class="descclassname">ukfetcher.</tt><tt class="descname">get_user_fetcher_list</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukfetcher.html#get_user_fetcher_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.get_user_fetcher_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a list of <tt class="xref py py-class docutils literal"><span class="pre">_user_register_fetcher</span></tt> objects</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ukfetcher package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ukfetcher.base">ukfetcher.base module</a></li>
+<li><a class="reference internal" href="#module-ukfetcher.context">ukfetcher.context module</a></li>
+<li><a class="reference internal" href="#module-ukfetcher.util">ukfetcher.util module</a></li>
+<li><a class="reference internal" href="#module-ukfetcher">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/ukfetcher.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

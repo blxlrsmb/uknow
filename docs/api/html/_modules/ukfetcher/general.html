@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukfetcher.general &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../index.html" />
+    <link rel="up" title="ukfetcher" href="../ukfetcher.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukfetcher.html" accesskey="U">ukfetcher</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ukfetcher.general</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: __init__.py</span>
+<span class="c"># $Date: Sat Dec 14 17:55:00 2013 +0800</span>
+<span class="c"># $Author: jiakai &lt;jia.kai66@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;fetcher for general items&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">ukutil</span> <span class="kn">import</span> <span class="n">import_all_modules</span>
+<span class="kn">import</span> <span class="nn">ukconfig</span>
+<span class="kn">import</span> <span class="nn">uklogger</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">register_fetcher_base</span>
+<span class="kn">from</span> <span class="nn">..context</span> <span class="kn">import</span> <span class="n">FetcherContext</span><span class="p">,</span> <span class="n">FETCHER_TYPE_GENERAL</span>
+<span class="kn">import</span> <span class="nn">gevent</span>
+
+
+<div class="viewcode-block" id="GeneralFetcherContext"><a class="viewcode-back" href="../../autogen/ukfetcher.general.html#ukfetcher.general.GeneralFetcherContext">[docs]</a><span class="k">class</span> <span class="nc">GeneralFetcherContext</span><span class="p">(</span><span class="n">FetcherContext</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;FetcherContext for general fetchers&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetcher_name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GeneralFetcherContext</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+            <span class="n">FETCHER_TYPE_GENERAL</span><span class="p">,</span> <span class="n">fetcher_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GeneralFetcherContext.new_item"><a class="viewcode-back" href="../../autogen/ukfetcher.general.html#ukfetcher.general.GeneralFetcherContext.new_item">[docs]</a>    <span class="k">def</span> <span class="nf">new_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">inital_tags</span><span class="p">,</span> <span class="n">create_time</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_new_item</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="n">inital_tags</span><span class="p">,</span> <span class="n">create_time</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="register_fetcher"><a class="viewcode-back" href="../../autogen/ukfetcher.general.html#ukfetcher.general.register_fetcher">[docs]</a><span class="k">class</span> <span class="nc">register_fetcher</span><span class="p">(</span><span class="n">register_fetcher_base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;register a fetcher for general items&quot;&quot;&quot;</span>
+
+    <span class="n">sleep_time</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="n">fetcher_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="sd">&quot;&quot;&quot;list of :class:`register_fetcher` objects&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;see :meth:`register_fetcher_base.__init__` for details;</span>
+<span class="sd">        additional keyword argument:</span>
+<span class="sd">            * sleep_time: default sleep time for this fetcher&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleep_time</span> <span class="o">=</span> \
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;sleep_time&#39;</span><span class="p">,</span>
+                       <span class="n">ukconfig</span><span class="o">.</span><span class="n">general_fetcher_sleep_interval_default</span><span class="p">)</span>
+
+        <span class="n">register_fetcher_base</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">ust</span> <span class="o">=</span> <span class="n">ukconfig</span><span class="o">.</span><span class="n">general_fetcher_sleep_interval_special</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fetcher_name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ust</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="n">ust</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">sleep_time</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;invalid sleep time: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sleep_time</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_new_fetcher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fetcher_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">_create_fetcher_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">GeneralFetcherContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fetcher_name</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="start_server"><a class="viewcode-back" href="../../autogen/ukfetcher.general.html#ukfetcher.general.start_server">[docs]</a><span class="k">def</span> <span class="nf">start_server</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;start the server for all general fetchers&quot;&quot;&quot;</span>
+    <span class="n">import_all_modules</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">register_fetcher</span><span class="o">.</span><span class="n">fetcher_list</span><span class="p">:</span>
+        <span class="n">uklogger</span><span class="o">.</span><span class="n">log_err</span><span class="p">(</span><span class="s">&#39;no general fetcher available, exit&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">fetcher</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">uklogger</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s">&#39;run fetcher {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">fetcher</span><span class="o">.</span><span class="n">fetcher_name</span><span class="p">))</span>
+                <span class="n">fetcher</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+                <span class="n">gevent</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">fetcher</span><span class="o">.</span><span class="n">sleep_time</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="n">uklogger</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s">&#39;worker {} got KeyboardInterrupt, exit&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">fetcher</span><span class="o">.</span><span class="n">fetcher_name</span><span class="p">))</span>
+
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">gevent</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">worker</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">register_fetcher</span><span class="o">.</span><span class="n">fetcher_list</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">uklogger</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s">&#39;got KeyboardInterrupt, exit&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="parse_entry_time"><a class="viewcode-back" href="../../autogen/ukfetcher.general.html#ukfetcher.general.parse_entry_time">[docs]</a><span class="k">def</span> <span class="nf">parse_entry_time</span><span class="p">(</span><span class="n">entry</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return 9-tuple time for a given entry&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;published_parsed&#39;</span><span class="p">,</span> <span class="s">&#39;created_parsed&#39;</span><span class="p">,</span> <span class="s">&#39;updated_parsed&#39;</span><span class="p">]:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">t</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukfetcher.html" >ukfetcher</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

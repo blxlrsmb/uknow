@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukfetcher.prefilter package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ukfetcher-prefilter-package">
+<h1>ukfetcher.prefilter package<a class="headerlink" href="#ukfetcher-prefilter-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ukfetcher.prefilter.autotagging">
+<span id="ukfetcher-prefilter-autotagging-module"></span><h2>ukfetcher.prefilter.autotagging module<a class="headerlink" href="#module-ukfetcher.prefilter.autotagging" title="Permalink to this headline">¶</a></h2>
+<p>auto tagging prefilter</p>
+<dl class="function">
+<dt id="ukfetcher.prefilter.autotagging.auto_tagging">
+<tt class="descclassname">ukfetcher.prefilter.autotagging.</tt><tt class="descname">auto_tagging</tt><big>(</big><em>ctx</em>, <em>doc</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/prefilter/autotagging.html#auto_tagging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.prefilter.autotagging.auto_tagging" title="Permalink to this definition">¶</a></dt>
+<dd><p>auto tagging an item.
+It will load tagger model from <cite>ukconfig.tagger_path</cite>.
+Model should be trained prior to make this function work</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukfetcher.prefilter">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ukfetcher.prefilter" title="Permalink to this headline">¶</a></h2>
+<p>change mongo doc before inserting into db</p>
+<dl class="exception">
+<dt id="ukfetcher.prefilter.AbortItemProcessing">
+<em class="property">exception </em><tt class="descclassname">ukfetcher.prefilter.</tt><tt class="descname">AbortItemProcessing</tt><a class="reference internal" href="../_modules/ukfetcher/prefilter.html#AbortItemProcessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.prefilter.AbortItemProcessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>dummy exception to abort processing of current item, causing it to be
+discarded</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ukfetcher.prefilter.prefilter">
+<em class="property">class </em><tt class="descclassname">ukfetcher.prefilter.</tt><tt class="descname">prefilter</tt><big>(</big><em>name</em>, <em>priority=0</em>, <em>is_user=False</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/prefilter.html#prefilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.prefilter.prefilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>decorator to register a new prefilter</p>
+<dl class="classmethod">
+<dt id="ukfetcher.prefilter.prefilter.apply">
+<em class="property">classmethod </em><tt class="descname">apply</tt><big>(</big><em>ctx</em>, <em>doc</em><big>)</big><a class="reference internal" href="../_modules/ukfetcher/prefilter.html#prefilter.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukfetcher.prefilter.prefilter.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply all prefilters; invoked by <tt class="xref py py-meth docutils literal"><span class="pre">FetcherContext.new_item()</span></tt>
+note that user-defined prefilters would be first invoked, and then
+system-wide ones</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.prefilter.prefilter.func">
+<tt class="descname">func</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.prefilter.prefilter.func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.prefilter.prefilter.name">
+<tt class="descname">name</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.prefilter.prefilter.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.prefilter.prefilter.prefilter_list">
+<tt class="descname">prefilter_list</tt><em class="property"> = [&lt;ukfetcher.prefilter.prefilter object at 0x4fbda50&gt;, &lt;ukfetcher.prefilter.prefilter object at 0x4fc4410&gt;]</em><a class="headerlink" href="#ukfetcher.prefilter.prefilter.prefilter_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of system-wide prefilters, <a class="reference internal" href="#ukfetcher.prefilter.prefilter" title="ukfetcher.prefilter.prefilter"><tt class="xref py py-class docutils literal"><span class="pre">prefilter</span></tt></a> objects</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.prefilter.prefilter.priority">
+<tt class="descname">priority</tt><em class="property"> = None</em><a class="headerlink" href="#ukfetcher.prefilter.prefilter.priority" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ukfetcher.prefilter.prefilter.user_customizable_map">
+<tt class="descname">user_customizable_map</tt><em class="property"> = {'sample_user': &lt;ukfetcher.prefilter.prefilter object at 0x4fc4450&gt;}</em><a class="headerlink" href="#ukfetcher.prefilter.prefilter.user_customizable_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>filter_name =&gt; <a class="reference internal" href="#ukfetcher.prefilter.prefilter" title="ukfetcher.prefilter.prefilter"><tt class="xref py py-class docutils literal"><span class="pre">prefilter</span></tt></a> objects
+user could enable/disable filters in this list</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ukfetcher.prefilter package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ukfetcher.prefilter.autotagging">ukfetcher.prefilter.autotagging module</a></li>
+<li><a class="reference internal" href="#module-ukfetcher.prefilter">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/ukfetcher.prefilter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

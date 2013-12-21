@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Global Name List &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="global-name-list">
+<span id="id1"></span><h1><a class="toc-backref" href="#id2">Global Name List</a><a class="headerlink" href="#global-name-list" title="Permalink to this headline">¶</a></h1>
+<p>The global names that are not documented in the API Reference should be listed
+here.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#global-name-list" id="id2">Global Name List</a><ul>
+<li><a class="reference internal" href="#database-session" id="id3">Database Session</a></li>
+<li><a class="reference internal" href="#renderers" id="id4">Renderers</a></li>
+<li><a class="reference internal" href="#cookies" id="id5">Cookies</a></li>
+<li><a class="reference internal" href="#views" id="id6">Views</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="database-session">
+<h2><a class="toc-backref" href="#id3">Database Session</a><a class="headerlink" href="#database-session" title="Permalink to this headline">¶</a></h2>
+<p>A contextual session defined in <tt class="xref py py-mod docutils literal"><span class="pre">pynojo.model</span></tt> is used. To create
+a session instance <tt class="docutils literal"><span class="pre">ses</span></tt> in some function, just do the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pynojo.model</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="n">ses</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+    <span class="c"># do something with ses</span>
+</pre></div>
+</div>
+<p>Direct invoking of <tt class="xref py py-meth docutils literal"><span class="pre">Session.commit()</span></tt> is usually unnecessary, except when
+some operations that might fail and call <tt class="xref py py-meth docutils literal"><span class="pre">Session.rollback()</span></tt> are performed,
+in which case <tt class="xref py py-meth docutils literal"><span class="pre">Session.commit()</span></tt> should be called before starting any of
+those operations. The committing is performed in a subscriber defined in
+<tt class="xref py py-mod docutils literal"><span class="pre">pynojo.model</span></tt>.</p>
+</div>
+<div class="section" id="renderers">
+<h2><a class="toc-backref" href="#id4">Renderers</a><a class="headerlink" href="#renderers" title="Permalink to this headline">¶</a></h2>
+<p>The following renderers are provided by pynojo (see the source of
+<tt class="xref py py-func docutils literal"><span class="pre">pynojo.view.setup_pyramid_conf()</span></tt>):</p>
+<blockquote>
+<div><ul class="simple">
+<li>cjson: replace the json renderer, to gain some efficiency.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="cookies">
+<h2><a class="toc-backref" href="#id5">Cookies</a><a class="headerlink" href="#cookies" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="46%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Cookie Name</th>
+<th class="head">Description</th>
+<th class="head">Source Reference</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>uid</td>
+<td>the id of the user that logged
+in</td>
+<td><tt class="xref py py-mod docutils literal"><span class="pre">pynojo.lib.user</span></tt></td>
+</tr>
+<tr class="row-odd"><td>token</td>
+<td>the authentication code of the</td>
+<td><tt class="xref py py-mod docutils literal"><span class="pre">pynojo.lib.user</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="views">
+<h2><a class="toc-backref" href="#id6">Views</a><a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Global Name List</a><ul>
+<li><a class="reference internal" href="#database-session">Database Session</a></li>
+<li><a class="reference internal" href="#renderers">Renderers</a></li>
+<li><a class="reference internal" href="#cookies">Cookies</a></li>
+<li><a class="reference internal" href="#views">Views</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/global-name-list.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

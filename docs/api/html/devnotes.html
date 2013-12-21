@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Notes for Developers &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="index.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Welcome to uknow’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to uknow’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="notes-for-developers">
+<h1><a class="toc-backref" href="#id1">Notes for Developers</a><a class="headerlink" href="#notes-for-developers" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#notes-for-developers" id="id1">Notes for Developers</a><ul>
+<li><a class="reference internal" href="#getting-started" id="id2">Getting Started</a><ul>
+<li><a class="reference internal" href="#environment-setup" id="id3">Environment Setup</a></li>
+<li><a class="reference internal" href="#configuration" id="id4">Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous-specifications-and-instructions" id="id5">Miscellaneous Specifications and Instructions</a><ul>
+<li><a class="reference internal" href="#framework" id="id6">Framework</a></li>
+<li><a class="reference internal" href="#code-style" id="id7">Code Style</a></li>
+<li><a class="reference internal" href="#documenting" id="id8">Documenting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Contact Kai Jia &lt;<a class="reference external" href="mailto:jia&#46;kai66&#37;&#52;&#48;gmail&#46;com">jia<span>&#46;</span>kai66<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt; if you have any question about this page.</p>
+<div class="section" id="getting-started">
+<h2><a class="toc-backref" href="#id2">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="environment-setup">
+<h3><a class="toc-backref" href="#id3">Environment Setup</a><a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Install MongoDB, Redis and their development packages if you don&#8217;t already
+have them installed.  Usually this is via your system&#8217;s package
+manager.</p>
+</li>
+<li><p class="first">Install virtualenv:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>sudo pip install virtualenv
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install python packages as dependencies</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>manage
+<span class="nv">$ </span>./quickinstall
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="configuration">
+<span id="devnotes-sysconf"></span><h3><a class="toc-backref" href="#id4">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>The static system configuration file is <tt class="xref py py-mod docutils literal"><span class="pre">manage/config.py</span></tt>, allowing the
+developers applying their local settings without having to change the system
+defaults.</p>
+<p>An example file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FRONTEND_PORT</span> <span class="o">=</span> <span class="mi">4999</span>
+<span class="n">API_PORT</span> <span class="o">=</span> <span class="mi">5000</span>
+
+<span class="n">API_RUN_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;debug&#39;</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+
+<span class="n">FRONTEND_RUN_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;debug&#39;</span><span class="p">:</span> <span class="bp">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="miscellaneous-specifications-and-instructions">
+<h2><a class="toc-backref" href="#id5">Miscellaneous Specifications and Instructions</a><a class="headerlink" href="#miscellaneous-specifications-and-instructions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="framework">
+<h3><a class="toc-backref" href="#id6">Framework</a><a class="headerlink" href="#framework" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://flask.pocoo.org/">Flask</a> is used as the web framework, and <a class="reference external" href="http://www.mongodb.org/">MongoDB</a> as the database</p>
+</div>
+<div class="section" id="code-style">
+<h3><a class="toc-backref" href="#id7">Code Style</a><a class="headerlink" href="#code-style" title="Permalink to this headline">¶</a></h3>
+<p>Follow the <a class="reference external" href="http://www.python.org/dev/peps/pep-0008">Style Guide for Python Code</a>.  Use <a class="reference external" href="http://pypi.python.org/pypi/pylint">pylint</a> to check the style and
+find potential bugs. Execute the <em>run-pylint</em> script to invoke pylint.</p>
+<p>The following lines should be included in every Python source file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># $File: &lt;file name&gt;</span>
+<span class="c"># $Date: &lt;last modification time&gt;</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2012 the uknow development team &lt;see AUTHORS file&gt;</span>
+<span class="c">#</span>
+<span class="c"># Contributors to this file:</span>
+<span class="c">#    &lt;you name and email here&gt;</span>
+<span class="c">#</span>
+<span class="c"># This file is part of uknow</span>
+<span class="c">#</span>
+<span class="c"># uknow is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c"># uknow is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with uknow.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+</pre></div>
+</div>
+<p>Configure your editor to update the <em>$File</em> and <em>$Date</em> fields automatically.
+Add your name to the contributors field and the AUTHORS file.</p>
+<p>By the way, if vim is your favorite, you can add the following lines to
+your vimrc:</p>
+<div class="highlight-vim"><div class="highlight"><pre>autocmd <span class="k">filetype</span> python <span class="k">set</span> <span class="nb">expandtab</span>
+autocmd <span class="k">filetype</span> python <span class="k">set</span> <span class="nb">textwidth</span><span class="p">=</span><span class="m">79</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="documenting">
+<span id="devnotes-documenting"></span><h3><a class="toc-backref" href="#id8">Documenting</a><a class="headerlink" href="#documenting" title="Permalink to this headline">¶</a></h3>
+<p>Write docstrings for every package, module, public class, public method, public
+function, etc. The documents should be written in English.</p>
+<p>Register all the global names in <a class="reference internal" href="global-name-list.html#global-name-list"><em>Global Name List</em></a>.</p>
+<p>These documents are generated from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> sources and docstrings by
+<a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>.  Issue the following command to generate all the documents:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> &lt;path-to-uknow-source-root&gt;/docs/api
+<span class="nv">$ </span>./gendoc.sh
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Notes for Developers</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous-specifications-and-instructions">Miscellaneous Specifications and Instructions</a><ul>
+<li><a class="reference internal" href="#framework">Framework</a></li>
+<li><a class="reference internal" href="#code-style">Code Style</a></li>
+<li><a class="reference internal" href="#documenting">Documenting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to uknow&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="next chapter">API Reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/devnotes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to uknow’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

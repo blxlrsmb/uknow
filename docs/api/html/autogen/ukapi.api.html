@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukapi.api package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" />
+    <link rel="up" title="ukapi package" href="ukapi.html" />
+    <link rel="next" title="ukapi.postfilter package" href="ukapi.postfilter.html" />
+    <link rel="prev" title="ukapi package" href="ukapi.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ukapi.postfilter.html" title="ukapi.postfilter package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ukapi.html" title="ukapi package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="ukapi.html" accesskey="U">ukapi package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ukapi-api-package">
+<h1>ukapi.api package<a class="headerlink" href="#ukapi-api-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ukapi.api.refresh">
+<span id="ukapi-api-refresh-module"></span><h2>ukapi.api.refresh module<a class="headerlink" href="#module-ukapi.api.refresh" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ukapi.api.refresh.refresh">
+<tt class="descclassname">ukapi.api.refresh.</tt><tt class="descname">refresh</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/refresh.html#refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.refresh.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>refresh user-specified fetchers</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.tab">
+<span id="ukapi-api-tab-module"></span><h2>ukapi.api.tab module<a class="headerlink" href="#module-ukapi.api.tab" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ukapi.api.tab.add_tab">
+<tt class="descclassname">ukapi.api.tab.</tt><tt class="descname">add_tab</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tab.html#add_tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tab.add_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a new tab to current user
+{
+name: &#8216;string&#8217;      # name of the tab
+priority: integer   # bigger, better. default to be 0
+}</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tab.del_tab">
+<tt class="descclassname">ukapi.api.tab.</tt><tt class="descname">del_tab</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tab.html#del_tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tab.del_tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>delete a tab
+{
+name: &#8216;tabname&#8217;      # name of the tab
+}
+ignore it when tab with &#8216;tabname&#8217; doesn&#8217;t exist</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tab.get_all_tabs">
+<tt class="descclassname">ukapi.api.tab.</tt><tt class="descname">get_all_tabs</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tab.html#get_all_tabs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tab.get_all_tabs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tab.get_tab_article">
+<tt class="descclassname">ukapi.api.tab.</tt><tt class="descname">get_tab_article</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tab.html#get_tab_article"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tab.get_tab_article" title="Permalink to this definition">¶</a></dt>
+<dd><p>get all articles under a tab
+GET /get_tab_article?tab=tabname</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.tag">
+<span id="ukapi-api-tag-module"></span><h2>ukapi.api.tag module<a class="headerlink" href="#module-ukapi.api.tag" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ukapi.api.tag.add_tag">
+<tt class="descclassname">ukapi.api.tag.</tt><tt class="descname">add_tag</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tag.html#add_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tag.add_tag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>{</dt>
+<dd>name: &#8216;tagname&#8217;,
+tab: &#8216;tabname&#8217;</dd>
+</dl>
+<p>}</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tag.del_tag">
+<tt class="descclassname">ukapi.api.tag.</tt><tt class="descname">del_tag</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tag.html#del_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tag.del_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>GET /del_tag?name=xxx&amp;tab=xxx</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tag.get_all_tags">
+<tt class="descclassname">ukapi.api.tag.</tt><tt class="descname">get_all_tags</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tag.html#get_all_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tag.get_all_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>get all tags to choose from</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.tag.set_tag">
+<tt class="descclassname">ukapi.api.tag.</tt><tt class="descname">set_tag</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/tag.html#set_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.tag.set_tag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>{</dt>
+<dd>name: [&#8216;tagname&#8217;],
+tab: &#8216;tabname&#8217;</dd>
+</dl>
+<p>}</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.test">
+<span id="ukapi-api-test-module"></span><h2>ukapi.api.test module<a class="headerlink" href="#module-ukapi.api.test" title="Permalink to this headline">¶</a></h2>
+<p>test with user id</p>
+<dl class="function">
+<dt id="ukapi.api.test.test">
+<tt class="descclassname">ukapi.api.test.</tt><tt class="descname">test</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/test.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.test.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>given user id and return all items</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.user">
+<span id="ukapi-api-user-module"></span><h2>ukapi.api.user module<a class="headerlink" href="#module-ukapi.api.user" title="Permalink to this headline">¶</a></h2>
+<p>user operation api</p>
+<p>mongo doc: collection: user
+{
+username:
+password:
+tab: []
+}</p>
+<dl class="function">
+<dt id="ukapi.api.user.login">
+<tt class="descclassname">ukapi.api.user.</tt><tt class="descname">login</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user.html#login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>login api</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user.logout">
+<tt class="descclassname">ukapi.api.user.</tt><tt class="descname">logout</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user.html#logout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user.logout" title="Permalink to this definition">¶</a></dt>
+<dd><p>logout api</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user.register">
+<tt class="descclassname">ukapi.api.user.</tt><tt class="descname">register</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user.html#register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>user registration api.
+username: string
+password: string        XXX TODO</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user.test_login">
+<tt class="descclassname">ukapi.api.user.</tt><tt class="descname">test_login</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user.html#test_login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user.test_login" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if a cookie is valid</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.user_fetcher">
+<span id="ukapi-api-user-fetcher-module"></span><h2>ukapi.api.user_fetcher module<a class="headerlink" href="#module-ukapi.api.user_fetcher" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ukapi.api.user_fetcher.disable_fetcher">
+<tt class="descclassname">ukapi.api.user_fetcher.</tt><tt class="descname">disable_fetcher</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_fetcher.html#disable_fetcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_fetcher.disable_fetcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>arg: fetcher_id</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user_fetcher.enable_fetcher">
+<tt class="descclassname">ukapi.api.user_fetcher.</tt><tt class="descname">enable_fetcher</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_fetcher.html#enable_fetcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_fetcher.enable_fetcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>arg: fetcher_id, fetcher-specific config
+currently, config only includes username and password, for
+authentication to the underlying website</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user_fetcher.get_fetcher_list">
+<tt class="descclassname">ukapi.api.user_fetcher.</tt><tt class="descname">get_fetcher_list</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_fetcher.html#get_fetcher_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_fetcher.get_fetcher_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{
+&#8220;fetcher&#8221;: [
+{&#8220;id&#8221;: &#8220;&#8221;,<blockquote>
+<div>&#8220;enabled&#8221;: bool,
+&#8220;name&#8221;: &#8220;&#8221;,    // display name on webpage
+&#8220;config&#8221;: &#8220;&#8221;}  // config type, currently list of configurable text<blockquote>
+<div>fields</div></blockquote>
+</div></blockquote>
+<p>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>}</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.user_model">
+<span id="ukapi-api-user-model-module"></span><h2>ukapi.api.user_model module<a class="headerlink" href="#module-ukapi.api.user_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ukapi.api.user_model.User">
+<em class="property">class </em><tt class="descclassname">ukapi.api.user_model.</tt><tt class="descname">User</tt><big>(</big><em>username</em>, <em>password</em>, <em>need_auth=True</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>User class as an implementation required by flask-login</p>
+<dl class="method">
+<dt id="ukapi.api.user_model.User.authenticate">
+<tt class="descname">authenticate</tt><big>(</big><em>username</em>, <em>password</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="ukapi.api.user_model.User.from_username">
+<em class="property">static </em><tt class="descname">from_username</tt><big>(</big><em>username</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.from_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.from_username" title="Permalink to this definition">¶</a></dt>
+<dd><p>create authenticated User object from a user document from db</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.user_model.User.get_error">
+<tt class="descname">get_error</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.get_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.get_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.user_model.User.get_id">
+<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.get_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.user_model.User.is_active">
+<tt class="descname">is_active</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.is_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.is_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.user_model.User.is_anonymous">
+<tt class="descname">is_anonymous</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.is_anonymous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.is_anonymous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.user_model.User.is_authenticated">
+<tt class="descname">is_authenticated</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#User.is_authenticated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.User.is_authenticated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user_model.load_user">
+<tt class="descclassname">ukapi.api.user_model.</tt><tt class="descname">load_user</tt><big>(</big><em>username</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_model.html#load_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_model.load_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api.user_postfilter">
+<span id="ukapi-api-user-postfilter-module"></span><h2>ukapi.api.user_postfilter module<a class="headerlink" href="#module-ukapi.api.user_postfilter" title="Permalink to this headline">¶</a></h2>
+<p>note that currently user-specified prefilter is not implemented, thus only
+URL /filter is actually for postfilters only</p>
+<dl class="function">
+<dt id="ukapi.api.user_postfilter.api_disable_postfilter">
+<tt class="descclassname">ukapi.api.user_postfilter.</tt><tt class="descname">api_disable_postfilter</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_postfilter.html#api_disable_postfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_postfilter.api_disable_postfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>arg: filter_id</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user_postfilter.api_enable_postfilter">
+<tt class="descclassname">ukapi.api.user_postfilter.</tt><tt class="descname">api_enable_postfilter</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_postfilter.html#api_enable_postfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_postfilter.api_enable_postfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>arg: filter_id, postfilter-specific config</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ukapi.api.user_postfilter.api_get_postfilter_list">
+<tt class="descclassname">ukapi.api.user_postfilter.</tt><tt class="descname">api_get_postfilter_list</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api/user_postfilter.html#api_get_postfilter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.user_postfilter.api_get_postfilter_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{
+&#8220;filter&#8221;: [<blockquote>
+<div><dl class="docutils">
+<dt>{&#8220;id&#8221;: &#8220;&#8221;,</dt>
+<dd>&#8220;enabled&#8221;: bool,
+&#8220;name&#8221;: &#8220;&#8221;,    // display name on webpage
+&#8220;config&#8221;: &#8220;&#8221;}  // config type, currently ignored</dd>
+</dl>
+</div></blockquote>
+<p>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>}</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ukapi.api">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ukapi.api" title="Permalink to this headline">¶</a></h2>
+<p>website API entry points</p>
+<dl class="class">
+<dt id="ukapi.api.api_method">
+<em class="property">class </em><tt class="descclassname">ukapi.api.</tt><tt class="descname">api_method</tt><big>(</big><em>url_rule</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/ukapi/api.html#api_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.api_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>use as a decorator to register an API</p>
+<dl class="attribute">
+<dt id="ukapi.api.api_method.all_url_rule">
+<tt class="descname">all_url_rule</tt><em class="property"> = []</em><a class="headerlink" href="#ukapi.api.api_method.all_url_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>class level attribute for all url rules</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukapi.api.api_method.api_implementation">
+<tt class="descname">api_implementation</tt><em class="property"> = None</em><a class="headerlink" href="#ukapi.api.api_method.api_implementation" title="Permalink to this definition">¶</a></dt>
+<dd><p>a callable implementing current API, which takes no argument and
+returns a dict</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukapi.api.api_method.url_rule">
+<tt class="descname">url_rule</tt><em class="property"> = None</em><a class="headerlink" href="#ukapi.api.api_method.url_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>url rule for current API</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ukapi.api.api_method.url_rule_extra_kwargs">
+<tt class="descname">url_rule_extra_kwargs</tt><em class="property"> = None</em><a class="headerlink" href="#ukapi.api.api_method.url_rule_extra_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra keyword arguments for url rule</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ukapi.api.api_method.view_func">
+<tt class="descname">view_func</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/ukapi/api.html#api_method.view_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ukapi.api.api_method.view_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>the view_func passed to Flask.add_url_rule</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ukapi.api package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.refresh">ukapi.api.refresh module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.tab">ukapi.api.tab module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.tag">ukapi.api.tag module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.test">ukapi.api.test module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.user">ukapi.api.user module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.user_fetcher">ukapi.api.user_fetcher module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.user_model">ukapi.api.user_model module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api.user_postfilter">ukapi.api.user_postfilter module</a></li>
+<li><a class="reference internal" href="#module-ukapi.api">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ukapi.html"
+                        title="previous chapter">ukapi package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ukapi.postfilter.html"
+                        title="next chapter">ukapi.postfilter package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/ukapi.api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ukapi.postfilter.html" title="ukapi.postfilter package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ukapi.html" title="ukapi package"
+             >previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="ukapi.html" >ukapi package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

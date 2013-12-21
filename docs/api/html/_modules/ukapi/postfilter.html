@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukapi.postfilter &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../index.html" />
+    <link rel="up" title="ukapi" href="../ukapi.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukapi.html" accesskey="U">ukapi</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ukapi.postfilter</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: __init__.py</span>
+<span class="c"># $Date: Sat Dec 14 22:35:00 2013 +0800</span>
+<span class="c"># $Author: jiakai &lt;jia.kai66@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;change mongo doc before inserting into db&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">ukutil</span> <span class="kn">import</span> <span class="n">import_all_modules</span><span class="p">,</span> <span class="n">MongoDBSet</span>
+<span class="kn">from</span> <span class="nn">ukdbconn</span> <span class="kn">import</span> <span class="n">get_mongo</span>
+<span class="kn">from</span> <span class="nn">ukitem</span> <span class="kn">import</span> <span class="n">ItemDescBase</span>
+<span class="kn">import</span> <span class="nn">uklogger</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="n">_user_enabled_filter_set</span> <span class="o">=</span> <span class="n">MongoDBSet</span><span class="p">(</span><span class="s">&#39;ukapi_enabled_postfilter&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_postfilter_list"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.get_postfilter_list">[docs]</a><span class="k">def</span> <span class="nf">get_postfilter_list</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;:return: list of :class:`PostfilterBase` objects&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">PostfilterBase</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())</span>
+
+</div>
+<div class="viewcode-block" id="get_enabled_user_postfilter"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.get_enabled_user_postfilter">[docs]</a><span class="k">def</span> <span class="nf">get_enabled_user_postfilter</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_user_enabled_filter_set</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="enable_user_postfilter"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.enable_user_postfilter">[docs]</a><span class="k">def</span> <span class="nf">enable_user_postfilter</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">PostfilterBase</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="p">[</span><span class="n">filter_name</span><span class="p">]</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">enable</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+    <span class="n">_user_enabled_filter_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="disable_user_postfilter"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.disable_user_postfilter">[docs]</a><span class="k">def</span> <span class="nf">disable_user_postfilter</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">PostfilterBase</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="p">[</span><span class="n">filter_name</span><span class="p">]</span>
+    <span class="n">_user_enabled_filter_set</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">disable</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="apply_postfilter"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.apply_postfilter">[docs]</a><span class="k">def</span> <span class="nf">apply_postfilter</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:param docs: raw document retrived from mongodb from item collection;</span>
+<span class="sd">    would be changed in default&quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">[</span><span class="s">&#39;desc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ItemDescBase</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;desc&#39;</span><span class="p">])</span>
+
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">PostfilterContext</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_enabled_user_postfilter</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+        <span class="n">PostfilterBase</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">docs</span><span class="p">)</span>
+
+    <span class="n">docs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;creation_time&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="PostfilterContext"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterContext">[docs]</a><span class="k">class</span> <span class="nc">PostfilterContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="sd">&quot;&quot;&quot;current user id&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+
+</div>
+<div class="viewcode-block" id="PostfilterBaseMeta"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBaseMeta">[docs]</a><span class="k">class</span> <span class="nc">PostfilterBaseMeta</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PostfilterBaseMeta</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s">&#39;PostfilterBase&#39;</span><span class="p">:</span>
+            <span class="n">PostfilterBase</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+</div>
+<div class="viewcode-block" id="PostfilterBase"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase">[docs]</a><span class="k">class</span> <span class="nc">PostfilterBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">PostfilterBaseMeta</span>
+
+    <span class="n">_postfilter_list</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;id =&gt; filter class&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;globally unique name of this postfilter&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_disp_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;display name on webpage&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_config_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get user configurable fields&quot;&quot;&quot;</span>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="PostfilterBase.enable"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;enable this filter for a user&quot;&quot;&quot;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="PostfilterBase.disable"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;disable this filter for a user&quot;&quot;&quot;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="PostfilterBase.apply"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;apply this postfilter</span>
+<span class="sd">        :param ctx: :class:`PostfilterContext` object</span>
+<span class="sd">        :param docs: mongo docs, with `desc&#39; field decoded&quot;&quot;&quot;</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PostfilterBase.register"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.register">[docs]</a>    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">subcls</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">subcls</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
+        <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="p">,</span> \
+            <span class="s">&#39;duplicate postfilter: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_postfilter_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="PostfilterBase.name"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;globally unique name of this postfilter&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_name</span><span class="p">()</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="PostfilterBase.disp_name"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.disp_name">[docs]</a>    <span class="k">def</span> <span class="nf">disp_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;display name on webpage&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_disp_name</span><span class="p">()</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="PostfilterBase.config_type"><a class="viewcode-back" href="../../autogen/ukapi.postfilter.html#ukapi.postfilter.PostfilterBase.config_type">[docs]</a>    <span class="k">def</span> <span class="nf">config_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get user configurable fields&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_config_type</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_mongo_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:return a mongo collection for this fetcher&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_mongo</span><span class="p">(</span><span class="s">&#39;postfilter_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;save the config using default method&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_mongo_collection</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s">&#39;config&#39;</span><span class="p">:</span> <span class="n">config</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">_del_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;remove config for a user&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_mongo_collection</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">_load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load the config using default method&quot;&quot;&quot;</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_mongo_collection</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}))</span>
+        <span class="k">if</span> <span class="n">rst</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rst</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;config&#39;</span><span class="p">]</span>
+
+</div>
+<span class="n">import_all_modules</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukapi.html" >ukapi</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

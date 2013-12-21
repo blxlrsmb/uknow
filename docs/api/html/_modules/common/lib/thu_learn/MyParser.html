@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.thu_learn.MyParser &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.thu_learn.MyParser</h1><div class="highlight"><pre>
+<span class="c"># -*- coding=UTF-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">handle_str</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">HTMLParser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
+<div class="viewcode-block" id="itemlist_parser"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.itemlist_parser">[docs]</a><span class="k">class</span> <span class="nc">itemlist_parser</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feed_data</span><span class="p">,</span> <span class="n">itemtype</span><span class="p">):</span>
+		<span class="n">HTMLParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">is_item</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">is_itemtable</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">=</span> <span class="n">itemtype</span>
+<span class="c">#		WTF &#39;HTMLParseError: malformed start tag&#39;</span>
+		<span class="k">if</span> <span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+			<span class="n">feed_data</span> <span class="o">=</span> <span class="n">delete_input</span><span class="p">(</span><span class="n">feed_data</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">feed_data</span><span class="p">)</span>
+<div class="viewcode-block" id="itemlist_parser.handle_starttag"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.itemlist_parser.handle_starttag">[docs]</a>	<span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;table&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;table_box&#39;</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">is_itemtable</span> <span class="o">=</span> <span class="bp">True</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_itemtable</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_is_item</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">is_item</span> <span class="o">=</span> <span class="bp">True</span>
+				<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+					<span class="k">if</span> <span class="s">&#39;href&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+						<span class="n">href_str</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span> <span class="o">=</span> <span class="n">urldecode</span><span class="p">(</span><span class="n">href_str</span><span class="p">)</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+			<span class="k">pass</span></div>
+<div class="viewcode-block" id="itemlist_parser.handle_data"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.itemlist_parser.handle_data">[docs]</a>	<span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_item</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delete_space</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">return</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_item</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">,</span> <span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">is_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">data</span>
+			<span class="k">if</span> <span class="n">delete_space</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">u&#39;已经提交&#39;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;is_submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span>
+			<span class="k">if</span> <span class="n">delete_space</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">u&#39;尚未提交&#39;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;is_submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0&#39;</span>
+</div>
+<div class="viewcode-block" id="itemlist_parser.check_is_item"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.itemlist_parser.check_is_item">[docs]</a>	<span class="k">def</span> <span class="nf">check_is_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;notice&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;href&#39;</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+			<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;download&#39;</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;_top&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;href&#39;</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+			<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Unknown item type&#39;</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="courselist_parser"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.courselist_parser">[docs]</a><span class="k">class</span> <span class="nc">courselist_parser</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feed_data</span><span class="p">):</span>
+		<span class="n">HTMLParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">is_course</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">is_coursename</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">is_homework</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">feed_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="courselist_parser.handle_starttag"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.courselist_parser.handle_starttag">[docs]</a>	<span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;tr&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;class&#39;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">is_course</span> <span class="o">=</span> <span class="bp">True</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_course</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;href&#39;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span> <span class="o">=</span> <span class="n">urldecode</span><span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">is_coursename</span> <span class="o">=</span> <span class="bp">True</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_course</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;span&#39;</span> <span class="ow">and</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="s">&#39;class&#39;</span><span class="p">,</span> <span class="s">&#39;red_text&#39;</span><span class="p">):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">is_homework</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+			<span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="courselist_parser.handle_data"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.MyParser.courselist_parser.handle_data">[docs]</a>	<span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_coursename</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delete_space</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_coursename</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_homework</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span><span class="p">[</span><span class="s">&#39;homework&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_homework</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_course</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span><span class="p">,</span> <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

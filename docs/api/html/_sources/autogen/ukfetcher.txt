@@ -1,0 +1,47 @@
+ukfetcher package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    ukfetcher.general
+    ukfetcher.prefilter
+    ukfetcher.user
+
+Submodules
+----------
+
+ukfetcher.base module
+---------------------
+
+.. automodule:: ukfetcher.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.context module
+------------------------
+
+.. automodule:: ukfetcher.context
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.util module
+---------------------
+
+.. automodule:: ukfetcher.util
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ukfetcher
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.thu_learn.handle_str &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.thu_learn.handle_str</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<div class="viewcode-block" id="urldecode"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.urldecode">[docs]</a><span class="k">def</span> <span class="nf">urldecode</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+	<span class="n">ans</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+	<span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">r&#39;?&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+	<span class="n">item_list</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&#39;&amp;&#39;</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">item_list</span><span class="p">:</span>
+		<span class="n">ans</span><span class="p">[</span><span class="n">urllib</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">r&#39;=&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">r&#39;=&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">])</span>
+	<span class="k">return</span> <span class="n">ans</span>
+</div>
+<div class="viewcode-block" id="delete_space"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.delete_space">[docs]</a><span class="k">def</span> <span class="nf">delete_space</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="n">white_str</span> <span class="o">=</span> <span class="s">&#39; </span><span class="se">\r\t\n</span><span class="s">&#39;</span>
+	<span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">white_str</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">white_str</span><span class="p">)</span></div>
+<div class="viewcode-block" id="delete_input"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.delete_input">[docs]</a><span class="k">def</span> <span class="nf">delete_input</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="n">tmp</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&quot;&lt;input &quot;</span><span class="p">)</span>
+	<span class="n">ans</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+		<span class="n">ans</span> <span class="o">+=</span> <span class="n">i</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">r&#39;/&gt;&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+	<span class="k">return</span> <span class="n">ans</span>
+</div>
+<div class="viewcode-block" id="filename_trans"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.filename_trans">[docs]</a><span class="k">def</span> <span class="nf">filename_trans</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="n">ex_char</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">r&#39;/&#39;</span><span class="p">,</span> <span class="s">r&#39;*&#39;</span><span class="p">,</span> <span class="s">r&#39;&quot;&#39;</span><span class="p">,</span> <span class="s">r&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">r&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">r&#39;|&#39;</span><span class="p">,</span> <span class="s">r&#39;:&#39;</span><span class="p">,</span> <span class="s">r&#39;?&#39;</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ex_char</span><span class="p">:</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="is_datetime"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.is_datetime">[docs]</a><span class="k">def</span> <span class="nf">is_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">True</span>
+	<span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="urlencode"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.handle_str.urlencode">[docs]</a><span class="k">def</span> <span class="nf">urlencode</span><span class="p">(</span><span class="n">_dic</span><span class="p">):</span>
+	<span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">_dic</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dic</span><span class="p">:</span>
+		<span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

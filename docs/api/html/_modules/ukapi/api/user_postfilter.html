@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukapi.api.user_postfilter &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../index.html" />
+    <link rel="up" title="ukapi.api" href="../api.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../ukapi.html" >ukapi</a> &raquo;</li>
+          <li><a href="../api.html" accesskey="U">ukapi.api</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ukapi.api.user_postfilter</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: UTF-8 -*-</span>
+<span class="c"># $File: user_postfilter.py</span>
+<span class="c"># $Date: Sat Dec 14 22:36:42 2013 +0800</span>
+<span class="c"># $Author: jiakai &lt;jia.kai66@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;note that currently user-specified prefilter is not implemented, thus only</span>
+<span class="sd">URL /filter is actually for postfilters only&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">api_method</span>
+
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">get_current_user_id</span><span class="p">,</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">..postfilter</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">get_postfilter_list</span><span class="p">,</span> <span class="n">get_enabled_user_postfilter</span><span class="p">,</span>
+    <span class="n">enable_user_postfilter</span><span class="p">,</span> <span class="n">disable_user_postfilter</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/filter/list&#39;</span><span class="p">)</span>
+<span class="nd">@login_required</span>
+<div class="viewcode-block" id="api_get_postfilter_list"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user_postfilter.api_get_postfilter_list">[docs]</a><span class="k">def</span> <span class="nf">api_get_postfilter_list</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;:return: {</span>
+<span class="sd">        &quot;filter&quot;: [</span>
+<span class="sd">            {&quot;id&quot;: &quot;&quot;,</span>
+<span class="sd">             &quot;enabled&quot;: bool,</span>
+<span class="sd">             &quot;name&quot;: &quot;&quot;,    // display name on webpage</span>
+<span class="sd">             &quot;config&quot;: &quot;&quot;}  // config type, currently ignored</span>
+<span class="sd">        ]</span>
+<span class="sd">    }&quot;&quot;&quot;</span>
+    <span class="n">enabled</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_enabled_user_postfilter</span><span class="p">(</span><span class="n">get_current_user_id</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;filter&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                        <span class="s">&#39;enabled&#39;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">enabled</span><span class="p">,</span>
+                        <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">disp_name</span><span class="p">,</span>
+                        <span class="s">&#39;config&#39;</span><span class="p">:</span> <span class="n">i</span><span class="o">.</span><span class="n">config_type</span><span class="p">}</span>
+                       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_postfilter_list</span><span class="p">()]}</span>
+
+</div>
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/filter/enable&#39;</span><span class="p">)</span>
+<span class="nd">@login_required</span>
+<div class="viewcode-block" id="api_enable_postfilter"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user_postfilter.api_enable_postfilter">[docs]</a><span class="k">def</span> <span class="nf">api_enable_postfilter</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;arg: filter_id, postfilter-specific config&quot;&quot;&quot;</span>
+    <span class="n">enable_user_postfilter</span><span class="p">(</span>
+        <span class="n">get_current_user_id</span><span class="p">(),</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;filter_id&#39;</span><span class="p">],</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+</div>
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/filter/disable&#39;</span><span class="p">)</span>
+<span class="nd">@login_required</span>
+<div class="viewcode-block" id="api_disable_postfilter"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user_postfilter.api_disable_postfilter">[docs]</a><span class="k">def</span> <span class="nf">api_disable_postfilter</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;arg: filter_id&quot;&quot;&quot;</span>
+    <span class="n">disable_user_postfilter</span><span class="p">(</span>
+        <span class="n">get_current_user_id</span><span class="p">(),</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;filter_id&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../ukapi.html" >ukapi</a> &raquo;</li>
+          <li><a href="../api.html" >ukapi.api</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

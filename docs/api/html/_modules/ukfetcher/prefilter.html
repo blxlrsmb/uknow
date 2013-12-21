@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukfetcher.prefilter &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../index.html" />
+    <link rel="up" title="ukfetcher" href="../ukfetcher.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukfetcher.html" accesskey="U">ukfetcher</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ukfetcher.prefilter</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: __init__.py</span>
+<span class="c"># $Date: Fri Dec 13 00:19:42 2013 +0800</span>
+<span class="c"># $Author: jiakai &lt;jia.kai66@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;change mongo doc before inserting into db&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">get_db_set</span>
+
+<span class="kn">from</span> <span class="nn">ukutil</span> <span class="kn">import</span> <span class="n">import_all_modules</span>
+<span class="kn">import</span> <span class="nn">uklogger</span>
+
+
+<div class="viewcode-block" id="AbortItemProcessing"><a class="viewcode-back" href="../../autogen/ukfetcher.prefilter.html#ukfetcher.prefilter.AbortItemProcessing">[docs]</a><span class="k">class</span> <span class="nc">AbortItemProcessing</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;dummy exception to abort processing of current item, causing it to be</span>
+<span class="sd">    discarded&quot;&quot;&quot;</span>
+
+</div>
+<div class="viewcode-block" id="prefilter"><a class="viewcode-back" href="../../autogen/ukfetcher.prefilter.html#ukfetcher.prefilter.prefilter">[docs]</a><span class="k">class</span> <span class="nc">prefilter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;decorator to register a new prefilter&quot;&quot;&quot;</span>
+
+    <span class="n">prefilter_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="sd">&quot;&quot;&quot;list of system-wide prefilters, :class:`prefilter` objects&quot;&quot;&quot;</span>
+
+    <span class="n">user_customizable_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="sd">&quot;&quot;&quot;filter_name =&gt; :class:`prefilter` objects</span>
+<span class="sd">    user could enable/disable filters in this list&quot;&quot;&quot;</span>
+
+    <span class="n">priority</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">is_user</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param priority: int, the smaller value, the earlier executed</span>
+<span class="sd">        :param is_user: whether could be customized by user; if true, priority</span>
+<span class="sd">            would be ignored and they would be executed in the order</span>
+<span class="sd">            specified by the user&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="n">priority</span>
+        <span class="k">if</span> <span class="n">is_user</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user_customizable_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prefilter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prefilter_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">priority</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param func: user callable, which takes a :class:`FetcherContext`</span>
+<span class="sd">        object and a mongo doc as its two arguments; see</span>
+<span class="sd">        :module:`uknow.context` for details on mongo doc&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="prefilter.apply"><a class="viewcode-back" href="../../autogen/ukfetcher.prefilter.html#ukfetcher.prefilter.prefilter.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;apply all prefilters; invoked by :meth:`FetcherContext.new_item`</span>
+<span class="sd">        note that user-defined prefilters would be first invoked, and then</span>
+<span class="sd">        system-wide ones&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_db_set</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="s">&#39;prefilter&#39;</span><span class="p">):</span>
+                <span class="n">flt</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">user_customizable_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">flt</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">uklogger</span><span class="o">.</span><span class="n">log_err</span><span class="p">(</span>
+                        <span class="s">&#39;prefilter {} not exist, requested by user {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">i</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">user_id</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">flt</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">prefilter_list</span><span class="p">:</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+
+</div></div>
+<span class="n">import_all_modules</span><span class="p">(</span><span class="n">__file__</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../ukfetcher.html" >ukfetcher</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

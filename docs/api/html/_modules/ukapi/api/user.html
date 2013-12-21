@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ukapi.api.user &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../index.html" />
+    <link rel="up" title="ukapi.api" href="../api.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../ukapi.html" >ukapi</a> &raquo;</li>
+          <li><a href="../api.html" accesskey="U">ukapi.api</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for ukapi.api.user</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: UTF-8 -*-</span>
+<span class="c"># File: user.py</span>
+<span class="c"># Date: Sat Dec 21 16:08:55 2013 +0800</span>
+<span class="c"># Author: Yuxin Wu &lt;ppwwyyxxc@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;user operation api</span>
+
+<span class="sd">mongo doc: collection: user</span>
+<span class="sd">{</span>
+<span class="sd">    username:</span>
+<span class="sd">    password:</span>
+<span class="sd">    tab: []</span>
+<span class="sd">}</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">api_method</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask_login</span> <span class="kn">import</span> <span class="n">login_user</span><span class="p">,</span> <span class="n">login_required</span><span class="p">,</span> <span class="n">logout_user</span><span class="p">,</span> <span class="n">current_user</span>
+<span class="kn">from</span> <span class="nn">ukdbconn</span> <span class="kn">import</span> <span class="n">get_mongo</span><span class="p">,</span> <span class="n">get_user</span>
+<span class="kn">from</span> <span class="nn">user_model</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">uklogger</span> <span class="kn">import</span> <span class="n">log_api</span> <span class="k">as</span> <span class="n">log_info</span>
+
+
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/logout&#39;</span><span class="p">)</span>
+<span class="nd">@login_required</span>
+<div class="viewcode-block" id="logout"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user.logout">[docs]</a><span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; logout api&quot;&quot;&quot;</span>
+    <span class="n">log_info</span><span class="p">(</span><span class="s">&#39;user {0} logged out&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">username</span><span class="p">))</span>
+    <span class="n">logout_user</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+</div>
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/test_login&#39;</span><span class="p">)</span>
+<span class="nd">@login_required</span>
+<div class="viewcode-block" id="test_login"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user.test_login">[docs]</a><span class="k">def</span> <span class="nf">test_login</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;test if a cookie is valid&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+</div>
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user.login">[docs]</a><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;login api&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;error&#39;</span><span class="p">:</span> <span class="s">&#39;illegal login format!&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">auth</span><span class="o">.</span><span class="n">get_error</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">err</span>
+    <span class="n">login_user</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+    <span class="n">log_info</span><span class="p">(</span><span class="s">&#39;user {0} succesfully logged in&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">username</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+</div>
+<span class="nd">@api_method</span><span class="p">(</span><span class="s">&#39;/register&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="register"><a class="viewcode-back" href="../../../autogen/ukapi.api.html#ukapi.api.user.register">[docs]</a><span class="k">def</span> <span class="nf">register</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;user registration api.</span>
+<span class="sd">        username: string</span>
+<span class="sd">        password: string        XXX TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;error&#39;</span><span class="p">:</span> <span class="s">&#39;illegal format&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">username</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;error&#39;</span><span class="p">:</span>
+                <span class="s">&#39;length of username and password must&#39;</span> <span class="o">+</span>
+                <span class="s">&#39; be at least 3 characters&#39;</span><span class="p">}</span>
+
+    <span class="n">exist</span> <span class="o">=</span> <span class="n">get_user</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">exist</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;error&quot;</span><span class="p">:</span> <span class="s">&quot;user {0} already exists&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">username</span><span class="p">)}</span>
+
+    <span class="n">db</span> <span class="o">=</span> <span class="n">get_mongo</span><span class="p">(</span><span class="s">&#39;user&#39;</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span>
+        <span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+        <span class="s">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
+        <span class="s">&#39;tab&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">})</span>
+    <span class="n">log_info</span><span class="p">(</span><span class="s">&#39;new user: {0}:{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;success&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../ukapi.html" >ukapi</a> &raquo;</li>
+          <li><a href="../api.html" >ukapi.api</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

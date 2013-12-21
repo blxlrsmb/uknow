@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.ukutil &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.ukutil</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python2</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># $File: ukutil.py</span>
+<span class="c"># $Date: Sat Dec 21 16:00:56 2013 +0800</span>
+<span class="c"># $Author: jiakai &lt;jia.kai66@gmail.com&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;common utility functions&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">ukdbconn</span> <span class="kn">import</span> <span class="n">get_mongo</span><span class="p">,</span> <span class="n">DuplicateKeyError</span>
+
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+<span class="kn">from</span> <span class="nn">pkgutil</span> <span class="kn">import</span> <span class="n">walk_packages</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="ensure_unicode"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.ensure_unicode">[docs]</a><span class="k">def</span> <span class="nf">ensure_unicode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;assert type of s is basestring and convert s to unicode&quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">),</span> <span class="s">&#39;s should be string&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+</div>
+<div class="viewcode-block" id="import_all_modules"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.import_all_modules">[docs]</a><span class="k">def</span> <span class="nf">import_all_modules</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;import all modules recursively in a package</span>
+<span class="sd">    :param file_path: just pass __file__</span>
+<span class="sd">    :param pkg_name: just pass __name__</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">walk_packages</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)],</span> <span class="n">pkg_name</span> <span class="o">+</span> <span class="s">&#39;.&#39;</span><span class="p">):</span>
+        <span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="is_in_unittest"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.is_in_unittest">[docs]</a><span class="k">def</span> <span class="nf">is_in_unittest</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;return whether currently in unittest mode&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;IN_UKNOW_TEST&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="MongoDBSet"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBSet">[docs]</a><span class="k">class</span> <span class="nc">MongoDBSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;mantain a set in mongo db&quot;&quot;&quot;</span>
+
+    <span class="n">collection_name</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">=</span> <span class="n">collection_name</span>
+
+<div class="viewcode-block" id="MongoDBSet.get_coll"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBSet.get_coll">[docs]</a>    <span class="k">def</span> <span class="nf">get_coll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_mongo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MongoDBSet.add"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBSet.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_name</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="n">coll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coll</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">coll</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">set_name</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span><span class="p">]})</span>
+        <span class="k">except</span> <span class="n">DuplicateKeyError</span><span class="p">:</span>
+            <span class="n">coll</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">set_name</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;$addToSet&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">}})</span>
+</div>
+<div class="viewcode-block" id="MongoDBSet.remove"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBSet.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_name</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_coll</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">set_name</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;$pull&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="n">item</span><span class="p">}})</span>
+</div>
+<div class="viewcode-block" id="MongoDBSet.get"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBSet.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:return: list of items in this set&quot;&quot;&quot;</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_coll</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">set_name</span><span class="p">}))</span>
+        <span class="k">if</span> <span class="n">rst</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">rst</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;v&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+</div></div>
+<div class="viewcode-block" id="MongoDBLRUCache"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBLRUCache">[docs]</a><span class="k">class</span> <span class="nc">MongoDBLRUCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;naive LRU cache in mongodb</span>
+<span class="sd">        doc: {</span>
+<span class="sd">        _id: key</span>
+<span class="sd">        v: value</span>
+<span class="sd">        t: creation time, indexed, expire</span>
+<span class="sd">        }</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">expire_time</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">coll_name</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expire_time</span><span class="p">,</span> <span class="n">coll_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expire_time</span> <span class="o">=</span> <span class="n">expire_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coll_name</span> <span class="o">=</span> <span class="n">coll_name</span>
+
+<div class="viewcode-block" id="MongoDBLRUCache.get_coll"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBLRUCache.get_coll">[docs]</a>    <span class="k">def</span> <span class="nf">get_coll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_mongo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coll_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MongoDBLRUCache.put"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBLRUCache.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">coll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coll</span><span class="p">()</span>
+        <span class="n">coll</span><span class="o">.</span><span class="n">save</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                   <span class="s">&#39;t&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()})</span>
+        <span class="n">coll</span><span class="o">.</span><span class="n">ensure_index</span><span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="n">expireAfterSeconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">expire_time</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MongoDBLRUCache.get"><a class="viewcode-back" href="../../autogen/common.html#common.ukutil.MongoDBLRUCache.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">coll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_coll</span><span class="p">()</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">coll</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">}))</span>
+        <span class="k">if</span> <span class="n">rst</span><span class="p">:</span>
+            <span class="n">coll</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;_id&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;$set&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;t&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()}})</span>
+            <span class="k">return</span> <span class="n">rst</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;v&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">default</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

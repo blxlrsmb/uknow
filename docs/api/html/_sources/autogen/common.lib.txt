@@ -1,0 +1,37 @@
+common.lib package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    common.lib.thu_learn
+
+Submodules
+----------
+
+common.lib.texttagger module
+----------------------------
+
+.. automodule:: common.lib.texttagger
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+common.lib.tfidf module
+-----------------------
+
+.. automodule:: common.lib.tfidf
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: common.lib
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,22 @@
+common.ukconfig package
+=======================
+
+Submodules
+----------
+
+common.ukconfig.default module
+------------------------------
+
+.. automodule:: common.ukconfig.default
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: common.ukconfig
+    :members:
+    :undoc-members:
+    :show-inheritance:

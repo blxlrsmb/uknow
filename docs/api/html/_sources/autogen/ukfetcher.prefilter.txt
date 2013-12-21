@@ -1,0 +1,22 @@
+ukfetcher.prefilter package
+===========================
+
+Submodules
+----------
+
+ukfetcher.prefilter.autotagging module
+--------------------------------------
+
+.. automodule:: ukfetcher.prefilter.autotagging
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ukfetcher.prefilter
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Permission Model &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-permission-model">
+<h1><a class="toc-backref" href="#id1">The Permission Model</a><a class="headerlink" href="#the-permission-model" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#the-permission-model" id="id1">The Permission Model</a><ul>
+<li><a class="reference internal" href="#users-and-user-groups" id="id2">Users and User Groups</a></li>
+<li><a class="reference internal" href="#problem-access-control" id="id3">Problem Access Control</a></li>
+<li><a class="reference internal" href="#event-access-control" id="id4">Event Access Control</a></li>
+<li><a class="reference internal" href="#access-limiter-acl" id="id5">Access Limiter (ACL)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Contact Kai Jia &lt;<a class="reference external" href="mailto:jia&#46;kai66&#37;&#52;&#48;gmail&#46;com">jia<span>&#46;</span>kai66<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt; if you have any question about this page.</p>
+<div class="section" id="users-and-user-groups">
+<h2><a class="toc-backref" href="#id2">Users and User Groups</a><a class="headerlink" href="#users-and-user-groups" title="Permalink to this headline">¶</a></h2>
+<p>Each user can be assigned to multiple user groups, and each user group can be
+given multiple permissions, which are used for authorization of system
+management tasks.  The permissions are defined in
+<tt class="xref py py-class docutils literal"><span class="pre">pynojo.model.permdef.UserGrp</span></tt>.</p>
+<p>For a user, the permissions that it has is the union of the permissions of
+groups that it belongs to.</p>
+</div>
+<div class="section" id="problem-access-control">
+<h2><a class="toc-backref" href="#id3">Problem Access Control</a><a class="headerlink" href="#problem-access-control" title="Permalink to this headline">¶</a></h2>
+<p>Whether a problem can be accessed by a particular user is determined by the
+user&#8217;s accessibility to the problem groups(PG) that it belongs to. Each PG is
+associated to an <a class="reference internal" href="#perm-model-acl"><em>ACL</em></a>. A user is able to access a PG if
+the ACL associated with that PG allows the user&#8217;s request.</p>
+<p>A user gains access to a problem if he has access to <strong>at least one</strong> of the PGs
+that it belongs to. Although this might weaken the access controllability, it is
+designed so to simplify overall design and speed up listing problems. A user can
+only see the PGs that he has access to, so under such design, when listing
+problems in a PG, it is not needed to consider for each problem the user&#8217;s
+access to other PGs that the it belongs to.</p>
+</div>
+<div class="section" id="event-access-control">
+<h2><a class="toc-backref" href="#id4">Event Access Control</a><a class="headerlink" href="#event-access-control" title="Permalink to this headline">¶</a></h2>
+<p>An event is an activity that lasts for a period of time, associated with some
+problems and can be associated with an <a class="reference internal" href="#perm-model-acl"><em>ACL</em></a>. For example,
+it can be a time-limited assignment, a test or a contest. During an event, the
+problems in this event are locked. Locking a problem means that in the problem
+list, it can only be viewed, but the user can not post new submissions or read
+the sources of his previous submissions; instead, the user must go to the event
+page to submit the problem, and only sources submitted after the event starts
+might be viewed. There are different kinds of events, and each event
+implementation can have control over the accessibility of problems, submissions
+or any other related resource.</p>
+</div>
+<div class="section" id="access-limiter-acl">
+<span id="perm-model-acl"></span><h2><a class="toc-backref" href="#id5">Access Limiter (ACL)</a><a class="headerlink" href="#access-limiter-acl" title="Permalink to this headline">¶</a></h2>
+<p>ACL is an abstract access control mechanism used by pynojo. It can be viewed as
+an abstract base class, and the resource that needs access control can be
+associated with an instance of an implemented subclass of ACL. Each ACL instance
+is identified by a unique ACL id. This is the basic idea of ACL, and refer to
+<tt class="xref py py-mod docutils literal"><span class="pre">pynojo.lib.acl</span></tt> and <tt class="xref py py-mod docutils literal"><span class="pre">pynojo.model.acl</span></tt> for the detailed API
+descriptions.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Permission Model</a><ul>
+<li><a class="reference internal" href="#users-and-user-groups">Users and User Groups</a></li>
+<li><a class="reference internal" href="#problem-access-control">Problem Access Control</a></li>
+<li><a class="reference internal" href="#event-access-control">Event Access Control</a></li>
+<li><a class="reference internal" href="#access-limiter-acl">Access Limiter (ACL)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/perm-model.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">uknow 0.0.2.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

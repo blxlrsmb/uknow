@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.thu_learn.run_thread &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.thu_learn.run_thread</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding=UTF-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s">&#39;setdefaultencoding&#39;</span><span class="p">):</span>
+	<span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">URLError</span>
+<span class="kn">from</span> <span class="nn">handle_str</span> <span class="kn">import</span> <span class="n">filename_trans</span>
+<span class="kn">from</span> <span class="nn">items</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="viewcode-block" id="mythread"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.run_thread.mythread">[docs]</a><span class="k">class</span> <span class="nc">mythread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">if_format</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">mythread</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">existing</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">option</span> <span class="o">=</span> <span class="n">option</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">if_format</span> <span class="o">=</span> <span class="n">if_format</span>
+		<span class="k">if</span> <span class="n">if_format</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">fileroot</span> <span class="o">=</span> <span class="s">&#39;.txt&#39;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">fileroot</span> <span class="o">=</span> <span class="s">&#39;.html&#39;</span>
+<div class="viewcode-block" id="mythread.run"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.run_thread.mythread.run">[docs]</a>	<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">existing</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">unread_files</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+			<span class="n">courses</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;password&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;if_this_only&#39;</span><span class="p">])</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">courses</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;正在处理课程 &#39;</span><span class="o">+</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; ...</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+				<span class="n">thiscourse</span> <span class="o">=</span> <span class="n">course</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+				<span class="k">for</span> <span class="n">itemtype</span> <span class="ow">in</span> <span class="n">item_name_dict</span><span class="p">:</span>
+					<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">thiscourse</span><span class="o">.</span><span class="n">get_item_list</span><span class="p">(</span><span class="n">itemtype</span><span class="p">):</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing</span><span class="p">:</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\n\n\n\t\t</span><span class="s">下载取消，退出&#39;</span><span class="p">)</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+							<span class="k">return</span>
+						<span class="n">thisitem</span> <span class="o">=</span> <span class="n">item</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">itemtype</span><span class="p">)</span>
+						<span class="n">thispath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;path&#39;</span><span class="p">],</span> <span class="n">filename_trans</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]),</span> <span class="n">item_name_dict</span><span class="p">[</span><span class="n">itemtype</span><span class="p">])</span>
+						<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">thispath</span><span class="p">):</span>
+							<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">thispath</span><span class="p">)</span>
+						<span class="k">if</span> <span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;download&#39;</span> <span class="ow">or</span> <span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+							<span class="k">try</span><span class="p">:</span>
+								<span class="n">thisitem</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">thispath</span><span class="p">,</span> <span class="n">size_limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;size_limit&#39;</span><span class="p">],</span> \
+										<span class="n">type_only</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;type_only&#39;</span><span class="p">],</span> <span class="n">type_except</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="p">[</span><span class="s">&#39;type_except&#39;</span><span class="p">],</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+							<span class="k">except</span><span class="p">:</span>
+								<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">发生未知错误，忽略此文件。&#39;</span><span class="p">)</span>
+						<span class="k">if</span> <span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span> <span class="ow">or</span> <span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;notice&#39;</span><span class="p">:</span>
+							<span class="n">thisitempath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">thispath</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">filename_trans</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]),</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;course_id&#39;</span><span class="p">],</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]])</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">fileroot</span><span class="p">)</span>
+							<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">thisitempath</span><span class="p">):</span>
+								<span class="n">fout</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">thisitempath</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+								<span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">thisitem</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">if_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">if_format</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">))</span>
+								<span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c">#								if thisitem.itemtype != &#39;homework&#39; or thisitem.item_dict[&#39;is_submit&#39;] == &#39;0&#39;:</span>
+								<span class="bp">self</span><span class="o">.</span><span class="n">unread_files</span> <span class="o">+=</span> <span class="p">(</span><span class="n">thisitempath</span><span class="p">,</span> <span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\n\n\n</span><span class="s">下载完成！</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">,</span> <span class="ne">SystemExit</span><span class="p">:</span>
+			<span class="k">pass</span>
+		<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+		<span class="k">except</span> <span class="n">URLError</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;网络连接错误。</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="kn">import</span> <span class="nn">traceback</span>
+			<span class="n">log</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;error.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+			<span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">log</span><span class="p">)</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;发生未知错误，请重试。若问题依旧存在，请将error.log发送给作者，谢谢。</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

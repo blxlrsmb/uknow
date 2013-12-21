@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.thu_learn package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" />
+    <link rel="up" title="common.lib package" href="common.lib.html" />
+    <link rel="next" title="common.ukconfig package" href="common.ukconfig.html" />
+    <link rel="prev" title="common.lib package" href="common.lib.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="common.ukconfig.html" title="common.ukconfig package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="common.lib.html" title="common.lib package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" >common package</a> &raquo;</li>
+          <li><a href="common.lib.html" accesskey="U">common.lib package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-lib-thu-learn-package">
+<h1>common.lib.thu_learn package<a class="headerlink" href="#common-lib-thu-learn-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-common.lib.thu_learn.MyParser">
+<span id="common-lib-thu-learn-myparser-module"></span><h2>common.lib.thu_learn.MyParser module<a class="headerlink" href="#module-common.lib.thu_learn.MyParser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.lib.thu_learn.MyParser.courselist_parser">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.MyParser.</tt><tt class="descname">courselist_parser</tt><big>(</big><em>feed_data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#courselist_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.courselist_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">HTMLParser.HTMLParser</span></tt></p>
+<dl class="method">
+<dt id="common.lib.thu_learn.MyParser.courselist_parser.handle_data">
+<tt class="descname">handle_data</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#courselist_parser.handle_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.courselist_parser.handle_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.MyParser.courselist_parser.handle_starttag">
+<tt class="descname">handle_starttag</tt><big>(</big><em>tag</em>, <em>attrs</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#courselist_parser.handle_starttag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.courselist_parser.handle_starttag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="common.lib.thu_learn.MyParser.itemlist_parser">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.MyParser.</tt><tt class="descname">itemlist_parser</tt><big>(</big><em>feed_data</em>, <em>itemtype</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#itemlist_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.itemlist_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">HTMLParser.HTMLParser</span></tt></p>
+<dl class="method">
+<dt id="common.lib.thu_learn.MyParser.itemlist_parser.check_is_item">
+<tt class="descname">check_is_item</tt><big>(</big><em>tag</em>, <em>attrs</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#itemlist_parser.check_is_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.itemlist_parser.check_is_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.MyParser.itemlist_parser.handle_data">
+<tt class="descname">handle_data</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#itemlist_parser.handle_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.itemlist_parser.handle_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.MyParser.itemlist_parser.handle_starttag">
+<tt class="descname">handle_starttag</tt><big>(</big><em>tag</em>, <em>attrs</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MyParser.html#itemlist_parser.handle_starttag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MyParser.itemlist_parser.handle_starttag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.MySoupParser">
+<span id="common-lib-thu-learn-mysoupparser-module"></span><h2>common.lib.thu_learn.MySoupParser module<a class="headerlink" href="#module-common.lib.thu_learn.MySoupParser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.lib.thu_learn.MySoupParser.courselist_parser_soup">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.MySoupParser.</tt><tt class="descname">courselist_parser_soup</tt><big>(</big><em>feed_data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MySoupParser.html#courselist_parser_soup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MySoupParser.courselist_parser_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">BeautifulSoup.BeautifulSoup</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.lib.thu_learn.MySoupParser.itemlist_parser_soup">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.MySoupParser.</tt><tt class="descname">itemlist_parser_soup</tt><big>(</big><em>feed_data</em>, <em>itemtype</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MySoupParser.html#itemlist_parser_soup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MySoupParser.itemlist_parser_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">BeautifulSoup.BeautifulSoup</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="common.lib.thu_learn.MySoupParser.termlist_parser_soup">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.MySoupParser.</tt><tt class="descname">termlist_parser_soup</tt><big>(</big><em>feed_data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/MySoupParser.html#termlist_parser_soup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.MySoupParser.termlist_parser_soup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">BeautifulSoup.BeautifulSoup</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.fetch">
+<span id="common-lib-thu-learn-fetch-module"></span><h2>common.lib.thu_learn.fetch module<a class="headerlink" href="#module-common.lib.thu_learn.fetch" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="common.lib.thu_learn.fetch.fetch">
+<tt class="descclassname">common.lib.thu_learn.fetch.</tt><tt class="descname">fetch</tt><big>(</big><em>username</em>, <em>password</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/fetch.html#fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.fetch.fetch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.fetch.innerHTML">
+<tt class="descclassname">common.lib.thu_learn.fetch.</tt><tt class="descname">innerHTML</tt><big>(</big><em>soupNode</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/fetch.html#innerHTML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.fetch.innerHTML" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.handle_str">
+<span id="common-lib-thu-learn-handle-str-module"></span><h2>common.lib.thu_learn.handle_str module<a class="headerlink" href="#module-common.lib.thu_learn.handle_str" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.delete_input">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">delete_input</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#delete_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.delete_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.delete_space">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">delete_space</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#delete_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.delete_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.filename_trans">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">filename_trans</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#filename_trans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.filename_trans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.is_datetime">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">is_datetime</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#is_datetime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.is_datetime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.urldecode">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">urldecode</tt><big>(</big><em>url</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#urldecode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.urldecode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.handle_str.urlencode">
+<tt class="descclassname">common.lib.thu_learn.handle_str.</tt><tt class="descname">urlencode</tt><big>(</big><em>_dic</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/handle_str.html#urlencode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.handle_str.urlencode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.items">
+<span id="common-lib-thu-learn-items-module"></span><h2>common.lib.thu_learn.items module<a class="headerlink" href="#module-common.lib.thu_learn.items" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.lib.thu_learn.items.course">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.items.</tt><tt class="descname">course</tt><big>(</big><em>course_dict</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#course"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.course" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="common.lib.thu_learn.items.course.get_item_list">
+<tt class="descname">get_item_list</tt><big>(</big><em>itemtype</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#course.get_item_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.course.get_item_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.items.get_version_news">
+<tt class="descclassname">common.lib.thu_learn.items.</tt><tt class="descname">get_version_news</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#get_version_news"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.get_version_news" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="common.lib.thu_learn.items.item">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.items.</tt><tt class="descname">item</tt><big>(</big><em>item_dict</em>, <em>itemtype</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.item" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="common.lib.thu_learn.items.item.download_attachment">
+<tt class="descname">download_attachment</tt><big>(</big><em>filepath</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x7f2630c98150&gt;</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#item.download_attachment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.item.download_attachment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.items.item.download_data">
+<tt class="descname">download_data</tt><big>(</big><em>filepath</em>, <em>size_limit=0</em>, <em>type_except=()</em>, <em>type_only=()</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x7f2630c98150&gt;</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#item.download_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.item.download_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.items.item.get_data">
+<tt class="descname">get_data</tt><big>(</big><em>if_format=True</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x7f2630c98150&gt;</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#item.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.item.get_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.thu_learn.items.item.get_url">
+<tt class="descname">get_url</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#item.get_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.item.get_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="common.lib.thu_learn.items.login">
+<tt class="descclassname">common.lib.thu_learn.items.</tt><tt class="descname">login</tt><big>(</big><em>user</em>, <em>password</em>, <em>if_this_only=True</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/items.html#login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.items.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.run_thread">
+<span id="common-lib-thu-learn-run-thread-module"></span><h2>common.lib.thu_learn.run_thread module<a class="headerlink" href="#module-common.lib.thu_learn.run_thread" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.lib.thu_learn.run_thread.mythread">
+<em class="property">class </em><tt class="descclassname">common.lib.thu_learn.run_thread.</tt><tt class="descname">mythread</tt><big>(</big><em>option</em>, <em>output</em>, <em>if_format=False</em><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/run_thread.html#mythread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.run_thread.mythread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></tt></p>
+<dl class="method">
+<dt id="common.lib.thu_learn.run_thread.mythread.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/thu_learn/run_thread.html#mythread.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.thu_learn.run_thread.mythread.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.thu_learn.test_config">
+<span id="common-lib-thu-learn-test-config-module"></span><h2>common.lib.thu_learn.test_config module<a class="headerlink" href="#module-common.lib.thu_learn.test_config" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-common.lib.thu_learn">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-common.lib.thu_learn" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">common.lib.thu_learn package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.MyParser">common.lib.thu_learn.MyParser module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.MySoupParser">common.lib.thu_learn.MySoupParser module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.fetch">common.lib.thu_learn.fetch module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.handle_str">common.lib.thu_learn.handle_str module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.items">common.lib.thu_learn.items module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.run_thread">common.lib.thu_learn.run_thread module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn.test_config">common.lib.thu_learn.test_config module</a></li>
+<li><a class="reference internal" href="#module-common.lib.thu_learn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="common.lib.html"
+                        title="previous chapter">common.lib package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="common.ukconfig.html"
+                        title="next chapter">common.ukconfig package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/common.lib.thu_learn.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="common.ukconfig.html" title="common.ukconfig package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="common.lib.html" title="common.lib package"
+             >previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" >common package</a> &raquo;</li>
+          <li><a href="common.lib.html" >common.lib package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

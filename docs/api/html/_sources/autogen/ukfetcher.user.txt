@@ -1,0 +1,22 @@
+ukfetcher.user package
+======================
+
+Submodules
+----------
+
+ukfetcher.user.thu_learn module
+-------------------------------
+
+.. automodule:: ukfetcher.user.thu_learn
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ukfetcher.user
+    :members:
+    :undoc-members:
+    :show-inheritance:

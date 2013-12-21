@@ -1,0 +1,10 @@
+ukapi.postfilter.plotter package
+================================
+
+Module contents
+---------------
+
+.. automodule:: ukapi.postfilter.plotter
+    :members:
+    :undoc-members:
+    :show-inheritance:

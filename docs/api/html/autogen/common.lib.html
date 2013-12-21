@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" />
+    <link rel="up" title="common package" href="common.html" />
+    <link rel="next" title="common.lib.thu_learn package" href="common.lib.thu_learn.html" />
+    <link rel="prev" title="common package" href="common.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="common.lib.thu_learn.html" title="common.lib.thu_learn package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="common.html" title="common package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" accesskey="U">common package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-lib-package">
+<h1>common.lib package<a class="headerlink" href="#common-lib-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="common.lib.thu_learn.html">common.lib.thu_learn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.MyParser">common.lib.thu_learn.MyParser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.MySoupParser">common.lib.thu_learn.MySoupParser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.fetch">common.lib.thu_learn.fetch module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.handle_str">common.lib.thu_learn.handle_str module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.items">common.lib.thu_learn.items module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.run_thread">common.lib.thu_learn.run_thread module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn.test_config">common.lib.thu_learn.test_config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common.lib.thu_learn.html#module-common.lib.thu_learn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-common.lib.texttagger">
+<span id="common-lib-texttagger-module"></span><h2>common.lib.texttagger module<a class="headerlink" href="#module-common.lib.texttagger" title="Permalink to this headline">¶</a></h2>
+<p>text tagger, used by prefilter</p>
+<dl class="class">
+<dt id="common.lib.texttagger.TextTagger">
+<em class="property">class </em><tt class="descclassname">common.lib.texttagger.</tt><tt class="descname">TextTagger</tt><big>(</big><em>prob_lower_bound=0.1</em>, <em>relative_threshold=0.95</em>, <em>nr_min_word_count=0</em><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#TextTagger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.TextTagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>a text tagger that automatically tag texts</p>
+<dl class="attribute">
+<dt id="common.lib.texttagger.TextTagger.classifier">
+<tt class="descname">classifier</tt><em class="property"> = None</em><a class="headerlink" href="#common.lib.texttagger.TextTagger.classifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.texttagger.TextTagger.dump">
+<tt class="descname">dump</tt><big>(</big><em>file_name</em><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#TextTagger.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.TextTagger.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.texttagger.TextTagger.fit">
+<tt class="descname">fit</tt><big>(</big><em>training_data</em><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#TextTagger.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.TextTagger.fit" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>training_data</strong> &#8211; a list of tuple, each tuple comprises of</td>
+</tr>
+</tbody>
+</table>
+<p>raw text from database (may contain html code), and its label(s). e.g,
+[(&#8216;NBA 2k13&#8217;, [&#8216;sports&#8217;, &#8216;computer&#8217;]), (&#8216;hello world&#8217;, &#8216;programming&#8217;)]</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="common.lib.texttagger.TextTagger.load">
+<em class="property">static </em><tt class="descname">load</tt><big>(</big><em>file_name</em><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#TextTagger.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.TextTagger.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.texttagger.TextTagger.predict_one">
+<tt class="descname">predict_one</tt><big>(</big><em>document</em><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#TextTagger.predict_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.TextTagger.predict_one" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">document: raw text from database, may contain html code</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="common.lib.texttagger.TextTagger.tfidf_model">
+<tt class="descname">tfidf_model</tt><em class="property"> = None</em><a class="headerlink" href="#common.lib.texttagger.TextTagger.tfidf_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="common.lib.texttagger.test">
+<tt class="descclassname">common.lib.texttagger.</tt><tt class="descname">test</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/texttagger.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.texttagger.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-common.lib.tfidf">
+<span id="common-lib-tfidf-module"></span><h2>common.lib.tfidf module<a class="headerlink" href="#module-common.lib.tfidf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.lib.tfidf.TFIDF">
+<em class="property">class </em><tt class="descclassname">common.lib.tfidf.</tt><tt class="descname">TFIDF</tt><big>(</big><em>nthres</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="common.lib.tfidf.TFIDF.add_document">
+<tt class="descname">add_document</tt><big>(</big><em>document</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.add_document"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.add_document" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.df">
+<tt class="descname">df</tt><big>(</big><em>t</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.dump">
+<tt class="descname">dump</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.dumps">
+<tt class="descname">dumps</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.dumps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.dumps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.get_feature_vector">
+<tt class="descname">get_feature_vector</tt><big>(</big><em>document</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.get_feature_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.get_feature_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>return: [(key_0, val_0), (key_1, val_1), ...], key start from 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.get_tf">
+<tt class="descname">get_tf</tt><big>(</big><em>document</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.get_tf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.get_tf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="common.lib.tfidf.TFIDF.load">
+<em class="property">static </em><tt class="descname">load</tt><big>(</big><em>fname</em><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.lib.tfidf.TFIDF.shrink_by_df">
+<tt class="descname">shrink_by_df</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/lib/tfidf.html#TFIDF.shrink_by_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.lib.tfidf.TFIDF.shrink_by_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-common.lib" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">common.lib package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-common.lib.texttagger">common.lib.texttagger module</a></li>
+<li><a class="reference internal" href="#module-common.lib.tfidf">common.lib.tfidf module</a></li>
+<li><a class="reference internal" href="#module-common.lib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="common.html"
+                        title="previous chapter">common package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="common.lib.thu_learn.html"
+                        title="next chapter">common.lib.thu_learn package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/common.lib.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="common.lib.thu_learn.html" title="common.lib.thu_learn package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="common.html" title="common package"
+             >previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" >common package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

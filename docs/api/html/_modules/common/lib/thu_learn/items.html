@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.lib.thu_learn.items &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for common.lib.thu_learn.items</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/python</span>
+<span class="c"># -*- coding=UTF-8 -*-</span>
+
+<span class="n">baseurl</span> <span class="o">=</span> <span class="s">&#39;https://learn.tsinghua.edu.cn/MultiLanguage&#39;</span>
+<span class="n">loginurl</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/lesson/teacher/loginteacher.jsp&#39;</span>
+<span class="n">courselist_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/lesson/student/MyCourse.jsp?language=cn&#39;</span>
+<span class="n">noticelist_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/public/bbs/getnoteid_student.jsp&#39;</span>
+<span class="n">downloadlist_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/lesson/student/download.jsp&#39;</span>
+<span class="n">homeworklist_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/lesson/student/hom_wk_brw.jsp&#39;</span>
+<span class="n">homework_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/lesson/student/hom_wk_detail.jsp&#39;</span>
+<span class="n">notice_url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="s">&#39;/public/bbs/note_reply.jsp&#39;</span>
+<span class="n">download_url</span> <span class="o">=</span> <span class="s">&#39;http://learn.tsinghua.edu.cn/uploadFile/downloadFile_student.jsp&#39;</span>
+<span class="n">url_dict</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+<span class="n">version_news_url</span> <span class="o">=</span> <span class="s">&#39;http://learn.tsinghua.edu.cn:8080/2011011262/version_news&#39;</span>
+
+<span class="n">item_name_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;download&#39;</span><span class="p">:</span><span class="s">u&#39;课程文件&#39;</span><span class="p">,</span>
+        <span class="s">&#39;homework&#39;</span><span class="p">:</span><span class="s">u&#39;课程作业&#39;</span><span class="p">,</span>
+        <span class="s">&#39;notice&#39;</span><span class="p">:</span><span class="s">u&#39;课程公告&#39;</span><span class="p">}</span>
+
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">cookielib</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">from</span> <span class="nn">MySoupParser</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span><span class="p">,</span> <span class="n">NavigableString</span>
+
+<div class="viewcode-block" id="login"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.login">[docs]</a><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">if_this_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPCookieProcessor</span><span class="p">(</span><span class="n">cookielib</span><span class="o">.</span><span class="n">CookieJar</span><span class="p">()))</span>
+        <span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">opener</span><span class="p">)</span>
+        <span class="n">para</span> <span class="o">=</span> <span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;userid&#39;</span><span class="p">:</span><span class="n">user</span><span class="p">,</span> <span class="s">&#39;userpass&#39;</span><span class="p">:</span><span class="n">password</span><span class="p">})</span>
+        <span class="n">login_page</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">loginurl</span><span class="p">,</span> <span class="n">para</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s">&#39;密码错误&#39;</span> <span class="ow">in</span> <span class="n">login_page</span> <span class="ow">or</span> <span class="s">&#39;没有登陆网络学堂的权限&#39;</span> <span class="ow">in</span> <span class="n">login_page</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Wrong username or password</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+        <span class="n">first_html</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">courselist_url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">if_this_only</span><span class="p">:</span>
+            <span class="n">terms</span> <span class="o">=</span> <span class="n">termlist_parser_soup</span><span class="p">(</span><span class="n">first_html</span><span class="p">)</span><span class="o">.</span><span class="n">terms</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
+                <span class="n">this_html</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">courselist_url</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="n">ret</span> <span class="o">+=</span> <span class="n">courselist_parser_soup</span><span class="p">(</span><span class="n">this_html</span><span class="p">)</span><span class="o">.</span><span class="n">courses</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="n">courselist_parser_soup</span><span class="p">(</span><span class="n">first_html</span><span class="p">)</span><span class="o">.</span><span class="n">courses</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;Error occurs on login</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="course"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.course">[docs]</a><span class="k">class</span> <span class="nc">course</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span> <span class="o">=</span> <span class="n">course_dict</span>
+<div class="viewcode-block" id="course.get_item_list"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.course.get_item_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itemtype</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_dict</span><span class="p">[</span><span class="n">itemtype</span> <span class="o">+</span> <span class="s">&#39;list_url&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_dict</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">r&#39;&amp;nbsp;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">itemlist_parser_soup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">itemtype</span><span class="p">)</span><span class="o">.</span><span class="n">items</span>
+</div></div>
+<div class="viewcode-block" id="item"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.item">[docs]</a><span class="k">class</span> <span class="nc">item</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_dict</span><span class="p">,</span> <span class="n">itemtype</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span> <span class="o">=</span> <span class="n">item_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">=</span> <span class="n">itemtype</span>
+<div class="viewcode-block" id="item.get_url"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.item.get_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">url_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">+</span> <span class="s">&#39;_url&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">)</span></div>
+<div class="viewcode-block" id="item.get_data"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.item.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">if_format</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">+</span> <span class="s">&#39;_url&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t</span><span class="s">正在获取  &#39;</span><span class="o">+</span><span class="n">item_name_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;   &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;...</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="n">data_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">data_soup</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;UTF-8&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+<div class="viewcode-block" id="item.download_data"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.item.download_data">[docs]</a>    <span class="k">def</span> <span class="nf">download_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">size_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">type_except</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">type_only</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">out</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">==</span> <span class="s">&#39;homework&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_attachment</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span> <span class="o">+</span> <span class="s">&#39;_url&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Content-Disposition&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">文件不存在。</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&#39;filename=&quot;&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;gb18030&#39;</span><span class="p">))</span>
+        <span class="n">obj_type</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t</span><span class="s">正在处理  &#39;</span> <span class="o">+</span> <span class="n">item_name_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39;   &#39;</span><span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;...</span><span class="se">\n</span><span class="s">&#39;</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Content-Length&#39;</span><span class="p">)):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">文件已存在，忽略 </span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">size_limit</span> <span class="o">!=</span> <span class="mi">0</span>  <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Content-Length&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">size_limit</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">文件太大，忽略</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">type_only</span><span class="p">)</span> <span class="o">!=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">obj_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">type_only</span><span class="p">)</span> <span class="ow">or</span> <span class="n">obj_type</span> <span class="ow">in</span> <span class="n">type_except</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">文件类型不匹配，忽略 </span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">fout</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">_little_data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_little_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">_little_data</span><span class="p">)</span>
+        <span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">下载成功。</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="item.download_attachment"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.item.download_attachment">[docs]</a>    <span class="k">def</span> <span class="nf">download_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">):</span>
+        <span class="n">attach_url</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span><span class="o">+</span><span class="s">&#39;_url&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39;?&#39;</span><span class="o">+</span><span class="n">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&#39;&lt;a target=&quot;_top&quot; href=&quot;&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s">&#39;&quot;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">attach_url</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t</span><span class="s">正在处理  &#39;</span> <span class="o">+</span> <span class="n">item_name_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itemtype</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39;   &#39;</span><span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;...</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\t\t</span><span class="s">无附件</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">attach_dict</span> <span class="o">=</span> <span class="n">urldecode</span><span class="p">(</span><span class="n">attach_url</span><span class="p">)</span>
+        <span class="n">attach_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_dict</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">item</span><span class="p">(</span><span class="n">attach_dict</span><span class="p">,</span> <span class="s">&#39;download&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
+</div></div>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<div class="viewcode-block" id="get_version_news"><a class="viewcode-back" href="../../../../autogen/common.lib.thu_learn.html#common.lib.thu_learn.items.get_version_news">[docs]</a><span class="k">def</span> <span class="nf">get_version_news</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">version_news_url</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

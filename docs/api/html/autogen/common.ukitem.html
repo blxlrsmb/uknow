@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>common.ukitem package &mdash; uknow 0.0.2.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.2.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="uknow 0.0.2.3 documentation" href="../index.html" />
+    <link rel="up" title="common package" href="common.html" />
+    <link rel="next" title="ukapi package" href="ukapi.html" />
+    <link rel="prev" title="common.ukconfig package" href="common.ukconfig.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ukapi.html" title="ukapi package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="common.ukconfig.html" title="common.ukconfig package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" accesskey="U">common package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-ukitem-package">
+<h1>common.ukitem package<a class="headerlink" href="#common-ukitem-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-common.ukitem.base">
+<span id="common-ukitem-base-module"></span><h2>common.ukitem.base module<a class="headerlink" href="#module-common.ukitem.base" title="Permalink to this headline">¶</a></h2>
+<p>Serialization format:
+descriptor_name + SERIALIZATION_SEP + descriptor.serialze()</p>
+<dl class="class">
+<dt id="common.ukitem.base.ItemDescBase">
+<em class="property">class </em><tt class="descclassname">common.ukitem.base.</tt><tt class="descname">ItemDescBase</tt><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Description of an item.
+Each item has a description, which could be used, for example, to render
+this item to HTML to be displayed as an entry on a webpage.
+Multiple description types are allowed, each having a unique name.</p>
+<dl class="classmethod">
+<dt id="common.ukitem.base.ItemDescBase.deserialize">
+<em class="property">classmethod </em><tt class="descname">deserialize</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase.deserialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.base.ItemDescBase.get_desc_name">
+<tt class="descname">get_desc_name</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase.get_desc_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase.get_desc_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a string, denoting the descriptor type;
+this should be a class method, and return value should be constant</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.base.ItemDescBase.render_content">
+<tt class="descname">render_content</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase.render_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase.render_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>render the contetn of this desc as human-readable text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.base.ItemDescBase.render_title">
+<tt class="descname">render_title</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase.render_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase.render_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>render the title of this desc as human-readable text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.base.ItemDescBase.serialize">
+<tt class="descname">serialize</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBase.serialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBase.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="common.ukitem.base.ItemDescBaseMeta">
+<em class="property">class </em><tt class="descclassname">common.ukitem.base.</tt><tt class="descname">ItemDescBaseMeta</tt><a class="reference internal" href="../_modules/common/ukitem/base.html#ItemDescBaseMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.base.ItemDescBaseMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">abc.ABCMeta</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.ukitem.textonly">
+<span id="common-ukitem-textonly-module"></span><h2>common.ukitem.textonly module<a class="headerlink" href="#module-common.ukitem.textonly" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="common.ukitem.textonly.TextOnlyItem">
+<em class="property">class </em><tt class="descclassname">common.ukitem.textonly.</tt><tt class="descname">TextOnlyItem</tt><big>(</big><em>title</em>, <em>content</em><big>)</big><a class="reference internal" href="../_modules/common/ukitem/textonly.html#TextOnlyItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#common.ukitem.base.ItemDescBase" title="common.ukitem.base.ItemDescBase"><tt class="xref py py-class docutils literal"><span class="pre">common.ukitem.base.ItemDescBase</span></tt></a></p>
+<dl class="attribute">
+<dt id="common.ukitem.textonly.TextOnlyItem.content">
+<tt class="descname">content</tt><em class="property"> = None</em><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="common.ukitem.textonly.TextOnlyItem.get_desc_name">
+<em class="property">static </em><tt class="descname">get_desc_name</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/textonly.html#TextOnlyItem.get_desc_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem.get_desc_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.textonly.TextOnlyItem.render_content">
+<tt class="descname">render_content</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/textonly.html#TextOnlyItem.render_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem.render_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="common.ukitem.textonly.TextOnlyItem.render_title">
+<tt class="descname">render_title</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/common/ukitem/textonly.html#TextOnlyItem.render_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem.render_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="common.ukitem.textonly.TextOnlyItem.title">
+<tt class="descname">title</tt><em class="property"> = None</em><a class="headerlink" href="#common.ukitem.textonly.TextOnlyItem.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-common.ukitem">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-common.ukitem" title="Permalink to this headline">¶</a></h2>
+<p>this package provides tools for item description; see <tt class="xref py py-class docutils literal"><span class="pre">ItemDescBase</span></tt>
+for details.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">common.ukitem package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-common.ukitem.base">common.ukitem.base module</a></li>
+<li><a class="reference internal" href="#module-common.ukitem.textonly">common.ukitem.textonly module</a></li>
+<li><a class="reference internal" href="#module-common.ukitem">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="common.ukconfig.html"
+                        title="previous chapter">common.ukconfig package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ukapi.html"
+                        title="next chapter">ukapi package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/autogen/common.ukitem.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ukapi.html" title="ukapi package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="common.ukconfig.html" title="common.ukconfig package"
+             >previous</a> |</li>
+        <li><a href="../index.html">uknow 0.0.2.3 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API Reference</a> &raquo;</li>
+          <li><a href="common.html" >common package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, blxlrsmb team.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

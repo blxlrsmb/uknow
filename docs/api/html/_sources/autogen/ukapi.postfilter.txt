@@ -1,0 +1,29 @@
+ukapi.postfilter package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    ukapi.postfilter.plotter
+
+Submodules
+----------
+
+ukapi.postfilter.keyword_hilighter module
+-----------------------------------------
+
+.. automodule:: ukapi.postfilter.keyword_hilighter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ukapi.postfilter
+    :members:
+    :undoc-members:
+    :show-inheritance:

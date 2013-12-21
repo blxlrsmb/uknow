@@ -1,0 +1,86 @@
+ukfetcher.general package
+=========================
+
+Submodules
+----------
+
+ukfetcher.general.bitcoin module
+--------------------------------
+
+.. automodule:: ukfetcher.general.bitcoin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.china_daily module
+------------------------------------
+
+.. automodule:: ukfetcher.general.china_daily
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.guokr module
+------------------------------
+
+.. automodule:: ukfetcher.general.guokr
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.quora module
+------------------------------
+
+.. automodule:: ukfetcher.general.quora
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.sample module
+-------------------------------
+
+.. automodule:: ukfetcher.general.sample
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.stackoverflow module
+--------------------------------------
+
+.. automodule:: ukfetcher.general.stackoverflow
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.tsinghua module
+---------------------------------
+
+.. automodule:: ukfetcher.general.tsinghua
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.xkcd module
+-----------------------------
+
+.. automodule:: ukfetcher.general.xkcd
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ukfetcher.general.zhihu module
+------------------------------
+
+.. automodule:: ukfetcher.general.zhihu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: ukfetcher.general
+    :members:
+    :undoc-members:
+    :show-inheritance:
