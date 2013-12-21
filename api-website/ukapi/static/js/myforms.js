@@ -223,6 +223,7 @@ doEditFetcher = function(){
 	$.each(to_disable, function(i, fetcher){
 		$.getJSON('/fetcher/disable', {fetcher_id: fetcher['id']});
 	});
+	setTimeout(refreshTab, 500);
 };
 
 doEditFilter = function(){
@@ -251,7 +252,7 @@ doEditFilter = function(){
 			'/filter/enable',
 			function(ret){
 				$('#form-modal').modal('hide');
-				setTimeout(doEditfilter, 500);
+				setTimeout(doEditFilter, 500);
 			}).data('usingget', true);
 		$('#form-modal').modal('show');
 		return;
@@ -259,4 +260,5 @@ doEditFilter = function(){
 	$.each(to_disable, function(i, filter){
 		$.getJSON('/filter/disable', {filter_id: filter['id']});
 	});
+	setTimeout(refreshTab, 500);
 };
