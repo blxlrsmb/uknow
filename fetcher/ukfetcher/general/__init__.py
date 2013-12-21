@@ -1,13 +1,14 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: __init__.py
-# $Date: Sat Dec 14 17:55:00 2013 +0800
+# $Date: Sat Dec 21 18:35:31 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 """fetcher for general items"""
 
 from ukutil import import_all_modules
 import ukconfig
+import time
 import uklogger
 
 from ..base import register_fetcher_base
