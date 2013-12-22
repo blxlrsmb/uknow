@@ -39,7 +39,6 @@ setup_args = dict(
         console_scripts=[
             'api-website = standalone_server:main',
             'fetcher-server = general_fetcher_server:main',
-            'frontend-website = ukfrontend.app:main',
             ],
     ),
 )
