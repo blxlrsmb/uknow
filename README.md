@@ -2,9 +2,9 @@
 
   ![logo](https://git.net9.org/blxlrsmb/unknown/raw/master/docs/logo/logo.png)
 
-  Uknow Information Collector is a web server that can fetch some Information and provide it with RESTful api.
+  Uknow Information Collector is a web server that can fetch Information and provide it with RESTful api.
 
-  It's a project for Software Engineering course.
+  It's a project for Software Engineering course, and is currently deployed at [https://uknow.net9.org]()
 
 ## Dependency
 
