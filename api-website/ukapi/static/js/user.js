@@ -1,16 +1,16 @@
 redirectLoginPage = function(){window.location.replace('/static/login.html');};
 
 checkLogin = function() {
-  $('#loading').modal('show');
+  set_loading(1);
   $.getJSON('/test_login', '', function(){
     setTimeout(refreshTab, 500);
   }).fail(redirectLoginPage);
 };
 
 doLogout = function(){
-  $('#loading').modal('show');
+  set_loading(1);
   $.getJSON(document.API_URL + '/logout', '', function(ret){
-    $('#loading').modal('hide');
+    set_loading(0);
     $('#login').modal('show');
     showBlackface();
   });

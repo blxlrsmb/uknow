@@ -42,7 +42,7 @@ doRefreshTab = function(tabs){
 };
 
 refreshTab = function(){
-  $('#loading').modal('show');
+  set_loading(1);
   $.getJSON(document.API_URL+'/get_all_tabs', '', function(ret){
     if(ret['tabs'] === undefined){
       alert('Error refreshing tabs');
@@ -98,10 +98,10 @@ nextArticle = function(){
 };
 
 setWholePageArticle = function(){
-    $('#loading').modal('show');
+    set_loading(1);
     var $tab = getNowTab();
     if($tab.length === 0){
-      $('#loading').modal('hide');
+      set_loading(0);
       return;
     }
     var tabname = $tab.text();
@@ -128,13 +128,13 @@ setWholePageArticle = function(){
                     $summaries.append($article);
                 });
                 focusArticle(0, true);
-                $('#loading').modal('hide');
+                set_loading(0);
               });
 };
 
 refresh = function(){
-  $('#loading').modal('show');
+  set_loading(1);
   $.getJSON('/refresh', '', function(ret){
-    $('#loading').modal('hide');
+    set_loading(0);
   });
 };

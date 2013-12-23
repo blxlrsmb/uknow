@@ -16,6 +16,21 @@
   <script type="text/javascript" src="bower_components/bootstrap.css/js/bootstrap.min.js"></script>
   <script type="text/javascript">
     document.API_URL = '';
+    set_loading = function(enable){
+      $body = $('body');
+      if($body.data('loading') === undefined)
+        $body.data('loading', 0);
+      if($body.data('loading') === 0 && enable == 1){
+        $('#loading').modal('show');
+        $body.data('loading', 1);
+        return;
+      }
+      if($body.data('loading') == 1 && enable === 0){
+        $('#loading').modal('hide');
+        $body.data('loading', 0);
+        return;
+      }
+    };
   </script>
   <script type="text/javascript" src="js/myforms.js"></script>
   <script type="text/javascript" src="js/user.js"></script>
