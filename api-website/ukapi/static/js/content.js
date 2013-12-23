@@ -16,9 +16,7 @@ setArticle = function(data){
     $source.append(' ');
   });
   $('#article-title').text(data['title']);
-  var $content = $('<div>').append($(data['content']));
-  $content.find('script').remove();
-  $('#article-content').html($content);
+  $('#article-content').html($.parseHTML(data['content'], document, false));
   var link = data['url'];
   $('#article-author').html($('<a>').attr('href', link).attr('target', '_blank').text(link));
 };
