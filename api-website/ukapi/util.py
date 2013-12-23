@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # $File: util.py
-# $Date: Sat Dec 14 22:34:37 2013 +0800
+# $Date: Mon Dec 23 10:20:13 2013 +0800
 # $Author: jiakai <jia.kai66@gmail.com>
 
 from .postfilter import apply_postfilter
@@ -32,4 +32,5 @@ def parse_article(docs):
         ret['tags'] = doc['tag']
         ret['source'] = doc['fetcher_name']
         rst.append(ret)
+        rst = rst[:200]
     return rst
