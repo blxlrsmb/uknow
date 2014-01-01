@@ -2,9 +2,19 @@
 
   ![logo](https://git.net9.org/blxlrsmb/unknown/raw/master/docs/logo/logo.png)
 
-  Uknow Information Collector is a web server that can fetch Information and provide it with RESTful api.
+  Uknow Information Collector is a highly extensible web server which can fetch and process various information, and provide it with RESTful api.
 
-  It's a project for Software Engineering course, and is currently deployed at [https://uknow.net9.org]()
+  It's a project for Software Engineering (2013Fall) course in THU, and it is currently deployed at [https://uknow.net9.org]()
+
+  Note that Uknow is far from complete. We only wrote a proof-of-concept working system to present our highly extensible design.
+  Any contribution is welcome.
+
+
+## Features
+
+  + Plugin-based fetcher and filter for fetching, pre-processing, post-processing information.
+  + User-specific fetcher and filter.
+  + Distributed fetcher worker.
 
 ## Dependency
 
@@ -36,14 +46,6 @@ Or:
 	cd api-website
 	./standalone_server.py
 
-To start the frontend-website:
-
-	. ./manage/setenv.sh
-	frontend-website
-
-Or:
-
-	./frontend-website/start_frontend.sh
 
 To start the fetcher server:
 
